@@ -1,0 +1,30 @@
+*.class
+bin/
+build/
+
+.gradle
+.ebextensions/
+/.classpath
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IDEA ###
+/.idea
+/out/
+*.iml
+
+.DS_STORE
+.vscode
+
+/.jpb
+
+**/application-*.yml
+
+
