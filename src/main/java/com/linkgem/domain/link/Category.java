@@ -23,5 +23,5 @@ public class Category extends BaseEntity {
 
 	private String name;
 
-	private Long order;
+	private Long orderNumber;
 }
