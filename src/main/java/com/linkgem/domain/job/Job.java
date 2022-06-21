@@ -23,5 +23,5 @@ public class Job extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    private Long index;
+    private Long ordering;
 }
