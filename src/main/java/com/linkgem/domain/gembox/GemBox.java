@@ -22,4 +22,10 @@ public class GemBox extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(name = "image_url", nullable = false)
+    private String imageUrl;
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 }
