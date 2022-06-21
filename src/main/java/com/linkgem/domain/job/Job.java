@@ -1,4 +1,4 @@
-package com.linkgem.domain.gembox;
+package com.linkgem.domain.job;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,20 +12,16 @@ import com.linkgem.domain.common.BaseEntity;
 import lombok.Getter;
 
 @Getter
-@Table(name = "gem_box")
+@Table(name = "job")
 @Entity
-public class GemBox extends BaseEntity {
+public class Job extends BaseEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
-
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private Long index;
 }
