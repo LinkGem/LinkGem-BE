@@ -1,4 +1,4 @@
-package com.linkgem.presentation.exception;
+package com.linkgem.presentation.common.exception;
 
 import lombok.Getter;
 
