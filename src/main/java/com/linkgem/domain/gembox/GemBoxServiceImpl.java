@@ -1,5 +1,8 @@
 package com.linkgem.domain.gembox;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.linkgem.presentation.common.exception.BusinessException;
@@ -32,6 +35,14 @@ public class GemBoxServiceImpl implements GemBoxService {
         // command.getLinkIds();
         //TODO : 링크 리스트의 잼박스 ID를 업데이트한다
         return GemBoxInfo.Create.of(gemBoxStore.create(initGemBox));
+    }
+
+    @Override
+    public List<GemBoxInfo.Main> findAll(Long userId) {
+        return gemBoxReader.findAll(userId)
+            .stream()
+            .map(GemBoxInfo.Main::of)
+            .collect(Collectors.toList());
     }
 
 }
