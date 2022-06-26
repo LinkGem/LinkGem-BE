@@ -1,4 +1,4 @@
-package com.linkgem.presentation.exception;
+package com.linkgem.presentation.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

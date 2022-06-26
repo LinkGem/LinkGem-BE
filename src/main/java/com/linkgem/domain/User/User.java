@@ -1,6 +1,7 @@
 package com.linkgem.domain.User;
 
-import com.linkgem.domain.Job.Job;
+import com.linkgem.domain.job.Job;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
