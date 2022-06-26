@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
@@ -19,6 +20,7 @@ public class GemBoxServiceImpl implements GemBoxService {
 
     private final GemBoxDomainService gemBoxDomainService;
 
+    @Transactional
     @Override
     public GemBoxInfo.Create create(GemBoxCommand.Create command) {
 
@@ -28,13 +30,34 @@ public class GemBoxServiceImpl implements GemBoxService {
             throw new BusinessException(ErrorCode.GEMBOX_IS_FULL);
         }
 
-        if (gemBoxDomainService.isExisted(initGemBox)) {
+        if (gemBoxDomainService.isExisted(GemBoxQuery.SearchDuplication.of(command.getName(), command.getUserId()))) {
             throw new BusinessException(ErrorCode.GEMBOX_IS_ALREADY_EXISTED);
         }
 
         // command.getLinkIds();
         //TODO : 링크 리스트의 잼박스 ID를 업데이트한다
         return GemBoxInfo.Create.of(gemBoxStore.create(initGemBox));
+    }
+
+    @Transactional
+    @Override
+    public void update(GemBoxCommand.Update command) {
+
+        GemBoxQuery.SearchDuplication searchDuplication =
+            GemBoxQuery.SearchDuplication.of(
+                command.getId(),
+                command.getName(),
+                command.getUserId()
+            );
+
+        if (gemBoxDomainService.isExisted(searchDuplication)) {
+            throw new BusinessException(ErrorCode.GEMBOX_IS_ALREADY_EXISTED);
+        }
+
+        GemBox gemBox = gemBoxReader.find(command.getId(), command.getUserId())
+            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_IS_NOT_FOUND));
+
+        gemBox.updateName(command.getName());
     }
 
     @Override
