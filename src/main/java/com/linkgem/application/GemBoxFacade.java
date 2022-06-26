@@ -20,6 +20,10 @@ public class GemBoxFacade {
         return gemBoxService.create(command);
     }
 
+    public void update(GemBoxCommand.Update command) {
+        gemBoxService.update(command);
+    }
+
     public List<GemBoxInfo.Main> findAll(Long userId) {
         return gemBoxService.findAll(userId);
     }

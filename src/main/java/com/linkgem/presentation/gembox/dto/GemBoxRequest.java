@@ -11,6 +11,7 @@ import com.linkgem.domain.gembox.GemBoxCommand;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 public class GemBoxRequest {
@@ -20,7 +21,7 @@ public class GemBoxRequest {
     @AllArgsConstructor
     public static class CreateRequest {
 
-        @ApiModelProperty(value = "잼박스 이름", example = "잼박스이름", required = true)
+        @ApiModelProperty(value = "잼박스 이름", example = "잼박스 이름", required = true)
         @NotBlank(message = "잼박스 이름은 필수 값입니다.")
         @Pattern(regexp = GemBox.GEMBOX_NAME_REGEX, message = "잼박스 이름은 최대 8글자 숫자/한글/영문/공백 문자만 입력이 가능합니다.")
         private String name;
@@ -32,6 +33,26 @@ public class GemBoxRequest {
             return GemBoxCommand.Create.builder()
                 .name(this.name)
                 .linkIds(this.linkIds)
+                .userId(userId)
+                .build();
+        }
+    }
+
+    @ApiModel(description = "잼박스 수정 요청")
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UpdateRequest {
+
+        @ApiModelProperty(value = "잼박스 이름", example = "잼박스 이름", required = true)
+        @NotBlank(message = "잼박스 이름은 필수 값입니다.")
+        @Pattern(regexp = GemBox.GEMBOX_NAME_REGEX, message = "잼박스 이름은 최대 8글자 숫자/한글/영문/공백 문자만 입력이 가능합니다.")
+        private String name;
+
+        public GemBoxCommand.Update to(Long userId, Long id) {
+            return GemBoxCommand.Update.builder()
+                .id(id)
+                .name(this.name)
                 .userId(userId)
                 .build();
         }

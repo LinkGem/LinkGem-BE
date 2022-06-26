@@ -5,7 +5,10 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +44,21 @@ public class GemBoxApiController {
         return CommonResponse.of(GemBoxResponse.CreateResponse.of(createInfo));
     }
 
-    @ApiOperation(value = "잼박스 조회", notes = "잼박스를 조회한다")
+    @ApiOperation(value = "잼박스 수정", notes = "잼박스를 수정한다")
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<Void> update(
+        @PathVariable Long id,
+        @RequestBody @Valid GemBoxRequest.UpdateRequest request) {
+
+        // :TODO User Id를 토큰에서 추출하는 방법을 결정해야한다.
+        Long temporaryUserId = 1L;
+        GemBoxCommand.Update command = request.to(temporaryUserId, id);
+        gemBoxFacade.update(command);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "잼박스 목록 조회", notes = "잼박스 목록을 조회한다")
     @GetMapping
     public CommonResponse<List<GemBoxResponse.GemBox>> findAll(
     ) {
