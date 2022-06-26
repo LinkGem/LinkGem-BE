@@ -31,10 +31,13 @@ public class GemBoxInfo {
 
         private String name;
 
+        private Long userId;
+
         public static Create of(GemBox gemBox) {
             return Create.builder()
                 .id(gemBox.getId())
                 .name(gemBox.getName())
+                .userId(gemBox.getUserId())
                 .build();
         }
 

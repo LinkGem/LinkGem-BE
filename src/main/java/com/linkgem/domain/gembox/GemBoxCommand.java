@@ -21,4 +21,13 @@ public class GemBoxCommand {
             return new GemBox(this.name, this.userId);
         }
     }
+
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class Update {
+        private Long id;
+        private String name;
+        private Long userId;
+    }
 }
