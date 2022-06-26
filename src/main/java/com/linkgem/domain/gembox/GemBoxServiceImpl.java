@@ -68,4 +68,22 @@ public class GemBoxServiceImpl implements GemBoxService {
             .collect(Collectors.toList());
     }
 
+    @Override
+    public GemBoxInfo.Main find(GemBoxQuery.SearchDetail searchDetail) {
+        return gemBoxReader.find(searchDetail.getId(), searchDetail.getUserId())
+            .map(GemBoxInfo.Main::of)
+            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_IS_NOT_FOUND));
+    }
+
+    @Transactional
+    @Override
+    public void delete(GemBoxCommand.Delete command) {
+
+        GemBox gemBox = gemBoxReader.find(command.getId(), command.getUserId())
+            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_IS_NOT_FOUND));
+
+        //TODO : 링크삭제 로직을 추가해야한다
+        gemBoxStore.delete(gemBox);
+    }
+
 }

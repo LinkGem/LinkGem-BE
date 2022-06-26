@@ -9,4 +9,8 @@ public interface GemBoxService {
     void update(GemBoxCommand.Update command);
 
     List<GemBoxInfo.Main> findAll(Long userId);
+
+    GemBoxInfo.Main find(GemBoxQuery.SearchDetail searchDetail);
+
+    void delete(GemBoxCommand.Delete command);
 }

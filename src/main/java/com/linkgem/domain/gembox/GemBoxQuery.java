@@ -21,4 +21,15 @@ public class GemBoxQuery {
         }
 
     }
+
+    @AllArgsConstructor
+    @Getter
+    public static class SearchDetail {
+        private Long id;
+        private Long userId;
+
+        public static SearchDetail of(Long id, Long userId) {
+            return new SearchDetail(id, userId);
+        }
+    }
 }

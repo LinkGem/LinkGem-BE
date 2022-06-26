@@ -15,8 +15,8 @@ public class GemBoxResponse {
         private Long id;
         private String name;
 
-        public static GemBox of(GemBoxInfo.Main create) {
-            return new GemBox(create.getId(), create.getName());
+        public static GemBox of(GemBoxInfo.Main gemboxInfo) {
+            return new GemBox(gemboxInfo.getId(), gemboxInfo.getName());
         }
     }
 

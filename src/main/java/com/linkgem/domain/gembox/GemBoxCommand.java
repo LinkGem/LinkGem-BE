@@ -30,4 +30,16 @@ public class GemBoxCommand {
         private String name;
         private Long userId;
     }
+
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class Delete {
+        private Long id;
+        private Long userId;
+
+        public static Delete of(Long id, Long userId) {
+            return new Delete(id, userId);
+        }
+    }
 }
