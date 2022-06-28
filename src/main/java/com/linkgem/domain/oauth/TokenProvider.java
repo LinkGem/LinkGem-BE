@@ -1,7 +1,7 @@
 package com.linkgem.domain.oauth;
 
-import com.linkgem.domain.User.User;
-import com.linkgem.domain.User.UserRepository;
+import com.linkgem.domain.user.User;
+import com.linkgem.domain.user.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;

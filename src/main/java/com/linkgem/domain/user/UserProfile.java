@@ -1,4 +1,4 @@
-package com.linkgem.domain.User;
+package com.linkgem.domain.user;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,7 @@
-package com.linkgem.presentation;
+package com.linkgem.presentation.oauth;
 
-import com.linkgem.presentation.Dto.LoginResponse;
+import com.linkgem.domain.oauth.OauthServiceImpl;
+import com.linkgem.presentation.oauth.dto.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

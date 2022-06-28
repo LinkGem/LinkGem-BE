@@ -1,14 +1,10 @@
-package com.linkgem.presentation;
+package com.linkgem.domain.oauth;
 
-import com.linkgem.domain.User.User;
-import com.linkgem.domain.User.UserProfile;
-import com.linkgem.domain.User.UserRepository;
-import com.linkgem.domain.oauth.InMemoryProviderRepository;
-import com.linkgem.domain.oauth.OauthAttributes;
-import com.linkgem.domain.oauth.OauthProvider;
-import com.linkgem.domain.oauth.TokenProvider;
-import com.linkgem.presentation.Dto.LoginResponse;
-import com.linkgem.presentation.Dto.OauthTokenResponse;
+import com.linkgem.domain.user.User;
+import com.linkgem.domain.user.UserProfile;
+import com.linkgem.domain.user.UserRepository;
+import com.linkgem.presentation.oauth.dto.LoginResponse;
+import com.linkgem.presentation.oauth.dto.OauthTokenResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
@@ -33,12 +29,12 @@ public class OauthServiceImpl implements OauthService {
 
   @Override
   public LoginResponse login(String providerName, String code) {
-    // ÇÁ·ÐÆ®¿¡¼­ ³Ñ¾î¿Â provider ÀÌ¸§À» ÅëÇØ InMemoryProviderRepository¿¡¼­ OauthProvider °¡Á®¿À±â
+    // ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ï¿½ provider ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ InMemoryProviderRepositoryï¿½ï¿½ï¿½ï¿½ OauthProvider ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     OauthProvider provider = inMemoryProviderRepository.findByProviderName(providerName);
 
-    // TODO access token °¡Á®¿À±â
+    // TODO access token ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     OauthTokenResponse tokenResponse = getToken(code, provider);
-    // TODO À¯Àú Á¤º¸ °¡Á®¿À±â
+    // TODO ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     UserProfile userProfile = getUserProfile(providerName, tokenResponse, provider);
     System.out.println("userProfile = " + userProfile.getOauthId());
     System.out.println("userProfile.getEmail() = " + userProfile.getEmail());
@@ -86,11 +82,11 @@ public class OauthServiceImpl implements OauthService {
   private UserProfile getUserProfile(String providerName, OauthTokenResponse tokenResponse,
       OauthProvider provider) {
     Map<String, Object> userAttributes = getUserAttributes(provider, tokenResponse);
-    // TODO À¯Àú Á¤º¸(map)¸¦ ÅëÇØ UserProfile ¸¸µé±â
+    // TODO ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(map)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UserProfile ï¿½ï¿½ï¿½ï¿½ï¿½
     return OauthAttributes.extract(providerName, userAttributes);
   }
 
-  // OAuth ¼­¹ö¿¡¼­ À¯Àú Á¤º¸ mapÀ¸·Î °¡Á®¿À±â
+  // OAuth ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ mapï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
   private Map<String, Object> getUserAttributes(OauthProvider provider,
       OauthTokenResponse tokenResponse) {
     return WebClient.create()

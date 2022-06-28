@@ -1,4 +1,4 @@
-package com.linkgem.domain.infrastructure.Interceptor;
+package com.linkgem.infrastructure.config.Interceptor;
 
 import com.linkgem.domain.oauth.TokenProvider;
 import io.jsonwebtoken.ExpiredJwtException;

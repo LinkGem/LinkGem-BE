@@ -1,4 +1,4 @@
-package com.linkgem.domain.infrastructure.config;
+package com.linkgem.infrastructure.config;
 
 import com.linkgem.domain.oauth.InMemoryProviderRepository;
 import com.linkgem.domain.oauth.OauthAdapter;

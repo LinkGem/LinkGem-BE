@@ -1,4 +1,4 @@
-package com.linkgem.presentation.Dto;
+package com.linkgem.presentation.oauth.dto;
 
 import lombok.Builder;
 import lombok.Getter;

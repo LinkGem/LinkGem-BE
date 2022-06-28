@@ -1,7 +1,7 @@
-package com.linkgem.presentation;
+package com.linkgem.domain.oauth;
 
 
-import com.linkgem.presentation.Dto.LoginResponse;
+import com.linkgem.presentation.oauth.dto.LoginResponse;
 
 
 public interface OauthService {

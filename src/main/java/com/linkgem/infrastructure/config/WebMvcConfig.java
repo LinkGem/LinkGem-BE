@@ -1,6 +1,6 @@
-package com.linkgem.domain.infrastructure.config;
+package com.linkgem.infrastructure.config;
 
-import com.linkgem.domain.infrastructure.Interceptor.JwtTokenInterceptor;
+import com.linkgem.infrastructure.config.Interceptor.JwtTokenInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

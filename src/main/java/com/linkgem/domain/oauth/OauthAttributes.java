@@ -1,6 +1,6 @@
 package com.linkgem.domain.oauth;
 
-import com.linkgem.domain.User.UserProfile;
+import com.linkgem.domain.user.UserProfile;
 import java.util.Arrays;
 import java.util.Map;
 

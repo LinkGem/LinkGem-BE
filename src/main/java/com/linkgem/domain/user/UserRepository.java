@@ -1,4 +1,4 @@
-package com.linkgem.domain.User;
+package com.linkgem.domain.user;
 
 
 import java.util.Optional;

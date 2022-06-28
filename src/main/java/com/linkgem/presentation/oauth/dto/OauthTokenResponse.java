@@ -1,4 +1,4 @@
-package com.linkgem.presentation.Dto;
+package com.linkgem.presentation.oauth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
