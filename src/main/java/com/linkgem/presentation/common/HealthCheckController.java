@@ -1,4 +1,4 @@
-package com.linkgem.presentation;
+package com.linkgem.presentation.common;
 
 import java.util.Collections;
 import java.util.Map;
