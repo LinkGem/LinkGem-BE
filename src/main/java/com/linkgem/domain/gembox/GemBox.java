@@ -45,4 +45,16 @@ public class GemBox extends BaseEntity {
         this.name = name;
         this.userId = userId;
     }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public boolean isEqual(Long id) {
+        if (id == null) {
+            return false;
+        }
+
+        return this.id == id;
+    }
 }

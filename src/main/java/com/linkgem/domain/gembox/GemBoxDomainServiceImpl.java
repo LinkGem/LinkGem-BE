@@ -11,9 +11,10 @@ public class GemBoxDomainServiceImpl implements GemBoxDomainService {
     private final GemBoxReader gemBoxReader;
 
     @Override
-    public boolean isExisted(GemBox gemBox) {
-        return gemBoxReader.find(gemBox.getName(), gemBox.getUserId())
-            .isPresent();
+    public boolean isExisted(GemBoxQuery.SearchDuplication searchDuplication) {
+        return gemBoxReader.find(searchDuplication.getName(), searchDuplication.getUserId())
+            .map(gemBox -> !gemBox.isEqual(searchDuplication.getId()))
+            .orElse(false);
     }
 
     @Override

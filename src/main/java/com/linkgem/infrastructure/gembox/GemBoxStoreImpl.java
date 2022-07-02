@@ -17,4 +17,9 @@ public class GemBoxStoreImpl implements GemBoxStore {
     public GemBox create(GemBox gembox) {
         return gemBoxRepository.save(gembox);
     }
+
+    @Override
+    public void delete(GemBox gemBox) {
+        gemBoxRepository.delete(gemBox);
+    }
 }
