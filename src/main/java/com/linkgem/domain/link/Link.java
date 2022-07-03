@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 
 import com.linkgem.domain.common.BaseEntity;
 import com.linkgem.domain.gembox.GemBox;
+import com.linkgem.domain.user.User;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -37,19 +38,27 @@ public class Link extends BaseEntity {
     @Embedded
     private OpenGraph openGraph;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gem_box_id")
     private GemBox gemBox;
 
     @Builder
-    public Link(String url, String memo, OpenGraph openGraph, Long userId) {
+    private Link(String url, String memo, OpenGraph openGraph, User user) {
+        validateString(url, "url");
+        validateObject(user, "user");
+        updateMemo(memo);
         this.url = url;
-        this.memo = memo;
-        this.openGraph = openGraph;
-        this.userId = userId;
+        this.user = user;
+
+        this.openGraph = openGraph == null ? OpenGraph.createEmpty() : openGraph;
+    }
+
+    private void updateMemo(String memo) {
+        this.memo = memo == null ? "" : memo;
     }
 
     public void setGemBox(GemBox gemBox) {
