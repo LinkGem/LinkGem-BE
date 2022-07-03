@@ -27,6 +27,11 @@ public class GemBoxReaderImpl implements GemBoxReader {
     }
 
     @Override
+    public Optional<GemBox> find(Long id, Long userId) {
+        return repository.findByIdAndUserId(id, userId);
+    }
+
+    @Override
     public List<GemBox> findAll(Long userId) {
         return repository.findAllByUserId(userId);
     }

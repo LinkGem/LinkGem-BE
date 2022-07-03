@@ -9,5 +9,7 @@ public interface GemBoxReader {
 
     Optional<GemBox> find(Long id);
 
+    Optional<GemBox> find(Long id, Long userId);
+
     List<GemBox> findAll(Long userId);
 }
