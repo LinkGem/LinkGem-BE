@@ -2,6 +2,10 @@ package com.linkgem.presentation.link;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +41,18 @@ public class LinkApiController {
         LinkInfo.Create create = linkFacade.create(createCommand);
 
         return CommonResponse.of(LinkResponse.CreateResponse.of(create));
+    }
+
+    @ApiOperation(value = "링크 목록 조회", notes = "링크를 목록을 조회한다")
+    @GetMapping
+    public CommonResponse<Page<LinkResponse.SearchResponse>> findAll(
+        @PageableDefault(page = 0, size = 10) Pageable pageable
+    ) {
+        Long userId = 1L;
+
+        Page<LinkInfo.Search> infos = linkFacade.findAll(userId, pageable);
+
+        return CommonResponse.of(infos.map(LinkResponse.SearchResponse::of));
     }
 
 }
