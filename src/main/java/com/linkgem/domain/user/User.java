@@ -2,6 +2,10 @@ package com.linkgem.domain.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+<<<<<<< HEAD
+=======
+import javax.persistence.FetchType;
+>>>>>>> develop
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;

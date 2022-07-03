@@ -9,12 +9,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.linkgem.domain.link.Link;
+import com.linkgem.domain.user.User;
 import com.linkgem.infrastructure.config.TestQueryDslConfig;
 import com.linkgem.infrastructure.gembox.GemBoxRepository;
 import com.linkgem.infrastructure.link.LinkRepository;
+import com.linkgem.infrastructure.user.UserRepository;
 
 @Import(TestQueryDslConfig.class)
 @DataJpaTest
@@ -26,6 +27,9 @@ class GemBoxTest {
 
     @Autowired
     private LinkRepository linkRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private TestEntityManager em;
@@ -45,26 +49,20 @@ class GemBoxTest {
         Assertions.assertTrue(findGemBox.isPresent());
     }
 
-    @Transactional
-    @Test
-    public void 링크를_저장한다() {
-        Link link = Link.builder()
-            .url("www.naver.com")
-            .memo("GOOD")
-            .userId(1L)
-            .build();
-
-        Link savedLink = linkRepository.save(link);
-
-        Assertions.assertTrue(linkRepository.findById(savedLink.getId()).isPresent());
-    }
-
     @Test
     public void 잼박스에_링크를_저장한다() {
+
+        User user = User.builder()
+            .email("test@naver.com")
+            .nickName("tester")
+            .build();
+
+        userRepository.save(user);
+
         Link link = Link.builder()
             .url("www.naver.com")
             .memo("GOOD")
-            .userId(1L)
+            .user(user)
             .build();
 
         Link savedLink = linkRepository.save(link);
@@ -91,13 +89,13 @@ class GemBoxTest {
         Link link = Link.builder()
             .url("www.naver.com")
             .memo("GOOD")
-            .userId(1L)
+            .user(createUser("tester1", "test1@naver.com"))
             .build();
 
         Link link2 = Link.builder()
             .url("www.google.com")
             .memo("GOOD")
-            .userId(1L)
+            .user(createUser("tester2", "test2@naver.com"))
             .build();
 
         Link savedLink1 = linkRepository.save(link);
@@ -126,6 +124,15 @@ class GemBoxTest {
         Assertions.assertFalse(linkRepository.findById(savedLink2.getId()).isPresent());
         Assertions.assertFalse(gemBoxRepository.findById(newGemBox.getId()).isPresent());
 
+    }
+
+    public User createUser(String nickname, String email) {
+        User user = User.builder()
+            .email(email)
+            .nickName(nickname)
+            .build();
+
+        return userRepository.save(user);
     }
 
 }

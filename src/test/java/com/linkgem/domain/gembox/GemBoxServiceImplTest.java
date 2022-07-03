@@ -94,7 +94,7 @@ class GemBoxServiceImplTest {
 
         assertThatThrownBy(() -> gemBoxService.create(command))
             .isInstanceOf(BusinessException.class)
-            .hasMessageContaining(ErrorCode.GEMBOX_IS_ALREADY_EXISTED.getMessage());
+            .hasMessageContaining(ErrorCode.GEMBOX_ALREADY_EXISTED.getMessage());
     }
 
     @DisplayName("잼박스를 수정한다")
@@ -140,7 +140,7 @@ class GemBoxServiceImplTest {
 
         assertThatThrownBy(() -> gemBoxService.update(command))
             .isInstanceOf(BusinessException.class)
-            .hasMessageContaining(ErrorCode.GEMBOX_IS_ALREADY_EXISTED.getMessage());
+            .hasMessageContaining(ErrorCode.GEMBOX_ALREADY_EXISTED.getMessage());
     }
 
     @DisplayName("잼박스 수정시 존재하지 않는 잼박스일 경우 예외가 발생한다")
@@ -151,7 +151,7 @@ class GemBoxServiceImplTest {
         final Long userId = 1L;
         final Long id = 1L;
 
-        doThrow(new BusinessException(ErrorCode.GEMBOX_IS_ALREADY_EXISTED)).when(gemBoxReader)
+        doThrow(new BusinessException(ErrorCode.GEMBOX_ALREADY_EXISTED)).when(gemBoxReader)
             .find(anyLong(), anyLong());
 
         GemBoxCommand.Update command = GemBoxCommand.Update.builder()
@@ -162,6 +162,6 @@ class GemBoxServiceImplTest {
 
         assertThatThrownBy(() -> gemBoxService.update(command))
             .isInstanceOf(BusinessException.class)
-            .hasMessageContaining(ErrorCode.GEMBOX_IS_ALREADY_EXISTED.getMessage());
+            .hasMessageContaining(ErrorCode.GEMBOX_ALREADY_EXISTED.getMessage());
     }
 }
