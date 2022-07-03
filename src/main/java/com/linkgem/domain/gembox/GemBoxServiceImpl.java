@@ -31,7 +31,7 @@ public class GemBoxServiceImpl implements GemBoxService {
         }
 
         if (gemBoxDomainService.isExisted(GemBoxQuery.SearchDuplication.of(command.getName(), command.getUserId()))) {
-            throw new BusinessException(ErrorCode.GEMBOX_IS_ALREADY_EXISTED);
+            throw new BusinessException(ErrorCode.GEMBOX_ALREADY_EXISTED);
         }
 
         // command.getLinkIds();
@@ -51,11 +51,11 @@ public class GemBoxServiceImpl implements GemBoxService {
             );
 
         if (gemBoxDomainService.isExisted(searchDuplication)) {
-            throw new BusinessException(ErrorCode.GEMBOX_IS_ALREADY_EXISTED);
+            throw new BusinessException(ErrorCode.GEMBOX_ALREADY_EXISTED);
         }
 
         GemBox gemBox = gemBoxReader.find(command.getId(), command.getUserId())
-            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_IS_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
 
         gemBox.updateName(command.getName());
     }
@@ -72,7 +72,7 @@ public class GemBoxServiceImpl implements GemBoxService {
     public GemBoxInfo.Main find(GemBoxQuery.SearchDetail searchDetail) {
         return gemBoxReader.find(searchDetail.getId(), searchDetail.getUserId())
             .map(GemBoxInfo.Main::of)
-            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_IS_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
     }
 
     @Transactional
@@ -80,7 +80,7 @@ public class GemBoxServiceImpl implements GemBoxService {
     public void delete(GemBoxCommand.Delete command) {
 
         GemBox gemBox = gemBoxReader.find(command.getId(), command.getUserId())
-            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_IS_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
 
         //TODO : 링크삭제 로직을 추가해야한다
         gemBoxStore.delete(gemBox);
