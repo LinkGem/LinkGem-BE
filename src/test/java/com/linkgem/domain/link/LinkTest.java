@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.linkgem.domain.link.opengraph.OpenGraph;
 import com.linkgem.domain.user.User;
 import com.linkgem.infrastructure.config.TestQueryDslConfig;
 import com.linkgem.infrastructure.link.LinkRepository;

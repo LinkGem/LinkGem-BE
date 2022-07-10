@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 
 import com.linkgem.domain.common.BaseEntity;
 import com.linkgem.domain.gembox.GemBox;
+import com.linkgem.domain.link.opengraph.OpenGraph;
 import com.linkgem.domain.user.User;
 
 import lombok.AccessLevel;
