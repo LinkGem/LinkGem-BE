@@ -19,7 +19,7 @@ public class GemBoxRequest {
     @ApiModel(description = "잼박스 생성 요청")
     @Setter
     @AllArgsConstructor
-    public static class CreateRequest {
+    public static class CreateGemBoxRequest {
 
         @ApiModelProperty(value = "잼박스 이름", example = "잼박스 이름", required = true)
         @NotBlank(message = "잼박스 이름은 필수 값입니다.")
@@ -42,7 +42,7 @@ public class GemBoxRequest {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class UpdateRequest {
+    public static class UpdateGemboxRequest {
 
         @ApiModelProperty(value = "잼박스 이름", example = "잼박스 이름", required = true)
         @NotBlank(message = "잼박스 이름은 필수 값입니다.")

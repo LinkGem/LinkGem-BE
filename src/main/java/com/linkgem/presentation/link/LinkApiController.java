@@ -33,7 +33,7 @@ public class LinkApiController {
 
     @ApiOperation(value = "링크 생성", notes = "링크를 생성한다")
     @PostMapping
-    public CommonResponse<LinkResponse.CreateResponse> createLink(
+    public CommonResponse<LinkResponse.CreateLinkResponse> createLink(
         @RequestBody @Valid LinkRequest.CreateLinkRequest request
     ) {
         Long userId = 1L;
@@ -41,21 +41,21 @@ public class LinkApiController {
 
         LinkInfo.Create create = linkFacade.create(createCommand);
 
-        return CommonResponse.of(LinkResponse.CreateResponse.of(create));
+        return CommonResponse.of(LinkResponse.CreateLinkResponse.of(create));
     }
 
     @ApiOperation(value = "링크 목록 조회", notes = "링크를 목록을 조회한다")
     @GetMapping
-    public CommonResponse<Pages<LinkResponse.SearchResponse>> findAll(
+    public CommonResponse<Pages<LinkResponse.SearchLinkResponse>> findAll(
         @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
         Long userId = 1L;
 
         Page<LinkInfo.Search> infos = linkFacade.findAll(userId, pageable);
-        Page<LinkResponse.SearchResponse> responses = infos.map(LinkResponse.SearchResponse::of);
+        Page<LinkResponse.SearchLinkResponse> responses = infos.map(LinkResponse.SearchLinkResponse::of);
 
         return CommonResponse.of(
-            Pages.<LinkResponse.SearchResponse>builder()
+            Pages.<LinkResponse.SearchLinkResponse>builder()
                 .contents(responses.getContent())
                 .totalCount(responses.getTotalElements())
                 .size(pageable.getPageSize())
