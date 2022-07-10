@@ -25,14 +25,14 @@ public class GemBoxResponse {
     @ApiModel(description = "잼박스 생성 응답")
     @AllArgsConstructor
     @Getter
-    public static class CreateResponse {
+    public static class CreateGemboxResponse {
         private Long id;
         private String name;
 
         private List<Long> linkIds;
 
-        public static CreateResponse of(GemBoxInfo.Create create) {
-            return new CreateResponse(create.getId(), create.getName(), create.getLinkIds());
+        public static CreateGemboxResponse of(GemBoxInfo.Create create) {
+            return new CreateGemboxResponse(create.getId(), create.getName(), create.getLinkIds());
         }
     }
 

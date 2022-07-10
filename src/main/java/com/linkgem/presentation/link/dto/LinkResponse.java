@@ -16,7 +16,7 @@ public class LinkResponse {
     @Builder
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
-    public static class SearchResponse {
+    public static class SearchLinkResponse {
         private Long id;
         private String memo;
         private String url;
@@ -31,8 +31,8 @@ public class LinkResponse {
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
 
-        public static LinkResponse.SearchResponse of(LinkInfo.Search search) {
-            return SearchResponse.builder()
+        public static SearchLinkResponse of(LinkInfo.Search search) {
+            return SearchLinkResponse.builder()
                 .id(search.getId())
                 .url(search.getUrl())
                 .memo(search.getMemo())
@@ -51,7 +51,7 @@ public class LinkResponse {
     @Builder
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
-    public static class CreateResponse {
+    public static class CreateLinkResponse {
         private Long id;
         private String memo;
         private String url;
@@ -66,8 +66,8 @@ public class LinkResponse {
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
 
-        public static LinkResponse.CreateResponse of(LinkInfo.Create create) {
-            return CreateResponse.builder()
+        public static CreateLinkResponse of(LinkInfo.Create create) {
+            return CreateLinkResponse.builder()
                 .id(create.getId())
                 .url(create.getUrl())
                 .memo(create.getMemo())
