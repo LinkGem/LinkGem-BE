@@ -4,9 +4,6 @@ name: dev-linkgem-git-action
 on:
   push:
     branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
-
   workflow_dispatch:
 env:
   S3_BUCKET_NAME: linkgem-deploy
