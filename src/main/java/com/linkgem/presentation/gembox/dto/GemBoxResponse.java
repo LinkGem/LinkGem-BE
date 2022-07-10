@@ -1,5 +1,7 @@
 package com.linkgem.presentation.gembox.dto;
 
+import java.util.List;
+
 import com.linkgem.domain.gembox.GemBoxInfo;
 
 import io.swagger.annotations.ApiModel;
@@ -27,8 +29,10 @@ public class GemBoxResponse {
         private Long id;
         private String name;
 
+        private List<Long> linkIds;
+
         public static CreateResponse of(GemBoxInfo.Create create) {
-            return new CreateResponse(create.getId(), create.getName());
+            return new CreateResponse(create.getId(), create.getName(), create.getLinkIds());
         }
     }
 

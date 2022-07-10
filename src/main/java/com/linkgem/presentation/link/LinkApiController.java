@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.linkgem.application.LinkFacade;
+import com.linkgem.domain.common.Pages;
 import com.linkgem.domain.link.LinkCommand;
 import com.linkgem.domain.link.LinkInfo;
 import com.linkgem.presentation.common.CommonResponse;
@@ -24,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 
 @Api(tags = "링크")
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/link")
+@RequestMapping(value = "/api/v1/links")
 @RestController
 public class LinkApiController {
 
@@ -33,7 +34,7 @@ public class LinkApiController {
     @ApiOperation(value = "링크 생성", notes = "링크를 생성한다")
     @PostMapping
     public CommonResponse<LinkResponse.CreateResponse> createLink(
-        @RequestBody @Valid LinkRequest.CreateRequest request
+        @RequestBody @Valid LinkRequest.CreateLinkRequest request
     ) {
         Long userId = 1L;
         LinkCommand.Create createCommand = request.to(userId);
@@ -45,14 +46,22 @@ public class LinkApiController {
 
     @ApiOperation(value = "링크 목록 조회", notes = "링크를 목록을 조회한다")
     @GetMapping
-    public CommonResponse<Page<LinkResponse.SearchResponse>> findAll(
+    public CommonResponse<Pages<LinkResponse.SearchResponse>> findAll(
         @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
         Long userId = 1L;
 
         Page<LinkInfo.Search> infos = linkFacade.findAll(userId, pageable);
+        Page<LinkResponse.SearchResponse> responses = infos.map(LinkResponse.SearchResponse::of);
 
-        return CommonResponse.of(infos.map(LinkResponse.SearchResponse::of));
+        return CommonResponse.of(
+            Pages.<LinkResponse.SearchResponse>builder()
+                .contents(responses.getContent())
+                .totalCount(responses.getTotalElements())
+                .size(pageable.getPageSize())
+                .page(pageable.getPageNumber())
+                .build()
+        );
     }
 
 }

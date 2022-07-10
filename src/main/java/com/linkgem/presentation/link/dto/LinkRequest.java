@@ -15,7 +15,7 @@ public class LinkRequest {
     @ApiModel(description = "링크 생성 요청")
     @Setter
     @AllArgsConstructor
-    public static class CreateRequest {
+    public static class CreateLinkRequest {
 
         @ApiModelProperty(value = "링크 URL", required = true)
         @Pattern(regexp = OpenGraph.URL_REGEX, message = "올바른 URL 형식이 아닙니다.")

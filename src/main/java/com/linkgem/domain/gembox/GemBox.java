@@ -65,7 +65,6 @@ public class GemBox extends BaseEntity {
 
     public void addLink(Link link) {
         links.add(link);
-        link.setGemBox(this);
     }
 
     public boolean isEqual(Long id) {

@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 
 @Api(tags = "잼박스")
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/gembox")
+@RequestMapping(value = "/api/v1/gemboxes")
 @RestController
 public class GemBoxApiController {
 
