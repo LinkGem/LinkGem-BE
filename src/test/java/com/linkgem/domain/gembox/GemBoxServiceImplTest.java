@@ -14,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.linkgem.domain.link.Link;
+import com.linkgem.domain.link.LinkReader;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
 
@@ -32,6 +34,9 @@ class GemBoxServiceImplTest {
     @Mock
     private GemBoxReader gemBoxReader;
 
+    @Mock
+    private LinkReader linkReader;
+
     @DisplayName("잼박스를 저장한다")
     @Test
     public void 잼박스_저장() {
@@ -43,6 +48,7 @@ class GemBoxServiceImplTest {
 
         when(gemBoxDomainService.isFull(any())).thenReturn(false);
         when(gemBoxDomainService.isExisted(any())).thenReturn(false);
+        when(linkReader.find(any(), any())).thenReturn(Optional.empty());
         when(gemBoxStore.create(any())).thenReturn(gemBox);
 
         GemBoxCommand.Create command = GemBoxCommand.Create.builder()
