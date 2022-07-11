@@ -2,12 +2,16 @@ package com.linkgem.domain.oauth;
 
 import com.linkgem.domain.user.User;
 import com.linkgem.domain.user.UserProfile;
-import com.linkgem.domain.user.UserRepository;
-import com.linkgem.presentation.oauth.dto.LoginResponse;
-import com.linkgem.presentation.oauth.dto.OauthTokenResponse;
+import com.linkgem.infrastructure.user.UserRepository;
+import com.linkgem.presentation.common.exception.BusinessException;
+import com.linkgem.presentation.common.exception.ErrorCode;
+import com.linkgem.presentation.oauth.dto.OauthResponse.LoginResponse;
+import com.linkgem.presentation.oauth.dto.OauthResponse.OauthTokenResponse;
+import com.linkgem.presentation.oauth.dto.OauthResponse.TokenReissueResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
@@ -28,31 +32,36 @@ public class OauthServiceImpl implements OauthService {
 
 
   @Override
+  @Transactional
   public LoginResponse login(String providerName, String code) {
-    // ����Ʈ���� �Ѿ�� provider �̸��� ���� InMemoryProviderRepository���� OauthProvider ��������
     OauthProvider provider = inMemoryProviderRepository.findByProviderName(providerName);
 
-    // TODO access token ��������
     OauthTokenResponse tokenResponse = getToken(code, provider);
-    // TODO ���� ���� ��������
     UserProfile userProfile = getUserProfile(providerName, tokenResponse, provider);
-    System.out.println("userProfile = " + userProfile.getOauthId());
-    System.out.println("userProfile.getEmail() = " + userProfile.getEmail());
-    System.out.println("userProfile.getName() = " + userProfile.getName());
 
     User user = userRepository.findByEmail(userProfile.getEmail())
         .orElseGet(userProfile::toUser);
 
-    String accessToken = tokenProvider.createAccessToken(user.getEmail());
-    String refreshToken = tokenProvider.createRefreshToken(user.getEmail());
-    user.updateRefreshToken(refreshToken);
-    userRepository.save(user);
+    String accessToken = tokenProvider.createAccessToken(user.getId().toString());
+    String refreshToken = tokenProvider.createRefreshToken(user.getId().toString());
     return LoginResponse.builder()
         .id(user.getId())
         .nickname(user.getNickName())
         .accessToken(accessToken)
         .refreshToken(refreshToken)
         .build();
+  }
+
+  @Override
+  public TokenReissueResponse reissue(String accessToken, String refreshToken) {
+    if(tokenProvider.isExpiredAccessToken(accessToken)){
+      String userId = tokenProvider.isValidRefreshToken(refreshToken);
+      String createdAccessToken = tokenProvider.createAccessToken(userId);
+      return TokenReissueResponse.builder()
+          .accessToken(createdAccessToken)
+          .build();
+    }
+    else throw new BusinessException(ErrorCode.ACCESS_TOKEN_NOT_EXPIRED);
   }
 
   private OauthTokenResponse getToken(String code, OauthProvider provider) {
@@ -82,11 +91,9 @@ public class OauthServiceImpl implements OauthService {
   private UserProfile getUserProfile(String providerName, OauthTokenResponse tokenResponse,
       OauthProvider provider) {
     Map<String, Object> userAttributes = getUserAttributes(provider, tokenResponse);
-    // TODO ���� ����(map)�� ���� UserProfile �����
     return OauthAttributes.extract(providerName, userAttributes);
   }
 
-  // OAuth �������� ���� ���� map���� ��������
   private Map<String, Object> getUserAttributes(OauthProvider provider,
       OauthTokenResponse tokenResponse) {
     return WebClient.create()

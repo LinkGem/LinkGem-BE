@@ -1,7 +1,8 @@
 package com.linkgem.infrastructure.config.Interceptor;
 
 import com.linkgem.domain.oauth.TokenProvider;
-import io.jsonwebtoken.ExpiredJwtException;
+import com.linkgem.presentation.common.exception.BusinessException;
+import com.linkgem.presentation.common.exception.ErrorCode;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +23,12 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
     String refresh_token = request.getHeader("REFRESH_TOKEN");
 
     if (access_token != null) {
-      try {
-        return tokenProvider.isValidAccessToken(access_token);
-      } catch (ExpiredJwtException e) {
-        //TODO accessToken 만료시 응답코드
-        return false;
-      }
+      String userId = tokenProvider.isValidAccessToken(access_token);
+      request.setAttribute("userId",Long.getLong(userId));
+      return true;
     } else {
-        //TODO accessToken 없을시 응답코드
-      return false;
+      //TODO accessToken 없을시 응답코드
+      throw new BusinessException(ErrorCode.ACCESS_TOKEN_IS_EMPTY);
     }
 
   }

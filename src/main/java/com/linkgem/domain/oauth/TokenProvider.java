@@ -1,32 +1,28 @@
 package com.linkgem.domain.oauth;
 
-import com.linkgem.domain.user.User;
-import com.linkgem.domain.user.UserRepository;
+import com.linkgem.presentation.common.exception.BusinessException;
+import com.linkgem.presentation.common.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import io.jsonwebtoken.security.Keys;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class TokenProvider {
+
   @Value("${jwt.Access}")
   private String accessKey;
 
   @Value("${jwt.Refresh}")
   private String refreshKey;
-
-  private final UserRepository userRepository;
 
   private Key getAccessSignKey() {
     return Keys.hmacShaKeyFor(accessKey.getBytes(StandardCharsets.UTF_8));
@@ -37,10 +33,10 @@ public class TokenProvider {
   }
 
 
-  public String createAccessToken(String email) {
+  public String createAccessToken(String userId) {
     return Jwts.builder()
         .signWith(getAccessSignKey())
-        .setSubject(email)
+        .setSubject(userId)
         .setIssuer("LINK_GEM")
         .setIssuedAt(new Date())
         .setExpiration(createAccessExpireDate())
@@ -48,10 +44,10 @@ public class TokenProvider {
 
   }
 
-  public String createRefreshToken(String email) {
+  public String createRefreshToken(String userId) {
     return Jwts.builder()
         .signWith(getRefreshSignKey())
-        .setSubject(email)
+        .setSubject(userId)
         .setIssuer("LINK_GEM")
         .setIssuedAt(new Date())
         .setExpiration(createRefreshExpireDate())
@@ -70,56 +66,52 @@ public class TokenProvider {
   }
 
   private Claims getAccessTokenClaims(String token) {
-    try {
-      return Jwts.parserBuilder()
-          .setSigningKey(getAccessSignKey())
-          .build()
-          .parseClaimsJws(token)
-          .getBody();
-    } catch (ExpiredJwtException e) {
-      return e.getClaims();
-    }
+    return Jwts.parserBuilder()
+        .setSigningKey(getAccessSignKey())
+        .build()
+        .parseClaimsJws(token)
+        .getBody();
   }
 
-  private Claims getRefreshTokenClaims(String token) {
-    try {
-      return Jwts.parserBuilder()
-          .setSigningKey(getRefreshSignKey())
-          .build()
-          .parseClaimsJws(token)
-          .getBody();
-    } catch (ExpiredJwtException e) {
-      return e.getClaims();
-    }
-  }
-  public boolean isValidAccessToken(String token) throws Exception {
-    System.out.println("isValidToken is : " +token);
-    try {
-      Claims accessClaims = getAccessTokenClaims(token);
-      String email = accessClaims.getSubject();
-      Optional<User> foundUser = userRepository.findByEmail(email);
-      return foundUser.isPresent();
-    } catch (JwtException | NullPointerException exception) {
-      return false;
-    }
+  private Claims getRefreshTokenClaims(String refreshToken) {
+    return Jwts.parserBuilder()
+        .setSigningKey(getRefreshSignKey())
+        .build()
+        .parseClaimsJws(refreshToken)
+        .getBody();
+
   }
 
-  public boolean isValidRefreshToken(String token) {
+  public String isValidAccessToken(String accessToken) {
     try {
-      Claims refreshTokenClaimsClaims = getRefreshTokenClaims(token);
-      String email = refreshTokenClaimsClaims.getSubject();
-      Optional<User> foundUser = userRepository.findByEmail(email);
-      return foundUser.isPresent();
+      Claims accessClaims = getAccessTokenClaims(accessToken);
+      return accessClaims.getSubject();
     } catch (ExpiredJwtException exception) {
-      System.out.println("Token Expired UserID : " + exception.getClaims().getSubject());
+      throw new BusinessException(ErrorCode.ACCESS_TOKEN_EXPIRED);
+    } catch (JwtException | NullPointerException exception) {
+      throw new BusinessException(ErrorCode.ACCESS_TOKEN_NOT_VALID);
+    }
+  }
+
+  public String isValidRefreshToken(String token) {
+    try {
+      Claims refreshTokenClaims = getRefreshTokenClaims(token);
+      return refreshTokenClaims.getSubject();
+    } catch (NullPointerException | JwtException exception) {
+      throw new BusinessException(ErrorCode.REFRESH_TOKEN_NOT_VALID);
+    }
+  }
+
+  public boolean isExpiredAccessToken(String accessToken) {
+    try {
+      getAccessTokenClaims(accessToken);
       return false;
-    } catch (JwtException exception) {
-      System.out.println("Token Tampered");
-      return false;
-    } catch (NullPointerException exception) {
-      System.out.println("Token is null");
+    } catch (ExpiredJwtException exception) {
+      return true;
+    } catch (Exception e) {
       return false;
     }
   }
+
 
 }
