@@ -20,7 +20,6 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
       throws Exception {
 
     String access_token = request.getHeader("ACCESS_TOKEN");
-    String refresh_token = request.getHeader("REFRESH_TOKEN");
 
     if (access_token != null) {
       String userId = tokenProvider.isValidAccessToken(access_token);
