@@ -29,12 +29,12 @@ public class User extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id")
     private Job job;
-
     @Column(name = "oauth_id", nullable = false)
     private String oauthId;
+    private UserPhase userPhase;
 
-    @Column(name = "refresh_token", nullable = false)
-    private String refreshToken;
+
+
 
     @Builder
     public User(String email, String nickName, String oauthId) {
@@ -43,7 +43,4 @@ public class User extends BaseEntity {
         this.oauthId = oauthId;
     }
 
-    public void updateRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
 }
