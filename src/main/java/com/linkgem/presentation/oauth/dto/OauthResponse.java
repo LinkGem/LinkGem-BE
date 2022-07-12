@@ -14,15 +14,15 @@ public class OauthResponse {
     private Long id;
     private String email;
 
-    private String nickName;
+    private String nickname;
     private String accessToken;
     private String refreshToken;
 
     @Builder
-    public LoginResponse(Long id, String email, String nickName, String accessToken,
+    public LoginResponse(Long id, String email, String nickname, String accessToken,
         String refreshToken) {
       this.id = id;
-      this.nickName = nickName;
+      this.nickname = nickname;
       this.email = email;
       this.accessToken = accessToken;
       this.refreshToken = refreshToken;

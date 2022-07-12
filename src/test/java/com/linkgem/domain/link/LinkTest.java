@@ -1,11 +1,11 @@
 package com.linkgem.domain.link;
 
+import com.linkgem.domain.link.opengraph.OpenGraph;
 import com.linkgem.domain.user.User;
 import com.linkgem.infrastructure.config.TestQueryDslConfig;
 import com.linkgem.infrastructure.link.LinkRepository;
 import com.linkgem.infrastructure.user.UserRepository;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-
-import com.linkgem.domain.link.opengraph.OpenGraph;
 
 @Import(TestQueryDslConfig.class)
 @DataJpaTest
@@ -55,7 +53,7 @@ class LinkTest {
     public User createUser(String nickname, String email) {
         User user = User.builder()
             .email(email)
-            .nickName(nickname)
+            .nickname(nickname)
             .build();
 
         return userRepository.save(user);

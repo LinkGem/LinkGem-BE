@@ -1,18 +1,15 @@
 package com.linkgem.infrastructure.link.opengraph;
 
+import com.linkgem.domain.link.opengraph.OpenGraph;
 import java.util.Optional;
-
+import lombok.Builder;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
-import com.linkgem.domain.link.opengraph.OpenGraph;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component

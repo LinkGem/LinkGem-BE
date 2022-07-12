@@ -25,21 +25,21 @@ public class User extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
-    private String nickName;
+    private String nickname;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id")
     private Job job;
     @Column(name = "oauth_id", nullable = false)
     private String oauthId;
-    private UserPhase userPhase;
+    //private UserPhase userPhase;
 
 
 
 
     @Builder
-    public User(String email, String nickName, String oauthId) {
+    public User(String email, String nickname, String oauthId) {
         this.email = email;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.oauthId = oauthId;
     }
 

@@ -46,7 +46,7 @@ public class OauthServiceImpl implements OauthService {
     String refreshToken = tokenProvider.createRefreshToken(user.getId().toString());
     return LoginResponse.builder()
         .id(user.getId())
-        .nickname(user.getNickName())
+        .nickname(user.getNickname())
         .accessToken(accessToken)
         .refreshToken(refreshToken)
         .build();

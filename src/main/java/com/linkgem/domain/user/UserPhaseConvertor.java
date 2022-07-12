@@ -6,7 +6,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter(autoApply = true)
-public class userPhaseConvertor implements AttributeConverter<UserPhase,String> {
+public class UserPhaseConvertor implements AttributeConverter<UserPhase,String> {
 
   @Override
   public String convertToDatabaseColumn(UserPhase attribute) {

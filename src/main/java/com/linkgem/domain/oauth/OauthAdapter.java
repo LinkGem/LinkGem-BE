@@ -8,7 +8,7 @@ public class OauthAdapter {
   private OauthAdapter() {
   }
 
-  // OauthProperties¸¦ OauthProvider·Î º¯È¯ÇØÁØ´Ù.
+  //ì£¼ì„í…ŒìŠ¤íŠ¸
   public static Map<String, OauthProvider> getOauthProviders(OauthProperties properties) {
     Map<String, OauthProvider> oauthProvider = new HashMap<>();
 

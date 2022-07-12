@@ -20,7 +20,7 @@ public class UserProfile {
   public User toUser() {
     return User.builder()
         .email(email)
-        .nickName(name)
+        .nickname(name)
         .oauthId(oauthId)
         .build();
   }

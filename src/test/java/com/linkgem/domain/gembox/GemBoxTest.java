@@ -52,7 +52,7 @@ class GemBoxTest {
 
         User user = User.builder()
             .email("test@naver.com")
-            .nickName("tester")
+            .nickname("tester")
             .build();
 
         userRepository.save(user);
@@ -127,7 +127,7 @@ class GemBoxTest {
     public User createUser(String nickname, String email) {
         User user = User.builder()
             .email(email)
-            .nickName(nickname)
+            .nickname(nickname)
             .build();
 
         return userRepository.save(user);
