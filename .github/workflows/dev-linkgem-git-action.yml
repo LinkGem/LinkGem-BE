@@ -30,6 +30,7 @@ jobs:
         run: |
           aws s3 cp s3://linkgem-properties/backend/application.yml ./src/main/resources/application.yml
           aws s3 cp s3://linkgem-properties/backend/application-dev.yml ./src/main/resources/application-dev.yml
+          aws s3 cp s3://linkgem-properties/backend/application-oauth.yml ./src/main/resources/application-oauth.yml
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew

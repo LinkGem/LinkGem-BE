@@ -37,7 +37,7 @@ public class LinkInfo {
                 .description(link.getOpenGraph().getDescription())
                 .imageUrl(link.getOpenGraph().getImageUrl())
                 .userId(link.getUser().getId())
-                .userNickName(link.getUser().getNickName())
+                .userNickName(link.getUser().getNickname())
                 .createDate(link.getCreateDate())
                 .updateDate(link.getUpdateDate())
                 .build();
@@ -72,7 +72,7 @@ public class LinkInfo {
                 .description(link.getOpenGraph().getDescription())
                 .imageUrl(link.getOpenGraph().getImageUrl())
                 .userId(link.getUser().getId())
-                .userNickName(link.getUser().getNickName())
+                .userNickName(link.getUser().getNickname())
                 .createDate(link.getCreateDate())
                 .updateDate(link.getUpdateDate())
                 .build();

@@ -1,7 +1,12 @@
 package com.linkgem.domain.gembox;
 
+import com.linkgem.domain.link.Link;
+import com.linkgem.domain.user.User;
+import com.linkgem.infrastructure.config.TestQueryDslConfig;
+import com.linkgem.infrastructure.gembox.GemBoxRepository;
+import com.linkgem.infrastructure.link.LinkRepository;
+import com.linkgem.infrastructure.user.UserRepository;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +14,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-
-import com.linkgem.domain.link.Link;
-import com.linkgem.domain.user.User;
-import com.linkgem.infrastructure.config.TestQueryDslConfig;
-import com.linkgem.infrastructure.gembox.GemBoxRepository;
-import com.linkgem.infrastructure.link.LinkRepository;
-import com.linkgem.infrastructure.user.UserRepository;
 
 @Import(TestQueryDslConfig.class)
 @DataJpaTest
@@ -54,7 +52,8 @@ class GemBoxTest {
 
         User user = User.builder()
             .email("test@naver.com")
-            .nickName("tester")
+            .nickname("tester")
+            .oauthId("oauthId")
             .build();
 
         userRepository.save(user);
@@ -129,7 +128,8 @@ class GemBoxTest {
     public User createUser(String nickname, String email) {
         User user = User.builder()
             .email(email)
-            .nickName(nickname)
+            .nickname(nickname)
+            .oauthId("oauthId")
             .build();
 
         return userRepository.save(user);

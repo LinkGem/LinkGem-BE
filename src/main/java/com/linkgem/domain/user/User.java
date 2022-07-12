@@ -1,5 +1,7 @@
 package com.linkgem.domain.user;
 
+import com.linkgem.domain.common.BaseEntity;
+import com.linkgem.domain.job.Job;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,9 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.linkgem.domain.job.Job;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,26 +17,30 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false, unique = true)
     private String email;
-
     @Column(nullable = false)
-    private String nickName;
-
+    private String nickname;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id")
     private Job job;
+    @Column(name = "oauth_id", nullable = false)
+    private String oauthId;
+    //private UserPhase userPhase;
+
+
+
 
     @Builder
-    public User(String email, String nickName) {
+    public User(String email, String nickname, String oauthId) {
         this.email = email;
-        this.nickName = nickName;
+        this.nickname = nickname;
+        this.oauthId = oauthId;
     }
 
 }

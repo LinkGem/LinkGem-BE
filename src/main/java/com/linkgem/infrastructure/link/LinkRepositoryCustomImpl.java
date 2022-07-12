@@ -33,7 +33,7 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
                 link.openGraph.description,
                 link.openGraph.imageUrl,
                 link.user.id.as("userId"),
-                link.user.nickName,
+                link.user.nickname,
                 link.createDate,
                 link.updateDate
             ))
