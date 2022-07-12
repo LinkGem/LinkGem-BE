@@ -1,4 +1,4 @@
-package com.linkgem.domain.link;
+package com.linkgem.domain.link.opengraph;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -14,6 +14,8 @@ import lombok.ToString;
 @Getter
 @Embeddable
 public class OpenGraph {
+
+    public static final String URL_REGEX = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)";
 
     @Column(length = 1000)
     private String description;

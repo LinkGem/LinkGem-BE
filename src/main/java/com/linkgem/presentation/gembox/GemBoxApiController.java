@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 
 @Api(tags = "잼박스")
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/gembox")
+@RequestMapping(value = "/api/v1/gemboxes")
 @RestController
 public class GemBoxApiController {
 
@@ -64,22 +64,22 @@ public class GemBoxApiController {
 
     @ApiOperation(value = "잼박스 생성", notes = "잼박스를 생성한다")
     @PostMapping
-    public CommonResponse<GemBoxResponse.CreateResponse> create(
-        @RequestBody @Valid GemBoxRequest.CreateRequest request) {
+    public CommonResponse<GemBoxResponse.CreateGemboxResponse> create(
+        @RequestBody @Valid GemBoxRequest.CreateGemBoxRequest request) {
 
         // :TODO User Id를 토큰에서 추출하는 방법을 결정해야한다.
         Long temporaryUserId = 1L;
         GemBoxCommand.Create command = request.to(temporaryUserId);
         GemBoxInfo.Create createInfo = gemBoxFacade.create(command);
 
-        return CommonResponse.of(GemBoxResponse.CreateResponse.of(createInfo));
+        return CommonResponse.of(GemBoxResponse.CreateGemboxResponse.of(createInfo));
     }
 
     @ApiOperation(value = "잼박스 수정", notes = "잼박스를 수정한다")
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Void> update(
         @ApiParam(value = "잼박스 고유 아이디", example = "1") @PathVariable Long id,
-        @RequestBody @Valid GemBoxRequest.UpdateRequest request) {
+        @RequestBody @Valid GemBoxRequest.UpdateGemboxRequest request) {
 
         // :TODO User Id를 토큰에서 추출하는 방법을 결정해야한다.
         Long temporaryUserId = 1L;

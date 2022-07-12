@@ -1,14 +1,10 @@
-package com.linkgem.domain.link;
-
-import java.util.Optional;
+package com.linkgem.infrastructure.link;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface LinkReader {
+import com.linkgem.domain.link.LinkInfo;
 
+public interface LinkRepositoryCustom {
     Page<LinkInfo.Search> findAll(Long userId, Pageable pageable);
-
-    Optional<Link> find(Long id, Long userId);
-
 }

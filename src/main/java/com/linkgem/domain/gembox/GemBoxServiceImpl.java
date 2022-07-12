@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.linkgem.domain.link.LinkReader;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
 
@@ -17,6 +18,8 @@ public class GemBoxServiceImpl implements GemBoxService {
 
     private final GemBoxStore gemBoxStore;
     private final GemBoxReader gemBoxReader;
+
+    private final LinkReader linkReader;
 
     private final GemBoxDomainService gemBoxDomainService;
 
@@ -34,9 +37,18 @@ public class GemBoxServiceImpl implements GemBoxService {
             throw new BusinessException(ErrorCode.GEMBOX_ALREADY_EXISTED);
         }
 
-        // command.getLinkIds();
-        //TODO : 링크 리스트의 잼박스 ID를 업데이트한다
-        return GemBoxInfo.Create.of(gemBoxStore.create(initGemBox));
+        GemBox createdGemBox = gemBoxStore.create(initGemBox);
+
+        addLinkToGemBox(command, createdGemBox);
+
+        return GemBoxInfo.Create.of(createdGemBox);
+    }
+
+    private void addLinkToGemBox(GemBoxCommand.Create command, GemBox createdGemBox) {
+        command.getLinkIds().forEach(linkId -> {
+            linkReader.find(linkId, command.getUserId())
+                .ifPresent(link -> createdGemBox.addLink(link));
+        });
     }
 
     @Transactional
