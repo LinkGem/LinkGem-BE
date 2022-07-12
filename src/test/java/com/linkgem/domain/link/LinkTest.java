@@ -54,6 +54,7 @@ class LinkTest {
         User user = User.builder()
             .email(email)
             .nickname(nickname)
+            .oauthId("oauthId")
             .build();
 
         return userRepository.save(user);

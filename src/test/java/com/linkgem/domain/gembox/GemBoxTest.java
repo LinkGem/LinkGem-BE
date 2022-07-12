@@ -53,6 +53,7 @@ class GemBoxTest {
         User user = User.builder()
             .email("test@naver.com")
             .nickname("tester")
+            .oauthId("oauthId")
             .build();
 
         userRepository.save(user);
@@ -128,6 +129,7 @@ class GemBoxTest {
         User user = User.builder()
             .email(email)
             .nickname(nickname)
+            .oauthId("oauthId")
             .build();
 
         return userRepository.save(user);
