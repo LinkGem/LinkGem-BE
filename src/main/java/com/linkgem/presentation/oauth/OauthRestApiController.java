@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = "Oauth")
 @RequiredArgsConstructor
-@RequestMapping("/api/oauth")
+@RequestMapping("/api/v1/oauth")
 public class OauthRestApiController {
 
   private final OauthService oauthService;
