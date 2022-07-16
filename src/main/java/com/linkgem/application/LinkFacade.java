@@ -11,6 +11,7 @@ import com.linkgem.domain.link.LinkCreateService;
 import com.linkgem.domain.link.LinkDeleteService;
 import com.linkgem.domain.link.LinkInfo;
 import com.linkgem.domain.link.LinkSearchService;
+import com.linkgem.domain.link.opengraph.LinkUpdateService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +22,7 @@ public class LinkFacade {
     private final LinkCreateService linkCreateService;
     private final LinkSearchService linkSearchService;
     private final LinkDeleteService linkDeleteService;
+    private final LinkUpdateService linkUpdateService;
 
     public LinkInfo.Create create(LinkCommand.Create create) {
         return linkCreateService.create(create);
@@ -32,5 +34,9 @@ public class LinkFacade {
 
     public List<Long> deletes(LinkCommand.Delete deleteCommand) {
         return linkDeleteService.deletes(deleteCommand);
+    }
+
+    public LinkInfo.Main update(LinkCommand.Update updateCommand) {
+        return linkUpdateService.update(updateCommand);
     }
 }

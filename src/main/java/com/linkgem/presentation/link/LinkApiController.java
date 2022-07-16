@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,5 +84,19 @@ public class LinkApiController {
 
         return CommonResponse.of(new LinkResponse.DeleteLinkResponse(deleteIds));
 
+    }
+
+    @ApiOperation(value = "링크 수정", notes = "링크를 수정한다")
+    @PatchMapping
+    public CommonResponse updateLink(
+        HttpServletRequest httpServletRequest,
+        @RequestBody @Valid LinkRequest.UpdateLinkRequest request
+    ) {
+
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        LinkCommand.Update updateCommand = request.to(userId);
+        LinkInfo.Main updateInfo = linkFacade.update(updateCommand);
+
+        return CommonResponse.of(LinkResponse.Main.of(updateInfo));
     }
 }

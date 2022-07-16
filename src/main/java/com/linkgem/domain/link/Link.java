@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.linkgem.domain.common.BaseEntity;
 import com.linkgem.domain.gembox.GemBox;
 import com.linkgem.domain.link.opengraph.OpenGraph;
@@ -24,6 +26,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@DynamicUpdate
 @Entity
 public class Link extends BaseEntity {
     @Id
@@ -58,7 +61,7 @@ public class Link extends BaseEntity {
         this.openGraph = openGraph == null ? OpenGraph.createEmpty() : openGraph;
     }
 
-    private void updateMemo(String memo) {
+    public void updateMemo(String memo) {
         this.memo = memo == null ? "" : memo;
     }
 

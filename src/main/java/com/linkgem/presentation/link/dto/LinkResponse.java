@@ -17,6 +17,41 @@ public class LinkResponse {
     @Builder
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
+    public static class Main {
+        private Long id;
+        private String memo;
+        private String url;
+
+        private String title;
+        private String description;
+        private String imageUrl;
+
+        private Long userId;
+        private String userNickname;
+
+        private LocalDateTime createDate;
+        private LocalDateTime updateDate;
+
+        public static Main of(LinkInfo.Main linkInfo) {
+            return Main.builder()
+                .id(linkInfo.getId())
+                .url(linkInfo.getUrl())
+                .memo(linkInfo.getMemo())
+                .title(linkInfo.getTitle())
+                .description(linkInfo.getDescription())
+                .imageUrl(linkInfo.getImageUrl())
+                .userId(linkInfo.getUserId())
+                .userNickname(linkInfo.getUserNickname())
+                .createDate(linkInfo.getCreateDate())
+                .updateDate(linkInfo.getUpdateDate())
+                .build();
+        }
+    }
+
+    @ApiModel(description = "링크 목록 조회 응답")
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
     public static class SearchLinkResponse {
         private Long id;
         private String memo;

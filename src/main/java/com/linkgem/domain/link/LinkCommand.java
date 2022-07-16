@@ -27,4 +27,14 @@ public class LinkCommand {
         private List<Long> ids;
         private Long userId;
     }
+
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class Update {
+        private Long id;
+        private Long userId;
+
+        private String memo;
+    }
 }

@@ -3,6 +3,7 @@ package com.linkgem.presentation.link.dto;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import com.linkgem.domain.link.LinkCommand;
@@ -49,6 +50,26 @@ public class LinkRequest {
             return LinkCommand.Delete.builder()
                 .userId(userId)
                 .ids(this.ids)
+                .build();
+        }
+    }
+
+    @ApiModel(description = "링크 수정 요청")
+    @NoArgsConstructor
+    @Getter
+    public static class UpdateLinkRequest {
+
+        @ApiModelProperty(value = "링크 id", required = true)
+        @NotNull(message = "link id는 필수 값입니다.")
+        private Long id;
+
+        private String memo;
+
+        public LinkCommand.Update to(Long userId) {
+            return LinkCommand.Update.builder()
+                .userId(userId)
+                .id(this.id)
+                .memo(this.memo)
                 .build();
         }
     }
