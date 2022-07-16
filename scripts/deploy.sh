@@ -18,7 +18,7 @@ else
   kill -15 $CURRENT_PID
   sleep 5
 fi
-echo "> 10초 대기 후 애플리케이션 실행"
+echo "> 10초 대기 후 애플리케이션 실행" >> /home/ec2-user/action/deploy.log
 sleep 10
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/action/deploy.log
