@@ -1,5 +1,6 @@
 package com.linkgem.presentation.link;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import com.linkgem.domain.common.Pages;
 import com.linkgem.domain.link.LinkCommand;
 import com.linkgem.domain.link.LinkInfo;
 import com.linkgem.presentation.common.CommonResponse;
+import com.linkgem.presentation.common.UserAuthenticationProvider;
 import com.linkgem.presentation.link.dto.LinkRequest;
 import com.linkgem.presentation.link.dto.LinkResponse;
 
@@ -34,9 +36,10 @@ public class LinkApiController {
     @ApiOperation(value = "링크 생성", notes = "링크를 생성한다")
     @PostMapping
     public CommonResponse<LinkResponse.CreateLinkResponse> createLink(
+        HttpServletRequest httpServletRequest,
         @RequestBody @Valid LinkRequest.CreateLinkRequest request
     ) {
-        Long userId = 1L;
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
         LinkCommand.Create createCommand = request.to(userId);
 
         LinkInfo.Create create = linkFacade.create(createCommand);
@@ -47,9 +50,10 @@ public class LinkApiController {
     @ApiOperation(value = "링크 목록 조회", notes = "링크를 목록을 조회한다")
     @GetMapping
     public CommonResponse<Pages<LinkResponse.SearchLinkResponse>> findAll(
+        HttpServletRequest httpServletRequest,
         @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
-        Long userId = 1L;
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
         Page<LinkInfo.Search> infos = linkFacade.findAll(userId, pageable);
         Page<LinkResponse.SearchLinkResponse> responses = infos.map(LinkResponse.SearchLinkResponse::of);

@@ -3,6 +3,7 @@ package com.linkgem.presentation.gembox;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import com.linkgem.domain.gembox.GemBoxCommand;
 import com.linkgem.domain.gembox.GemBoxInfo;
 import com.linkgem.domain.gembox.GemBoxQuery;
 import com.linkgem.presentation.common.CommonResponse;
+import com.linkgem.presentation.common.UserAuthenticationProvider;
 import com.linkgem.presentation.gembox.dto.GemBoxRequest;
 import com.linkgem.presentation.gembox.dto.GemBoxResponse;
 
@@ -39,23 +41,24 @@ public class GemBoxApiController {
     @ApiOperation(value = "잼박스 조회", notes = "잼박스를 조회한다")
     @GetMapping(value = "/{id}")
     public CommonResponse<GemBoxResponse.GemBox> find(
+        HttpServletRequest httpServletRequest,
         @ApiParam(value = "잼박스 고유 아이디", example = "1") @PathVariable Long id
     ) {
 
-        // :TODO User Id를 토큰에서 추출하는 방법을 결정해야한다.
-        Long temporaryUserId = 1L;
-        GemBoxInfo.Main gemboxInfo = gemBoxFacade.find(GemBoxQuery.SearchDetail.of(id, temporaryUserId));
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        GemBoxInfo.Main gemboxInfo = gemBoxFacade.find(GemBoxQuery.SearchDetail.of(id, userId));
 
         return CommonResponse.of(GemBoxResponse.GemBox.of(gemboxInfo));
     }
 
     @ApiOperation(value = "잼박스 목록 조회", notes = "잼박스 목록을 조회한다")
     @GetMapping
-    public CommonResponse<List<GemBoxResponse.GemBox>> findAll() {
+    public CommonResponse<List<GemBoxResponse.GemBox>> findAll(
+        HttpServletRequest httpServletRequest
+    ) {
 
-        // :TODO User Id를 토큰에서 추출하는 방법을 결정해야한다.
-        Long temporaryUserId = 1L;
-        List<GemBoxResponse.GemBox> responses = gemBoxFacade.findAll(temporaryUserId)
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        List<GemBoxResponse.GemBox> responses = gemBoxFacade.findAll(userId)
             .stream().map(GemBoxResponse.GemBox::of)
             .collect(Collectors.toList());
 
@@ -65,11 +68,12 @@ public class GemBoxApiController {
     @ApiOperation(value = "잼박스 생성", notes = "잼박스를 생성한다")
     @PostMapping
     public CommonResponse<GemBoxResponse.CreateGemboxResponse> create(
-        @RequestBody @Valid GemBoxRequest.CreateGemBoxRequest request) {
+        HttpServletRequest httpServletRequest,
+        @RequestBody @Valid GemBoxRequest.CreateGemBoxRequest request
+    ) {
 
-        // :TODO User Id를 토큰에서 추출하는 방법을 결정해야한다.
-        Long temporaryUserId = 1L;
-        GemBoxCommand.Create command = request.to(temporaryUserId);
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        GemBoxCommand.Create command = request.to(userId);
         GemBoxInfo.Create createInfo = gemBoxFacade.create(command);
 
         return CommonResponse.of(GemBoxResponse.CreateGemboxResponse.of(createInfo));
@@ -78,12 +82,13 @@ public class GemBoxApiController {
     @ApiOperation(value = "잼박스 수정", notes = "잼박스를 수정한다")
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Void> update(
+        HttpServletRequest httpServletRequest,
         @ApiParam(value = "잼박스 고유 아이디", example = "1") @PathVariable Long id,
-        @RequestBody @Valid GemBoxRequest.UpdateGemboxRequest request) {
+        @RequestBody @Valid GemBoxRequest.UpdateGemboxRequest request
+    ) {
 
-        // :TODO User Id를 토큰에서 추출하는 방법을 결정해야한다.
-        Long temporaryUserId = 1L;
-        GemBoxCommand.Update command = request.to(temporaryUserId, id);
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        GemBoxCommand.Update command = request.to(userId, id);
         gemBoxFacade.update(command);
 
         return ResponseEntity.noContent().build();
@@ -92,12 +97,12 @@ public class GemBoxApiController {
     @ApiOperation(value = "잼박스 삭제", notes = "잼박스를 삭제한다")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(
+        HttpServletRequest httpServletRequest,
         @ApiParam(value = "잼박스 고유 아이디", example = "1") @PathVariable Long id
     ) {
 
-        // :TODO User Id를 토큰에서 추출하는 방법을 결정해야한다.
-        Long temporaryUserId = 1L;
-        gemBoxFacade.delete(GemBoxCommand.Delete.of(id, temporaryUserId));
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        gemBoxFacade.delete(GemBoxCommand.Delete.of(id, userId));
 
         return ResponseEntity.noContent().build();
     }
