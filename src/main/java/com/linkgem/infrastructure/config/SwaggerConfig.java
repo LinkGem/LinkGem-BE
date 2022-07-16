@@ -39,6 +39,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    public static final String TOKEN_HEADER = "ACCESS_TOKEN";
+    public static final String DEFAULT_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaXNzIjoiTElOS19HRU0iLCJpYXQiOjE2NTc3MTQ3NzV9.PLAL9te0_Tszon7MMMPzMmDj7Cumt4nJGSVbx_6UT0g";
     private final TypeResolver typeResolver;
 
     private final String version = "0.0.1";
@@ -64,9 +66,15 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
+        String description = new StringBuilder()
+            .append("Link Gem swagger<br/>")
+            .append(String.format("API KEY header: %s<br/>", TOKEN_HEADER))
+            .append(String.format("default token: %s<br/>", DEFAULT_TOKEN))
+            .toString();
+
         return new ApiInfoBuilder()
             .title("Link Gem API")
-            .description("Link Gem swagger")
+            .description(description)
             .version(version)
             .build();
     }
@@ -80,14 +88,14 @@ public class SwaggerConfig {
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("accessToken", "ACCESS_TOKEN", "header");
+        return new ApiKey(TOKEN_HEADER, TOKEN_HEADER, "header");
     }
 
     List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(new SecurityReference("accessToken", authorizationScopes));
+        return Lists.newArrayList(new SecurityReference(TOKEN_HEADER, authorizationScopes));
     }
 
     private SecurityContext securityContext() {
