@@ -26,7 +26,7 @@ public class LinkResponse {
         private String imageUrl;
 
         private Long userId;
-        private String userNickName;
+        private String userNickname;
 
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
@@ -40,7 +40,7 @@ public class LinkResponse {
                 .description(search.getDescription())
                 .imageUrl(search.getImageUrl())
                 .userId(search.getUserId())
-                .userNickName(search.getUserNickName())
+                .userNickname(search.getUserNickname())
                 .createDate(search.getCreateDate())
                 .updateDate(search.getUpdateDate())
                 .build();
@@ -61,7 +61,7 @@ public class LinkResponse {
         private String imageUrl;
 
         private Long userId;
-        private String userNickName;
+        private String userNickname;
 
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
@@ -75,7 +75,7 @@ public class LinkResponse {
                 .description(create.getDescription())
                 .imageUrl(create.getImageUrl())
                 .userId(create.getUserId())
-                .userNickName(create.getUserNickName())
+                .userNickname(create.getUserNickname())
                 .createDate(create.getCreateDate())
                 .updateDate(create.getUpdateDate())
                 .build();

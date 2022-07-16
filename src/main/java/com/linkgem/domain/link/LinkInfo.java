@@ -23,7 +23,7 @@ public class LinkInfo {
         private String imageUrl;
 
         private Long userId;
-        private String userNickName;
+        private String userNickname;
 
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
@@ -37,7 +37,7 @@ public class LinkInfo {
                 .description(link.getOpenGraph().getDescription())
                 .imageUrl(link.getOpenGraph().getImageUrl())
                 .userId(link.getUser().getId())
-                .userNickName(link.getUser().getNickname())
+                .userNickname(link.getUser().getNickname())
                 .createDate(link.getCreateDate())
                 .updateDate(link.getUpdateDate())
                 .build();
@@ -58,7 +58,7 @@ public class LinkInfo {
         private String imageUrl;
 
         private Long userId;
-        private String userNickName;
+        private String userNickname;
 
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
@@ -72,7 +72,7 @@ public class LinkInfo {
                 .description(link.getOpenGraph().getDescription())
                 .imageUrl(link.getOpenGraph().getImageUrl())
                 .userId(link.getUser().getId())
-                .userNickName(link.getUser().getNickname())
+                .userNickname(link.getUser().getNickname())
                 .createDate(link.getCreateDate())
                 .updateDate(link.getUpdateDate())
                 .build();
