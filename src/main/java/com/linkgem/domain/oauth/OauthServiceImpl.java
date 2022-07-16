@@ -49,6 +49,7 @@ public class OauthServiceImpl implements OauthService {
     return LoginResponse.builder()
         .id(user.getId())
         .nickname(user.getNickname())
+        .email(user.getEmail())
         .accessToken(accessToken)
         .refreshToken(refreshToken)
         .build();
