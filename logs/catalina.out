@@ -1,0 +1,406 @@
+2022-07-16 13:54:46 [INFO ] com.linkgem.LinkGemApplication - Starting LinkGemApplication using Java 17.0.3 on DESKTOP-9GSCKCP with PID 19416 (C:\Users\hose0\Desktop\LinkGem-BE\out\production\classes started by hose0 in C:\Users\hose0\Desktop\LinkGem-BE)
+2022-07-16 13:54:46 [INFO ] com.linkgem.LinkGemApplication - The following 2 profiles are active: "oauth", "dev"
+2022-07-16 13:54:47 [INFO ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.3.Final
+2022-07-16 13:54:51 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-07-16 13:54:52 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 336 ms. Found 3 JPA repository interfaces.
+2022-07-16 13:54:53 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2022-07-16 13:54:53 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2022-07-16 13:54:53 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2022-07-16 13:54:53 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.62]
+2022-07-16 13:54:54 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-07-16 13:54:54 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 6864 ms
+2022-07-16 13:54:54 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-07-16 13:54:54 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.8.Final
+2022-07-16 13:54:55 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-07-16 13:54:55 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-07-16 13:54:55 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-07-16 13:54:55 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MariaDB106Dialect
+2022-07-16 13:54:57 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-07-16 13:54:57 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-07-16 13:54:58 [WARN ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-07-16 13:54:59 [INFO ] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-07-16 13:54:59 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2022-07-16 13:54:59 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2022-07-16 13:54:59 [INFO ] s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+2022-07-16 13:54:59 [INFO ] s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-07-16 13:54:59 [INFO ] s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+2022-07-16 13:54:59 [INFO ] s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: findAllUsingGET_1
+2022-07-16 13:55:00 [INFO ] com.linkgem.LinkGemApplication - Started LinkGemApplication in 15.734 seconds (JVM running for 18.403)
+2022-07-16 13:55:45 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-07-16 13:55:45 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2022-07-16 13:55:45 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2022-07-16 13:56:38 [INFO ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.3.Final
+2022-07-16 13:56:38 [INFO ] com.linkgem.LinkGemApplication - Starting LinkGemApplication using Java 17.0.3 on DESKTOP-9GSCKCP with PID 15228 (C:\Users\hose0\Desktop\LinkGem-BE\out\production\classes started by hose0 in C:\Users\hose0\Desktop\LinkGem-BE)
+2022-07-16 13:56:38 [INFO ] com.linkgem.LinkGemApplication - The following 2 profiles are active: "oauth", "dev"
+2022-07-16 13:56:40 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-07-16 13:56:40 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 185 ms. Found 3 JPA repository interfaces.
+2022-07-16 13:56:41 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2022-07-16 13:56:41 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2022-07-16 13:56:41 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2022-07-16 13:56:41 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.62]
+2022-07-16 13:56:41 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-07-16 13:56:41 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3295 ms
+2022-07-16 13:56:41 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-07-16 13:56:41 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.8.Final
+2022-07-16 13:56:41 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-07-16 13:56:42 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-07-16 13:56:42 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-07-16 13:56:42 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MariaDB106Dialect
+2022-07-16 13:56:43 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-07-16 13:56:43 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-07-16 13:56:44 [WARN ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-07-16 13:56:44 [INFO ] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-07-16 13:56:44 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2022-07-16 13:56:44 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2022-07-16 13:56:44 [INFO ] s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+2022-07-16 13:56:44 [INFO ] s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-07-16 13:56:44 [INFO ] s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+2022-07-16 13:56:45 [INFO ] s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: findAllUsingGET_1
+2022-07-16 13:56:45 [INFO ] com.linkgem.LinkGemApplication - Started LinkGemApplication in 8.195 seconds (JVM running for 9.748)
+2022-07-16 13:57:31 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-07-16 13:57:31 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-07-16 13:57:31 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2022-07-16 13:57:56 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-07-16 13:57:56 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2022-07-16 13:57:56 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2022-07-16 13:58:15 [INFO ] com.linkgem.LinkGemApplication - Starting LinkGemApplication using Java 17.0.3 on DESKTOP-9GSCKCP with PID 17452 (C:\Users\hose0\Desktop\LinkGem-BE\out\production\classes started by hose0 in C:\Users\hose0\Desktop\LinkGem-BE)
+2022-07-16 13:58:15 [INFO ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.3.Final
+2022-07-16 13:58:15 [INFO ] com.linkgem.LinkGemApplication - The following 2 profiles are active: "oauth", "dev"
+2022-07-16 13:58:17 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-07-16 13:58:17 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 184 ms. Found 3 JPA repository interfaces.
+2022-07-16 13:58:18 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2022-07-16 13:58:18 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2022-07-16 13:58:18 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2022-07-16 13:58:18 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.62]
+2022-07-16 13:58:18 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-07-16 13:58:18 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3195 ms
+2022-07-16 13:58:19 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-07-16 13:58:19 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.8.Final
+2022-07-16 13:58:19 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-07-16 13:58:19 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-07-16 13:58:19 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-07-16 13:58:19 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MariaDB106Dialect
+2022-07-16 13:58:20 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-07-16 13:58:20 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-07-16 13:58:21 [WARN ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-07-16 13:58:21 [INFO ] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-07-16 13:58:21 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2022-07-16 13:58:21 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2022-07-16 13:58:21 [INFO ] s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+2022-07-16 13:58:21 [INFO ] s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-07-16 13:58:22 [INFO ] s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+2022-07-16 13:58:22 [INFO ] s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: findAllUsingGET_1
+2022-07-16 13:58:22 [INFO ] com.linkgem.LinkGemApplication - Started LinkGemApplication in 7.649 seconds (JVM running for 9.368)
+2022-07-16 13:58:39 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-07-16 13:58:39 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-07-16 13:58:39 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2022-07-16 13:58:41 [ERROR] c.l.p.c.e.ControllerExceptionHandler - 
+org.springframework.web.reactive.function.client.WebClientResponseException$Unauthorized: 401 Unauthorized from GET https://openapi.naver.com/v1/nid/me
+	at org.springframework.web.reactive.function.client.WebClientResponseException.create(WebClientResponseException.java:198)
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	*__checkpoint ⇢ 401 from GET https://openapi.naver.com/v1/nid/me [DefaultWebClient]
+Original Stack Trace:
+		at org.springframework.web.reactive.function.client.WebClientResponseException.create(WebClientResponseException.java:198)
+		at org.springframework.web.reactive.function.client.DefaultClientResponse.lambda$createException$1(DefaultClientResponse.java:207)
+		at reactor.core.publisher.FluxMap$MapSubscriber.onNext(FluxMap.java:106)
+		at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79)
+		at reactor.core.publisher.FluxDefaultIfEmpty$DefaultIfEmptySubscriber.onNext(FluxDefaultIfEmpty.java:101)
+		at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onNext(FluxMapFuseable.java:127)
+		at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onNext(FluxContextWrite.java:107)
+		at reactor.core.publisher.FluxMapFuseable$MapFuseableConditionalSubscriber.onNext(FluxMapFuseable.java:295)
+		at reactor.core.publisher.FluxFilterFuseable$FilterFuseableConditionalSubscriber.onNext(FluxFilterFuseable.java:337)
+		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816)
+		at reactor.core.publisher.MonoCollect$CollectSubscriber.onComplete(MonoCollect.java:159)
+		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:142)
+		at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:260)
+		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:142)
+		at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:400)
+		at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:419)
+		at reactor.netty.channel.ChannelOperations.terminate(ChannelOperations.java:473)
+		at reactor.netty.http.client.HttpClientOperations.onInboundNext(HttpClientOperations.java:703)
+		at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:93)
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379)
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365)
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357)
+		at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:103)
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379)
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365)
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357)
+		at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436)
+		at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:327)
+		at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:299)
+		at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251)
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379)
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365)
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357)
+		at io.netty.handler.ssl.SslHandler.unwrap(SslHandler.java:1372)
+		at io.netty.handler.ssl.SslHandler.decodeJdkCompatible(SslHandler.java:1235)
+		at io.netty.handler.ssl.SslHandler.decode(SslHandler.java:1284)
+		at io.netty.handler.codec.ByteToMessageDecoder.decodeRemovalReentryProtection(ByteToMessageDecoder.java:510)
+		at io.netty.handler.codec.ByteToMessageDecoder.callDecode(ByteToMessageDecoder.java:449)
+		at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:279)
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379)
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365)
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357)
+		at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410)
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379)
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365)
+		at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919)
+		at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166)
+		at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:722)
+		at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:658)
+		at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:584)
+		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:496)
+		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:986)
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+		at java.base/java.lang.Thread.run(Thread.java:833)
+	Suppressed: java.lang.Exception: #block terminated with an error
+		at reactor.core.publisher.BlockingSingleSubscriber.blockingGet(BlockingSingleSubscriber.java:99)
+		at reactor.core.publisher.Mono.block(Mono.java:1707)
+		at com.linkgem.domain.oauth.OauthServiceImpl.getUserAttributes(OauthServiceImpl.java:107)
+		at com.linkgem.domain.oauth.OauthServiceImpl.getUserProfile(OauthServiceImpl.java:94)
+		at com.linkgem.domain.oauth.OauthServiceImpl.login(OauthServiceImpl.java:41)
+		at com.linkgem.domain.oauth.OauthServiceImpl$$FastClassBySpringCGLIB$$59cc9899.invoke(<generated>)
+		at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+		at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+		at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+		at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+		at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123)
+		at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388)
+		at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+		at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+		at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+		at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+		at com.linkgem.domain.oauth.OauthServiceImpl$$EnhancerBySpringCGLIB$$55e4b742.login(<generated>)
+		at com.linkgem.presentation.oauth.OauthRestApiController.login(OauthRestApiController.java:32)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+		at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+		at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+		at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+		at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+		at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+		at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+		at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+		at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+		at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+		at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+		at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+		at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+		at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+		at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+		at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+		at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+		at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+		at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+		at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+		at java.base/java.lang.Thread.run(Thread.java:833)
+2022-07-16 14:02:17 [ERROR] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is com.linkgem.presentation.common.exception.BusinessException: 엑세스 토큰이 없습니다.] with root cause
+com.linkgem.presentation.common.exception.BusinessException: 엑세스 토큰이 없습니다.
+	at com.linkgem.infrastructure.config.Interceptor.JwtTokenInterceptor.preHandle(JwtTokenInterceptor.java:31)
+	at org.springframework.web.servlet.HandlerExecutionChain.applyPreHandle(HandlerExecutionChain.java:148)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1062)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-07-16 14:02:17 [ERROR] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is com.linkgem.presentation.common.exception.BusinessException: 엑세스 토큰이 없습니다.] with root cause
+com.linkgem.presentation.common.exception.BusinessException: 엑세스 토큰이 없습니다.
+	at com.linkgem.infrastructure.config.Interceptor.JwtTokenInterceptor.preHandle(JwtTokenInterceptor.java:31)
+	at org.springframework.web.servlet.HandlerExecutionChain.applyPreHandle(HandlerExecutionChain.java:148)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1062)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-07-16 14:21:10 [ERROR] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is com.linkgem.presentation.common.exception.BusinessException: 엑세스 토큰이 없습니다.] with root cause
+com.linkgem.presentation.common.exception.BusinessException: 엑세스 토큰이 없습니다.
+	at com.linkgem.infrastructure.config.Interceptor.JwtTokenInterceptor.preHandle(JwtTokenInterceptor.java:31)
+	at org.springframework.web.servlet.HandlerExecutionChain.applyPreHandle(HandlerExecutionChain.java:148)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1062)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-07-16 14:21:11 [ERROR] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is com.linkgem.presentation.common.exception.BusinessException: 엑세스 토큰이 없습니다.] with root cause
+com.linkgem.presentation.common.exception.BusinessException: 엑세스 토큰이 없습니다.
+	at com.linkgem.infrastructure.config.Interceptor.JwtTokenInterceptor.preHandle(JwtTokenInterceptor.java:31)
+	at org.springframework.web.servlet.HandlerExecutionChain.applyPreHandle(HandlerExecutionChain.java:148)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1062)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-07-16 14:23:29 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-07-16 14:23:29 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2022-07-16 14:23:29 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
