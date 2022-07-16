@@ -17,13 +17,15 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
 
   public static String USER_INFORMATION_NAME = "userId";
 
+  public static String USER_TOKEN_HEADER = "authorization";
+
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-    String access_token = request.getHeader("ACCESS_TOKEN");
+    String authentication = request.getHeader(USER_TOKEN_HEADER);
 
-    if (access_token != null) {
-      String userId = tokenProvider.isValidAccessToken(access_token);
+    if (authentication != null) {
+      String userId = tokenProvider.isValidAccessToken(authentication);
       request.setAttribute("userId",Long.valueOf(userId));
       return true;
     } else {

@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 
 import com.fasterxml.classmate.TypeResolver;
 import com.google.common.collect.Lists;
+import com.linkgem.infrastructure.config.Interceptor.JwtTokenInterceptor;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -39,7 +40,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    public static final String TOKEN_HEADER = "ACCESS_TOKEN";
     public static final String DEFAULT_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaXNzIjoiTElOS19HRU0iLCJpYXQiOjE2NTc3MTQ3NzV9.PLAL9te0_Tszon7MMMPzMmDj7Cumt4nJGSVbx_6UT0g";
     private final TypeResolver typeResolver;
 
@@ -68,7 +68,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         String description = new StringBuilder()
             .append("Link Gem swagger<br/>")
-            .append(String.format("API KEY header: %s<br/>", TOKEN_HEADER))
+            .append(String.format("API KEY header: %s<br/>", JwtTokenInterceptor.USER_TOKEN_HEADER))
             .append(String.format("default token: %s<br/>", DEFAULT_TOKEN))
             .toString();
 
@@ -88,14 +88,14 @@ public class SwaggerConfig {
     }
 
     private ApiKey apiKey() {
-        return new ApiKey(TOKEN_HEADER, TOKEN_HEADER, "header");
+        return new ApiKey(JwtTokenInterceptor.USER_TOKEN_HEADER, JwtTokenInterceptor.USER_TOKEN_HEADER, "header");
     }
 
     List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(new SecurityReference(TOKEN_HEADER, authorizationScopes));
+        return Lists.newArrayList(new SecurityReference(JwtTokenInterceptor.USER_TOKEN_HEADER, authorizationScopes));
     }
 
     private SecurityContext securityContext() {
