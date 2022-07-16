@@ -40,8 +40,7 @@ public class OauthServiceImpl implements OauthService {
     UserProfile userProfile = getUserProfile(providerName, tokenResponse, provider);
 
     User user = userRepository.findByEmail(userProfile.getEmail())
-        .orElseGet(userProfile::toUser);
-
+        .orElseGet(userRepository.save(userProfile::toUser));
     String accessToken = tokenProvider.createAccessToken(user.getId().toString());
     String refreshToken = tokenProvider.createRefreshToken(user.getId().toString());
     return LoginResponse.builder()
