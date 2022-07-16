@@ -21,6 +21,8 @@ public enum ErrorCode {
     ACCESS_TOKEN_IS_EMPTY(HttpStatus.BAD_REQUEST, "엑세스 토큰이 없습니다."),
     REFRESH_TOKEN_NOT_VALID(HttpStatus.BAD_REQUEST, "리프레시 토큰이 유효하지않습니다."),
 
+    LINK_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 링크입니다."),
+
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다");
 
     private final HttpStatus httpStatus;

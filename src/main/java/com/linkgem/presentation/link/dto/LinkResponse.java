@@ -1,6 +1,7 @@
 package com.linkgem.presentation.link.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.linkgem.domain.link.LinkInfo;
 
@@ -82,4 +83,11 @@ public class LinkResponse {
         }
     }
 
+    @ApiModel(description = "링크 삭제 응답")
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class DeleteLinkResponse {
+        private List<Long> deletedIds;
+    }
 }

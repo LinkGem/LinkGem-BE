@@ -1,11 +1,7 @@
-package com.linkgem.domain.link;
+package com.linkgem.infrastructure.link;
 
-import com.linkgem.domain.link.opengraph.OpenGraph;
-import com.linkgem.domain.user.User;
-import com.linkgem.infrastructure.config.TestQueryDslConfig;
-import com.linkgem.infrastructure.link.LinkRepository;
-import com.linkgem.infrastructure.user.UserRepository;
 import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +10,21 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.linkgem.domain.link.Link;
+import com.linkgem.domain.link.opengraph.OpenGraph;
+import com.linkgem.domain.user.User;
+import com.linkgem.infrastructure.config.TestQueryDslConfig;
+import com.linkgem.infrastructure.user.UserRepository;
+
 @Import(TestQueryDslConfig.class)
 @DataJpaTest
 @ActiveProfiles("test")
-class LinkTest {
-
+class LinkRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private LinkRepository linkRepository;
-
-    @Autowired
-    private TestEntityManager em;
 
     @Test
     public void 링크를_저장한다() {
@@ -48,6 +46,29 @@ class LinkTest {
         Optional<Link> findLink = linkRepository.findById(link.getId());
 
         Assertions.assertTrue(findLink.isPresent());
+    }
+
+    @Test
+    public void 링크를_삭제한다() {
+        Link link = Link.builder()
+            .url("www.naver.com")
+            .memo("GOOD")
+            .user(createUser("tester", "www.naver.com"))
+            .openGraph(null)
+            .build();
+
+        linkRepository.saveAndFlush(link);
+
+        Optional<Link> findLink = linkRepository.findById(link.getId());
+
+        Assertions.assertTrue(findLink.isPresent());
+
+        linkRepository.delete(link);
+
+        Optional<Link> findDeletedLink = linkRepository.findById(link.getId());
+
+        Assertions.assertTrue(findDeletedLink.isEmpty());
+
     }
 
     public User createUser(String nickname, String email) {

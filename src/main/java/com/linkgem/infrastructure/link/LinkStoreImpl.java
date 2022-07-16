@@ -17,4 +17,10 @@ public class LinkStoreImpl implements LinkStore {
     public Link create(Link link) {
         return repository.save(link);
     }
+
+    @Override
+    public Long delete(Link link) {
+        repository.delete(link);
+        return link.getId();
+    }
 }

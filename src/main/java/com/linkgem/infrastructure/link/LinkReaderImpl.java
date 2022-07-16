@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.linkgem.domain.link.Link;
 import com.linkgem.domain.link.LinkInfo;
 import com.linkgem.domain.link.LinkReader;
+import com.linkgem.presentation.common.exception.BusinessException;
+import com.linkgem.presentation.common.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,5 +28,11 @@ public class LinkReaderImpl implements LinkReader {
     @Override
     public Optional<Link> find(Long id, Long userId) {
         return linkRepository.findByIdAndUserId(id, userId);
+    }
+
+    @Override
+    public Link get(Long id, Long userId) {
+        return this.find(id, userId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.LINK_NOT_FOUND));
     }
 }

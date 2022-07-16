@@ -1,5 +1,7 @@
 package com.linkgem.domain.link;
 
+import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,5 +18,13 @@ public class LinkCommand {
         private String memo;
         private Long userId;
 
+    }
+
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class Delete {
+        private List<Long> ids;
+        private Long userId;
     }
 }

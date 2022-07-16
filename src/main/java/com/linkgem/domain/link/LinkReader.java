@@ -11,4 +11,6 @@ public interface LinkReader {
 
     Optional<Link> find(Long id, Long userId);
 
+    Link get(Long id, Long userId);
+
 }
