@@ -22,4 +22,4 @@ echo "> 10초 대기 후 애플리케이션 실행" >> /home/ec2-user/action/dep
 sleep 10
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/action/deploy.log
-nohup java -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE -jar $DEPLOY_JAR >> /home/ec2-user/deploy.log 2>/home/ec2-user/action/deploy_err.log &
+nohup java -Dspring.profiles.active=dev -jar $DEPLOY_JAR >> /home/ec2-user/deploy.log 2>/home/ec2-user/action/deploy_err.log &
