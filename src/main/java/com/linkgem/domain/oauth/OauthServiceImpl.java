@@ -37,15 +37,19 @@ public class OauthServiceImpl implements OauthService {
     OauthProvider provider = inMemoryProviderRepository.findByProviderName(providerName);
 
     OauthTokenResponse tokenResponse = getToken(code, provider);
+    System.out.println("tokenResponse.getAccessToken() = " + tokenResponse.getAccessToken());
     UserProfile userProfile = getUserProfile(providerName, tokenResponse, provider);
 
     User user = userRepository.findByEmail(userProfile.getEmail())
-        .orElseGet(userRepository.save(userProfile::toUser));
+        .orElseGet(() -> {
+          return userRepository.save(userProfile.toUser());
+        });
     String accessToken = tokenProvider.createAccessToken(user.getId().toString());
     String refreshToken = tokenProvider.createRefreshToken(user.getId().toString());
     return LoginResponse.builder()
         .id(user.getId())
         .nickname(user.getNickname())
+        .email(user.getEmail())
         .accessToken(accessToken)
         .refreshToken(refreshToken)
         .build();
@@ -64,6 +68,10 @@ public class OauthServiceImpl implements OauthService {
   }
 
   private OauthTokenResponse getToken(String code, OauthProvider provider) {
+    System.out.println("code = " + code);
+    System.out.println("pr = " + provider.getTokenUrl());
+    System.out.println("provider.getClientId() = " + provider.getClientId());
+    System.out.println("code = " + code);
     return WebClient.create()
         .post()
         .uri(provider.getTokenUrl())
