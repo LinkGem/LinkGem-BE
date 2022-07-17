@@ -10,6 +10,7 @@ import com.linkgem.domain.link.LinkCommand;
 import com.linkgem.domain.link.LinkCreateService;
 import com.linkgem.domain.link.LinkDeleteService;
 import com.linkgem.domain.link.LinkInfo;
+import com.linkgem.domain.link.LinkQuery;
 import com.linkgem.domain.link.LinkSearchService;
 import com.linkgem.domain.link.opengraph.LinkUpdateService;
 
@@ -28,8 +29,8 @@ public class LinkFacade {
         return linkCreateService.create(create);
     }
 
-    public Page<LinkInfo.Search> findAll(Long userId, Pageable pageable) {
-        return linkSearchService.findAll(userId, pageable);
+    public Page<LinkInfo.Search> findAll(LinkQuery.SearchLinks searchLinks, Pageable pageable) {
+        return linkSearchService.findAll(searchLinks, pageable);
     }
 
     public List<Long> deletes(LinkCommand.Delete deleteCommand) {

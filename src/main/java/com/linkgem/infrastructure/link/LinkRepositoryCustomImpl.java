@@ -3,14 +3,16 @@ package com.linkgem.infrastructure.link;
 import static com.linkgem.domain.link.QLink.*;
 import static com.linkgem.domain.user.QUser.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
 import com.linkgem.domain.link.LinkInfo;
+import com.linkgem.domain.link.LinkQuery;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -22,7 +24,10 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<LinkInfo.Search> findAll(Long userId, Pageable pageable) {
+    public Page<LinkInfo.Search> findAll(LinkQuery.SearchLinks searchLinks, Pageable pageable) {
+
+        BooleanBuilder whereBuilder = this.createWhereBuilder(searchLinks);
+
         List<LinkInfo.Search> results = queryFactory
             .select(Projections.constructor(
                 LinkInfo.Search.class,
@@ -39,20 +44,30 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
             ))
             .from(link)
             .join(link.user, user)
-            .where(link.user.id.eq(userId))
+            .where(whereBuilder)
             .orderBy(link.createDate.desc())
             .limit(pageable.getPageSize())
             .offset(pageable.getOffset())
             .fetch();
 
-        return PageableExecutionUtils.getPage(results, pageable, () -> getTotal(userId));
+        return PageableExecutionUtils.getPage(results, pageable, () -> this.getLinkTotalCount(whereBuilder));
     }
 
-    private Long getTotal(Long userId) {
+    private BooleanBuilder createWhereBuilder(LinkQuery.SearchLinks searchLinks) {
+        BooleanBuilder whereBuilder = new BooleanBuilder();
+        whereBuilder.and(link.user.id.eq(searchLinks.getUserId()));
+
+        if (Objects.nonNull(searchLinks.getGemBoxId())) {
+            whereBuilder.and(link.gemBox.id.eq(searchLinks.getGemBoxId()));
+        }
+        return whereBuilder;
+    }
+
+    private Long getLinkTotalCount(BooleanBuilder whereBuilder) {
         return queryFactory
             .select(link.count())
             .from(link)
-            .where(link.user.id.eq(userId))
+            .where(whereBuilder)
             .fetchOne();
     }
 }

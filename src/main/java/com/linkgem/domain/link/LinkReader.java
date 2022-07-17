@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface LinkReader {
 
-    Page<LinkInfo.Search> findAll(Long userId, Pageable pageable);
+    Page<LinkInfo.Search> findAll(LinkQuery.SearchLinks searchLinks, Pageable pageable);
 
     Optional<Link> find(Long id, Long userId);
 

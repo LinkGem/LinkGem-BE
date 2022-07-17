@@ -4,5 +4,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface LinkSearchService {
-    Page<LinkInfo.Search> findAll(Long userId, Pageable pageable);
+    Page<LinkInfo.Search> findAll(LinkQuery.SearchLinks searchLinks, Pageable pageable);
 }

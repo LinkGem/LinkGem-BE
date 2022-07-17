@@ -12,7 +12,7 @@ public class LinkSearchServiceImpl implements LinkSearchService {
     private final LinkReader linkReader;
 
     @Override
-    public Page<LinkInfo.Search> findAll(Long userId, Pageable pageable) {
-        return linkReader.findAll(userId, pageable);
+    public Page<LinkInfo.Search> findAll(LinkQuery.SearchLinks searchLinks, Pageable pageable) {
+        return linkReader.findAll(searchLinks, pageable);
     }
 }

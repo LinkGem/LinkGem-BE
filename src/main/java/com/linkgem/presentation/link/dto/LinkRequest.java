@@ -7,14 +7,28 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import com.linkgem.domain.link.LinkCommand;
+import com.linkgem.domain.link.LinkQuery;
 import com.linkgem.domain.link.opengraph.OpenGraph;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 public class LinkRequest {
+
+    @ApiModel(description = "링크 목록 조회 요청")
+    @NoArgsConstructor
+    @Setter
+    @Getter
+    public static class SearchLinksRequest {
+        private Long gemBoxId;
+
+        public LinkQuery.SearchLinks to(Long userId) {
+            return new LinkQuery.SearchLinks(userId, this.gemBoxId);
+        }
+    }
 
     @ApiModel(description = "링크 생성 요청")
     @NoArgsConstructor

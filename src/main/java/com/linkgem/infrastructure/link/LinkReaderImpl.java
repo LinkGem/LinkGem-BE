@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.linkgem.domain.link.Link;
 import com.linkgem.domain.link.LinkInfo;
+import com.linkgem.domain.link.LinkQuery;
 import com.linkgem.domain.link.LinkReader;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
@@ -21,8 +22,8 @@ public class LinkReaderImpl implements LinkReader {
     private final LinkRepository linkRepository;
 
     @Override
-    public Page<LinkInfo.Search> findAll(Long userId, Pageable pageable) {
-        return linkRepository.findAll(userId, pageable);
+    public Page<LinkInfo.Search> findAll(LinkQuery.SearchLinks searchLinks, Pageable pageable) {
+        return linkRepository.findAll(searchLinks, pageable);
     }
 
     @Override

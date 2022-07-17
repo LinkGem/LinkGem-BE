@@ -20,6 +20,7 @@ import com.linkgem.application.LinkFacade;
 import com.linkgem.domain.common.Pages;
 import com.linkgem.domain.link.LinkCommand;
 import com.linkgem.domain.link.LinkInfo;
+import com.linkgem.domain.link.LinkQuery;
 import com.linkgem.presentation.common.CommonResponse;
 import com.linkgem.presentation.common.UserAuthenticationProvider;
 import com.linkgem.presentation.link.dto.LinkRequest;
@@ -55,11 +56,13 @@ public class LinkApiController {
     @GetMapping
     public CommonResponse<Pages<LinkResponse.SearchLinkResponse>> findAll(
         HttpServletRequest httpServletRequest,
-        @PageableDefault(page = 0, size = 10) Pageable pageable
+        @PageableDefault(page = 0, size = 10) Pageable pageable,
+        LinkRequest.SearchLinksRequest request
     ) {
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        LinkQuery.SearchLinks searchLinks = request.to(userId);
 
-        Page<LinkInfo.Search> infos = linkFacade.findAll(userId, pageable);
+        Page<LinkInfo.Search> infos = linkFacade.findAll(searchLinks, pageable);
         Page<LinkResponse.SearchLinkResponse> responses = infos.map(LinkResponse.SearchLinkResponse::of);
 
         return CommonResponse.of(
