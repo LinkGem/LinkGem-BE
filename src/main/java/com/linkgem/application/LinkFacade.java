@@ -33,6 +33,10 @@ public class LinkFacade {
         return linkSearchService.findAll(searchLinks, pageable);
     }
 
+    public LinkInfo.Detail findById(Long id, Long userId) {
+        return linkSearchService.findById(id, userId);
+    }
+
     public List<Long> deletes(LinkCommand.Delete deleteCommand) {
         return linkDeleteService.deletes(deleteCommand);
     }

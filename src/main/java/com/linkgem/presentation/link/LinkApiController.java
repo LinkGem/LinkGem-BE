@@ -11,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,18 @@ public class LinkApiController {
         LinkInfo.Create create = linkFacade.create(createCommand);
 
         return CommonResponse.of(LinkResponse.CreateLinkResponse.of(create));
+    }
+
+    @ApiOperation(value = "링크 상세 조회", notes = "링크를 상세하게 조회한다")
+    @GetMapping(value = "{id}")
+    public CommonResponse<LinkResponse.SearchDetailLinkResponse> findById(
+        HttpServletRequest httpServletRequest,
+        @PathVariable(value = "id") Long id
+    ) {
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        LinkInfo.Detail detailLink = linkFacade.findById(id, userId);
+        LinkResponse.SearchDetailLinkResponse linkResponse = LinkResponse.SearchDetailLinkResponse.of(detailLink);
+        return CommonResponse.of(linkResponse);
     }
 
     @ApiOperation(value = "링크 목록 조회", notes = "링크를 목록을 조회한다")

@@ -3,6 +3,7 @@ package com.linkgem.presentation.link.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.linkgem.domain.link.LinkInfo;
 
 import io.swagger.annotations.ApiModel;
@@ -46,6 +47,51 @@ public class LinkResponse {
                 .updateDate(linkInfo.getUpdateDate())
                 .build();
         }
+    }
+
+    @ApiModel(description = "링크 상세 조회 응답")
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class SearchDetailLinkResponse {
+
+        private Long id;
+        private String memo;
+        private String url;
+
+        private String title;
+        private String description;
+        private String imageUrl;
+
+        private Long userId;
+        private String userNickname;
+
+        private LocalDateTime createDate;
+        private LocalDateTime updateDate;
+
+        @JsonInclude(JsonInclude.Include.NON_EMPTY)
+        private Long gemBoxId;
+
+        @JsonInclude(JsonInclude.Include.NON_EMPTY)
+        private String gemBoxName;
+
+        public static SearchDetailLinkResponse of(LinkInfo.Detail linkInfo) {
+            return SearchDetailLinkResponse.builder()
+                .id(linkInfo.getId())
+                .url(linkInfo.getUrl())
+                .memo(linkInfo.getMemo())
+                .title(linkInfo.getTitle())
+                .description(linkInfo.getDescription())
+                .imageUrl(linkInfo.getImageUrl())
+                .userId(linkInfo.getUserId())
+                .userNickname(linkInfo.getUserNickname())
+                .createDate(linkInfo.getCreateDate())
+                .updateDate(linkInfo.getUpdateDate())
+                .gemBoxId(linkInfo.getGemBoxId())
+                .gemBoxName(linkInfo.getGemBoxName())
+                .build();
+        }
+
     }
 
     @ApiModel(description = "링크 목록 조회 응답")

@@ -15,4 +15,19 @@ public class LinkSearchServiceImpl implements LinkSearchService {
     public Page<LinkInfo.Search> findAll(LinkQuery.SearchLinks searchLinks, Pageable pageable) {
         return linkReader.findAll(searchLinks, pageable);
     }
+
+    @Override
+    public LinkInfo.Detail findById(Long id, Long userId) {
+        Link findLink = linkReader.get(id, userId);
+
+        Long gemBoxId = null;
+        String gemBoxName = null;
+
+        if (findLink.getGemBox() != null) {
+            gemBoxId = findLink.getGemBox().getId();
+            gemBoxName = findLink.getGemBox().getName();
+        }
+
+        return LinkInfo.Detail.of(findLink, gemBoxId, gemBoxName);
+    }
 }
