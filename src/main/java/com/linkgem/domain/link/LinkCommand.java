@@ -36,5 +36,6 @@ public class LinkCommand {
         private Long userId;
 
         private String memo;
+        private Long gemBoxId;
     }
 }

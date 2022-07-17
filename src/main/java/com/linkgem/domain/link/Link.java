@@ -65,7 +65,7 @@ public class Link extends BaseEntity {
         this.memo = memo == null ? "" : memo;
     }
 
-    public void setGemBox(GemBox gemBox) {
+    public void updateGemBox(GemBox gemBox) {
         this.gemBox = gemBox;
     }
 }

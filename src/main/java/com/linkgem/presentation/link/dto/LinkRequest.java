@@ -65,11 +65,14 @@ public class LinkRequest {
 
         private String memo;
 
+        private Long gemBoxId;
+
         public LinkCommand.Update to(Long userId) {
             return LinkCommand.Update.builder()
                 .userId(userId)
                 .id(this.id)
                 .memo(this.memo)
+                .gemBoxId(this.gemBoxId)
                 .build();
         }
     }

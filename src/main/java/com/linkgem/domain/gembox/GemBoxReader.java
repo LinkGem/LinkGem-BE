@@ -11,5 +11,7 @@ public interface GemBoxReader {
 
     Optional<GemBox> find(Long id, Long userId);
 
+    GemBox get(Long id, Long userId);
+
     List<GemBox> findAll(Long userId);
 }

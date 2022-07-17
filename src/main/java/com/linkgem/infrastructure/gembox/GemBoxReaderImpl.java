@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.linkgem.domain.gembox.GemBox;
 import com.linkgem.domain.gembox.GemBoxReader;
+import com.linkgem.presentation.common.exception.BusinessException;
+import com.linkgem.presentation.common.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +31,12 @@ public class GemBoxReaderImpl implements GemBoxReader {
     @Override
     public Optional<GemBox> find(Long id, Long userId) {
         return repository.findByIdAndUserId(id, userId);
+    }
+
+    @Override
+    public GemBox get(Long id, Long userId) {
+        return this.find(id, userId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
     }
 
     @Override
