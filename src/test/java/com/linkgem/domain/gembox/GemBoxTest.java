@@ -51,7 +51,7 @@ class GemBoxTest {
     public void 잼박스에_링크를_저장한다() {
 
         User user = User.builder()
-            .email("test@naver.com")
+            .loginEmail("test@naver.com")
             .nickname("tester")
             .oauthId("oauthId")
             .build();
@@ -127,7 +127,7 @@ class GemBoxTest {
 
     public User createUser(String nickname, String email) {
         User user = User.builder()
-            .email(email)
+            .loginEmail(email)
             .nickname(nickname)
             .oauthId("oauthId")
             .build();

@@ -1,20 +1,17 @@
 package com.linkgem.infrastructure.link;
 
-import java.util.Optional;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
-
 import com.linkgem.domain.link.Link;
 import com.linkgem.domain.link.opengraph.OpenGraph;
 import com.linkgem.domain.user.User;
 import com.linkgem.infrastructure.config.TestQueryDslConfig;
 import com.linkgem.infrastructure.user.UserRepository;
+import java.util.Optional;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 @Import(TestQueryDslConfig.class)
 @DataJpaTest
@@ -73,7 +70,7 @@ class LinkRepositoryTest {
 
     public User createUser(String nickname, String email) {
         User user = User.builder()
-            .email(email)
+            .loginEmail(email)
             .nickname(nickname)
             .oauthId("oauthId")
             .build();

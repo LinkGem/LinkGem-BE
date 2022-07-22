@@ -1,17 +1,20 @@
 package com.linkgem.presentation.user;
 
-import com.linkgem.domain.user.UserService;
-import com.linkgem.presentation.common.UserAuthenticationProvider;
-import com.linkgem.presentation.user.dto.UserRequest.AddDetailInfoRequest;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import javax.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.linkgem.domain.user.UserService;
+import com.linkgem.presentation.common.UserAuthenticationProvider;
+import com.linkgem.presentation.user.dto.UserRequest.AddDetailInfoRequest;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +31,7 @@ public class UserApiController {
       @RequestBody AddDetailInfoRequest addDetailInfoRequest) {
     Long userId = UserAuthenticationProvider.provider(httpServletRequest);
     userService.addDetailInfo(userId,addDetailInfoRequest);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.ok().build();
   }
 
 }

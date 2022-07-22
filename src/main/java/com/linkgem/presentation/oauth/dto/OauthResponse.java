@@ -15,7 +15,7 @@ public class OauthResponse {
   public static class LoginResponse {
 
     private Long id;
-    private String longinEmail;
+    private String loginEmail;
     private String mailEmail;
     private String name;
     private String nickname;
@@ -25,12 +25,12 @@ public class OauthResponse {
 
 
     @Builder
-    public LoginResponse(Long id, String longinEmail, String nickname, String accessToken,
+    public LoginResponse(Long id, String loginEmail, String nickname, String accessToken,
         String refreshToken, UserPhase userPhase, String mailEmail, String name) {
       this.id = id;
       this.nickname = nickname;
       this.name = name;
-      this.longinEmail = longinEmail;
+      this.loginEmail = loginEmail;
       this.accessToken = accessToken;
       this.refreshToken = refreshToken;
       this.userPhase = userPhase.name();

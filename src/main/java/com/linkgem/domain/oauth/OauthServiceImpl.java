@@ -44,7 +44,7 @@ public class OauthServiceImpl implements OauthService {
         .id(user.getId())
         .name(user.getName())
         .nickname(user.getNickname())
-        .longinEmail(user.getLoginEmail())
+        .loginEmail(user.getLoginEmail())
         .accessToken(accessToken)
         .refreshToken(refreshToken)
         .mailEmail(user.getMailEmail())
