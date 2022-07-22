@@ -53,6 +53,8 @@ dependencies {
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
     implementation 'org.jsoup:jsoup:1.15.1'
+    // jpa query parameter 보기용
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
 
     //JWT 의존성 추가
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'

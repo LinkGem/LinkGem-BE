@@ -11,7 +11,7 @@ public enum OauthAttributes {
       Map<String, Object> response = (Map<String, Object>) attributes.get("response");
       return UserProfile.builder()
           .oauthId(NAVER.providerName + "_" + response.get("id").toString())
-          .email((String) response.get("email"))
+          .loginEmail((String) response.get("email"))
           .name((String) response.get("name"))
           .build();
     }
@@ -21,7 +21,7 @@ public enum OauthAttributes {
     public UserProfile of(Map<String, Object> attributes) {
       return UserProfile.builder()
           .oauthId(GOOGLE.providerName + "_" + attributes.get("sub").toString())
-          .email((String) attributes.get("email"))
+          .loginEmail((String) attributes.get("email"))
           .name((String) attributes.get("name"))
           .build();
     }

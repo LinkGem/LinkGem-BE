@@ -1,15 +1,12 @@
 package com.linkgem.domain.user;
 
 import com.linkgem.domain.common.BaseEntity;
-import com.linkgem.domain.job.Job;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,28 +16,43 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false, unique = true)
-    private String email;
-    @Column(nullable = false)
-    private String nickname;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_id")
-    private Job job;
-    @Column(name = "oauth_id", nullable = false)
-    private String oauthId;
-    //private UserPhase userPhase;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  @Column(nullable = false, unique = true)
+  private String loginEmail;
+
+  private String mailEmail;
+  private String name;
+  private String nickname;
+  private String job;
+  @Column(name = "oauth_id", nullable = false)
+  private String oauthId;
+  @Convert(converter = UserPhaseConvertor.class)
+  private UserPhase userPhase;
+  @Column(name = "career_year")
+  private int careerYear;
 
 
+  @Builder
+  public User(String loginEmail, String nickname, String oauthId,String name) {
+    this.loginEmail = loginEmail;
+    this.nickname = nickname;
+    this.oauthId = oauthId;
+    this.userPhase = UserPhase.READY;
+    this.name = name;
+  }
 
+  public void updateNickname(String nickname) {
+    this.nickname = nickname;
+  }
 
-    @Builder
-    public User(String email, String nickname, String oauthId) {
-        this.email = email;
-        this.nickname = nickname;
-        this.oauthId = oauthId;
-    }
+  public void updateCareerYear(int careerYear) {
+    this.careerYear = careerYear;
+  }
+
+  public void updateJob(String job) {
+    this.job = job;
+  }
 
 }

@@ -26,7 +26,7 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
 
     if (authentication != null) {
       String userId = tokenProvider.isValidAccessToken(authentication);
-      request.setAttribute("userId",Long.valueOf(userId));
+      request.setAttribute(USER_INFORMATION_NAME,Long.valueOf(userId));
       return true;
     } else {
       //TODO accessToken 없을시 응답코드

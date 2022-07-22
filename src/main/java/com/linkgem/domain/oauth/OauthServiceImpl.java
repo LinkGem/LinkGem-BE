@@ -11,11 +11,11 @@ import com.linkgem.presentation.oauth.dto.OauthResponse.TokenReissueResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -35,23 +35,20 @@ public class OauthServiceImpl implements OauthService {
   @Transactional
   public LoginResponse login(String providerName, String code) {
     OauthProvider provider = inMemoryProviderRepository.findByProviderName(providerName);
-
     OauthTokenResponse tokenResponse = getToken(code, provider);
-    System.out.println("tokenResponse.getAccessToken() = " + tokenResponse.getAccessToken());
     UserProfile userProfile = getUserProfile(providerName, tokenResponse, provider);
-
-    User user = userRepository.findByEmail(userProfile.getEmail())
-        .orElseGet(() -> {
-          return userRepository.save(userProfile.toUser());
-        });
+    User user = userRepository.findByLoginEmail(userProfile.getLoginEmail()).orElseGet(()->userRepository.save(userProfile.toUser()));
     String accessToken = tokenProvider.createAccessToken(user.getId().toString());
     String refreshToken = tokenProvider.createRefreshToken(user.getId().toString());
     return LoginResponse.builder()
         .id(user.getId())
+        .name(user.getName())
         .nickname(user.getNickname())
-        .email(user.getEmail())
+        .loginEmail(user.getLoginEmail())
         .accessToken(accessToken)
         .refreshToken(refreshToken)
+        .mailEmail(user.getMailEmail())
+        .userPhase(user.getUserPhase())
         .build();
   }
 
@@ -68,10 +65,6 @@ public class OauthServiceImpl implements OauthService {
   }
 
   private OauthTokenResponse getToken(String code, OauthProvider provider) {
-    System.out.println("code = " + code);
-    System.out.println("pr = " + provider.getTokenUrl());
-    System.out.println("provider.getClientId() = " + provider.getClientId());
-    System.out.println("code = " + code);
     return WebClient.create()
         .post()
         .uri(provider.getTokenUrl())

@@ -1,6 +1,8 @@
 package com.linkgem.presentation.oauth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.linkgem.domain.user.UserPhase;
+import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,24 +10,31 @@ import lombok.NoArgsConstructor;
 public class OauthResponse {
 
   @Getter
+  @ApiModel(description = "로그인 요청 응답")
   @NoArgsConstructor
   public static class LoginResponse {
 
     private Long id;
-    private String email;
-
+    private String loginEmail;
+    private String mailEmail;
+    private String name;
     private String nickname;
     private String accessToken;
     private String refreshToken;
+    private String userPhase;
+
 
     @Builder
-    public LoginResponse(Long id, String email, String nickname, String accessToken,
-        String refreshToken) {
+    public LoginResponse(Long id, String loginEmail, String nickname, String accessToken,
+        String refreshToken, UserPhase userPhase, String mailEmail, String name) {
       this.id = id;
       this.nickname = nickname;
-      this.email = email;
+      this.name = name;
+      this.loginEmail = loginEmail;
       this.accessToken = accessToken;
       this.refreshToken = refreshToken;
+      this.userPhase = userPhase.name();
+      this.mailEmail = mailEmail;
     }
   }
 
@@ -49,13 +58,15 @@ public class OauthResponse {
     }
   }
 
+  @ApiModel(description = "엑세스 토큰 재발급 요청 응답")
   @Getter
   @NoArgsConstructor
   public static class TokenReissueResponse {
+
     private String accessToken;
 
     @Builder
-    public TokenReissueResponse(String accessToken){
+    public TokenReissueResponse(String accessToken) {
       this.accessToken = accessToken;
     }
   }
