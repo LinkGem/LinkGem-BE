@@ -7,20 +7,20 @@ import lombok.Getter;
 public class UserProfile {
 
   private final String oauthId;
-  private final String email;
+  private final String loginEmail;
   private final String name;
 
   @Builder
-  public UserProfile(String oauthId, String email, String name) {
+  public UserProfile(String oauthId, String loginEmail, String name) {
     this.oauthId = oauthId;
-    this.email = email;
+    this.loginEmail = loginEmail;
     this.name = name;
   }
 
   public User toUser() {
     return User.builder()
-        .email(email)
-        .nickname(name)
+        .loginEmail(loginEmail)
+        .name(name)
         .oauthId(oauthId)
         .build();
   }

@@ -23,6 +23,9 @@ public enum ErrorCode {
 
     LINK_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 링크입니다."),
 
+    USER_NICKNAME_NOT_VALID(HttpStatus.BAD_REQUEST,"닉네임이 유효하지않습니다."),
+    CAREER_YEAR_NOT_VALID(HttpStatus.BAD_REQUEST,"커리어 연차가 유효하지않습니다."),
+    JOB_NOT_VALID(HttpStatus.BAD_REQUEST,"직업이 유효하지않습니다."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다");
 
     private final HttpStatus httpStatus;
