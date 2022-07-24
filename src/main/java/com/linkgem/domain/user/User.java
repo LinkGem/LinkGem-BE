@@ -1,12 +1,14 @@
 package com.linkgem.domain.user;
 
-import com.linkgem.domain.common.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.linkgem.domain.common.BaseEntity;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,6 +55,10 @@ public class User extends BaseEntity {
 
   public void updateJob(String job) {
     this.job = job;
+  }
+
+  public void updateUserPhaseRegistered(){
+    this.userPhase = UserPhase.REGISTERED;
   }
 
 }
