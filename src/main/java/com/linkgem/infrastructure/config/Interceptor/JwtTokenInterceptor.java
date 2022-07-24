@@ -1,13 +1,16 @@
 package com.linkgem.infrastructure.config.Interceptor;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
 import com.linkgem.domain.oauth.TokenProvider;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 @RequiredArgsConstructor
@@ -29,7 +32,6 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
       request.setAttribute(USER_INFORMATION_NAME,Long.valueOf(userId));
       return true;
     } else {
-      //TODO accessToken 없을시 응답코드
       throw new BusinessException(ErrorCode.ACCESS_TOKEN_IS_EMPTY);
     }
 

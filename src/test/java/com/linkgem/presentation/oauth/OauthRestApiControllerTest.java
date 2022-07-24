@@ -25,10 +25,10 @@ class OauthRestApiControllerTest {
 	private MockMvc mockMvc;
 
 	@MockBean
-	OauthService oauthService;
+	private OauthService oauthService;
 
 	@MockBean
-	TokenProvider tokenProvider;
+	private TokenProvider tokenProvider;
 
 	@Test
 	@DisplayName("로그인 api 테스트")
