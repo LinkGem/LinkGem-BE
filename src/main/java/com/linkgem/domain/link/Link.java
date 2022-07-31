@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.util.StringUtils;
 
 import com.linkgem.domain.common.BaseEntity;
 import com.linkgem.domain.gembox.GemBox;
@@ -68,4 +69,9 @@ public class Link extends BaseEntity {
     public void updateGemBox(GemBox gemBox) {
         this.gemBox = gemBox;
     }
+
+    public boolean hasImageUrl() {
+        return StringUtils.hasText(this.getOpenGraph().getImageUrl());
+    }
+
 }

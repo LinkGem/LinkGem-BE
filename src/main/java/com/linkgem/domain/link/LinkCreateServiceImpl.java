@@ -3,6 +3,10 @@ package com.linkgem.domain.link;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.linkgem.domain.common.file.Directory;
+import com.linkgem.domain.common.file.FileCommand;
+import com.linkgem.domain.common.file.FileInfo;
+import com.linkgem.domain.common.file.FileStore;
 import com.linkgem.domain.link.opengraph.OpenGraph;
 import com.linkgem.domain.link.opengraph.OpenGraphReader;
 import com.linkgem.domain.user.User;
@@ -16,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class LinkCreateServiceImpl implements LinkCreateService {
 
+    private final FileStore fileStore;
+
     private final LinkStore linkStore;
 
     private final UserReader userReader;
@@ -24,20 +30,38 @@ public class LinkCreateServiceImpl implements LinkCreateService {
 
     @Transactional
     @Override
-    public LinkInfo.Create create(LinkCommand.Create create) {
+    public LinkInfo.Create create(LinkCommand.Create createCommand) {
 
-        User user = userReader.find(create.getUserId())
+        User user = userReader.find(createCommand.getUserId())
             .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
-        OpenGraph openGraph = openGraphReader.call(create.getUrl());
+        OpenGraph openGraph = openGraphReader.call(createCommand.getUrl());
 
         Link link = Link.builder()
-            .memo(create.getMemo())
-            .url(create.getUrl())
+            .memo(createCommand.getMemo())
+            .url(createCommand.getUrl())
             .user(user)
             .openGraph(openGraph)
             .build();
 
-        return LinkInfo.Create.of(linkStore.create(link));
+        Link createdLink = linkStore.create(link);
+
+        if (link.hasImageUrl()) {
+            this.uploadImageUrl(createdLink);
+        }
+
+        return LinkInfo.Create.of(createdLink);
+    }
+
+    private void uploadImageUrl(Link createdLink) {
+
+        final String imageUrl = createdLink.getOpenGraph().getImageUrl();
+
+        FileCommand.UploadUrlFile uploadCommand =
+            FileCommand.UploadUrlFile.of(imageUrl, Directory.LINK, createdLink.getUser().getId(), createdLink.getId());
+
+        FileInfo fileInfo = fileStore.store(uploadCommand);
+
+        createdLink.getOpenGraph().updateImageUrl(fileInfo.getUrl());
     }
 }

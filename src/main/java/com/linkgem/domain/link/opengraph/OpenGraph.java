@@ -32,6 +32,10 @@ public class OpenGraph {
         this.imageUrl = imageUrl;
     }
 
+    public void updateImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public static OpenGraph createEmpty() {
         return new OpenGraph("", "", "");
     }
