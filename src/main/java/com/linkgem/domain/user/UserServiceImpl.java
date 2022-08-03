@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService {
 
     if (addDetailInfoRequest.getUserNickname().isBlank()) {
       throw new BusinessException(ErrorCode.USER_NICKNAME_NOT_VALID);
+    } else if (userRepository.existsByNickname(addDetailInfoRequest.getUserNickname())) {
+      throw new BusinessException(ErrorCode.USER_NICKNAME_ALREADY_EXIST);
     } else if (Objects.isNull(addDetailInfoRequest.getCareerYear())
         || addDetailInfoRequest.getCareerYear() < 0) {
       throw new BusinessException(ErrorCode.CAREER_YEAR_NOT_VALID);
@@ -37,6 +39,14 @@ public class UserServiceImpl implements UserService {
     user.updateJob(addDetailInfoRequest.getJobName());
     user.updateNickname(addDetailInfoRequest.getUserNickname());
     user.updateUserPhaseRegistered();
+
+  }
+
+  @Override
+  @Transactional
+  public void leave(Long userId) {
+    User user = userRepository.findById(userId).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+    user.updateUserPhaseDeleted();
 
   }
 }

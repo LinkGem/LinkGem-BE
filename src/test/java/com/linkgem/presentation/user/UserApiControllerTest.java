@@ -37,7 +37,7 @@ class UserApiControllerTest {
 	void addDetailInfo() throws Exception {
 
 		given(jwtTokenInterceptor.preHandle(any(), any(), any())).willReturn(true);
-		doNothing().when(userService).addDetailInfo(any(),any());
+		doNothing().when(userService).addDetailInfo(any(), any());
 		AddDetailInfoRequest addDetailInfoRequest = AddDetailInfoRequest.builder()
 			.userNickname("test")
 			.careerYear(10)
@@ -46,10 +46,25 @@ class UserApiControllerTest {
 
 		String jsonRequest = objectMapper.writeValueAsString(addDetailInfoRequest);
 
+		mockMvc.perform(patch("/api/v1/user/addDetailInfo").contentType(MediaType.APPLICATION_JSON)
+			.requestAttr(JwtTokenInterceptor.USER_INFORMATION_NAME, 1L)
+			.content(jsonRequest)).andDo(print());
+	}
+
+	@Test
+	@DisplayName("회원탈퇴 API 테스트")
+	void leave() throws Exception {
+
+		given(jwtTokenInterceptor.preHandle(any(), any(), any())).willReturn(true);
+		doNothing().when(userService).leave(any());
+
+		String jsonRequest = objectMapper.writeValueAsString(null);
+
 		mockMvc.perform(patch("/api/v1/user/addDetailInfo")
-				.contentType(MediaType.APPLICATION_JSON)
-				.requestAttr(JwtTokenInterceptor.USER_INFORMATION_NAME,1L)
-				.content(jsonRequest))
-			.andDo(print());
+			.contentType(MediaType.APPLICATION_JSON)
+			.requestAttr(JwtTokenInterceptor.USER_INFORMATION_NAME, 1L)
+			.content(jsonRequest)
+		).andDo(print());
+
 	}
 }

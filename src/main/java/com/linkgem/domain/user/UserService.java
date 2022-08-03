@@ -6,4 +6,6 @@ public interface UserService {
 
   void addDetailInfo(Long userId, AddDetailInfoRequest addDetailInfoRequest);
 
+  void leave(Long userId);
+
 }

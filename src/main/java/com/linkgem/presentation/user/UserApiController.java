@@ -22,16 +22,24 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/user")
 public class UserApiController {
 
-  private final UserService userService;
+	private final UserService userService;
 
-  @ApiOperation(value = "추가정보 추가", notes = "직업,경력,닉네임 추가")
-  @PatchMapping("/addDetailInfo")
-  public ResponseEntity<Void> addDetailInfo(
-      HttpServletRequest httpServletRequest,
-      @RequestBody AddDetailInfoRequest addDetailInfoRequest) {
-    Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-    userService.addDetailInfo(userId,addDetailInfoRequest);
-    return ResponseEntity.ok().build();
-  }
+	@ApiOperation(value = "추가정보 추가", notes = "유저의 직업,경력,닉네임 추가한다.")
+	@PatchMapping("/addDetailInfo")
+	public ResponseEntity<Void> addDetailInfo(
+		HttpServletRequest httpServletRequest,
+		@RequestBody AddDetailInfoRequest addDetailInfoRequest) {
+		Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+		userService.addDetailInfo(userId, addDetailInfoRequest);
+		return ResponseEntity.ok().build();
+	}
+
+	@ApiOperation(value = "회원 탈퇴", notes = "회원을 탈퇴한다.")
+	@PatchMapping("/leave")
+	public ResponseEntity<Void> leave(HttpServletRequest httpServletRequest) {
+		Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+		userService.leave(userId);
+		return ResponseEntity.ok().build();
+	}
 
 }
