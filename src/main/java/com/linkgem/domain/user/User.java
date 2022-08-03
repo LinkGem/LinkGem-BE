@@ -18,47 +18,58 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User extends BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-  @Column(nullable = false, unique = true)
-  private String loginEmail;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Column(nullable = false, unique = true)
+	private String loginEmail;
 
-  private String mailEmail;
-  private String name;
-  private String nickname;
-  private String job;
-  @Column(name = "oauth_id", nullable = false)
-  private String oauthId;
-  @Convert(converter = UserPhaseConvertor.class)
-  private UserPhase userPhase;
-  @Column(name = "career_year")
-  private int careerYear;
+	private String mailEmail;
+	private String name;
+	private String nickname;
+	private String job;
+	@Column(name = "oauth_id", nullable = false)
+	private String oauthId;
+	@Convert(converter = UserPhaseConvertor.class)
+	private UserPhase userPhase;
+	@Column(name = "career_year")
+	private int careerYear;
 
+	@Builder
+	public User(String loginEmail, String nickname, String oauthId, String name) {
+		this.loginEmail = loginEmail;
+		this.nickname = nickname;
+		this.oauthId = oauthId;
+		this.userPhase = UserPhase.READY;
+		this.name = name;
+	}
 
-  @Builder
-  public User(String loginEmail, String nickname, String oauthId,String name) {
-    this.loginEmail = loginEmail;
-    this.nickname = nickname;
-    this.oauthId = oauthId;
-    this.userPhase = UserPhase.READY;
-    this.name = name;
-  }
+	public void updateNickname(String nickname) {
+		this.nickname = nickname;
+	}
 
-  public void updateNickname(String nickname) {
-    this.nickname = nickname;
-  }
+	public void updateCareerYear(int careerYear) {
+		this.careerYear = careerYear;
+	}
 
-  public void updateCareerYear(int careerYear) {
-    this.careerYear = careerYear;
-  }
+	public void updateJob(String job) {
+		this.job = job;
+	}
 
-  public void updateJob(String job) {
-    this.job = job;
-  }
+	public void updateUserPhaseRegistered() {
+		this.userPhase = UserPhase.REGISTERED;
+	}
 
-  public void updateUserPhaseRegistered(){
-    this.userPhase = UserPhase.REGISTERED;
-  }
+	public void updateUserPhaseDeleted() {
+		this.userPhase = UserPhase.DELETED;
+	}
+
+	public void resetReady(){
+		this.userPhase = UserPhase.READY;
+		this.job = null;
+		this.nickname = null;
+		this.careerYear = 0;
+		this.mailEmail = null;
+	}
 
 }
