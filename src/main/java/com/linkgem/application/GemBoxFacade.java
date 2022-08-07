@@ -1,7 +1,7 @@
 package com.linkgem.application;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.linkgem.domain.gembox.GemBoxCommand;
@@ -29,8 +29,8 @@ public class GemBoxFacade {
         gemBoxService.delete(command);
     }
 
-    public List<GemBoxInfo.Main> findAll(Long userId) {
-        return gemBoxService.findAll(userId);
+    public Page<GemBoxInfo.Search> search(Long userId, Pageable pageable) {
+        return gemBoxService.search(userId, pageable);
     }
 
     public GemBoxInfo.Main find(GemBoxQuery.SearchDetail searchDetail) {

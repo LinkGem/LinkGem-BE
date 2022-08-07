@@ -22,6 +22,19 @@ public class GemBoxResponse {
         }
     }
 
+    @ApiModel(description = "잼박스 목록 응답")
+    @AllArgsConstructor
+    @Getter
+    public static class Search {
+        private Long id;
+        private String name;
+        private String imageUrl;
+
+        public static Search of(GemBoxInfo.Search gemboxInfo) {
+            return new Search(gemboxInfo.getId(), gemboxInfo.getName(), gemboxInfo.getImageUrl());
+        }
+    }
+
     @ApiModel(description = "잼박스 생성 응답")
     @AllArgsConstructor
     @Getter

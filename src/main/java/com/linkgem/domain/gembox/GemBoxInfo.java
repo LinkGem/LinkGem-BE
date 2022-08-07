@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.linkgem.domain.link.Link;
-import com.linkgem.domain.link.LinkInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +25,16 @@ public class GemBoxInfo {
                 .name(gemBox.getName())
                 .build();
         }
+    }
 
+    @AllArgsConstructor
+    @Getter
+    public static class Search {
+        private Long id;
+
+        private String name;
+
+        private String imageUrl;
     }
 
     @Builder

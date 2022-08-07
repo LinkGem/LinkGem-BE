@@ -1,11 +1,10 @@
 package com.linkgem.presentation.gembox;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.linkgem.application.GemBoxFacade;
+import com.linkgem.domain.common.Pages;
 import com.linkgem.domain.gembox.GemBoxCommand;
 import com.linkgem.domain.gembox.GemBoxInfo;
 import com.linkgem.domain.gembox.GemBoxQuery;
@@ -53,16 +53,23 @@ public class GemBoxApiController {
 
     @ApiOperation(value = "잼박스 목록 조회", notes = "잼박스 목록을 조회한다")
     @GetMapping
-    public CommonResponse<List<GemBoxResponse.GemBox>> findAll(
-        HttpServletRequest httpServletRequest
+    public CommonResponse<Pages<GemBoxResponse.Search>> findAll(
+        HttpServletRequest httpServletRequest,
+        Pageable pageable
     ) {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-        List<GemBoxResponse.GemBox> responses = gemBoxFacade.findAll(userId)
-            .stream().map(GemBoxResponse.GemBox::of)
-            .collect(Collectors.toList());
+        Page<GemBoxResponse.Search> responses = gemBoxFacade.search(userId, pageable)
+            .map(GemBoxResponse.Search::of);
 
-        return CommonResponse.of(responses);
+        return CommonResponse.of(
+            Pages.<GemBoxResponse.Search>builder()
+                .contents(responses.getContent())
+                .totalCount(responses.getTotalElements())
+                .size(pageable.getPageSize())
+                .page(pageable.getPageNumber())
+                .build()
+        );
     }
 
     @ApiOperation(value = "잼박스 생성", notes = "잼박스를 생성한다")

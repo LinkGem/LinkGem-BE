@@ -3,6 +3,8 @@ package com.linkgem.domain.gembox;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +47,10 @@ public class GemBoxServiceImpl implements GemBoxService {
     }
 
     private void addLinkToGemBox(GemBoxCommand.Create command, GemBox createdGemBox) {
+        if (command.getLinkIds() == null || command.getLinkIds().isEmpty()) {
+            return;
+        }
+
         command.getLinkIds().forEach(linkId -> {
             linkReader.find(linkId, command.getUserId())
                 .ifPresent(link -> createdGemBox.addLink(link));
@@ -78,6 +84,11 @@ public class GemBoxServiceImpl implements GemBoxService {
             .stream()
             .map(GemBoxInfo.Main::of)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<GemBoxInfo.Search> search(Long userId, Pageable pageable) {
+        return gemBoxReader.search(userId, pageable);
     }
 
     @Override
