@@ -51,6 +51,9 @@ public class Link extends BaseEntity {
     @JoinColumn(name = "gem_box_id")
     private GemBox gemBox;
 
+    @Column(name = "is_favorites", nullable = false, columnDefinition = "boolean default false")
+    private boolean isFavorites;
+
     @Builder
     private Link(String url, String memo, OpenGraph openGraph, User user) {
         validateString(url, "url");
@@ -58,6 +61,7 @@ public class Link extends BaseEntity {
         updateMemo(memo);
         this.url = url;
         this.user = user;
+        this.isFavorites = false;
 
         this.openGraph = openGraph == null ? OpenGraph.createEmpty() : openGraph;
     }
@@ -68,6 +72,10 @@ public class Link extends BaseEntity {
 
     public void updateGemBox(GemBox gemBox) {
         this.gemBox = gemBox;
+    }
+
+    public void updateFavorites(boolean isFavorites) {
+        this.isFavorites = isFavorites;
     }
 
     public boolean hasImageUrl() {
