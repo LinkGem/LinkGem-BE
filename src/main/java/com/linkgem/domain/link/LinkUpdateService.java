@@ -1,4 +1,4 @@
-package com.linkgem.domain.link.opengraph;
+package com.linkgem.domain.link;
 
 import com.linkgem.domain.link.LinkCommand;
 import com.linkgem.domain.link.LinkInfo;

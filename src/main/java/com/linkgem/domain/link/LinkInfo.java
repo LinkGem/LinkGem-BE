@@ -21,6 +21,7 @@ public class LinkInfo {
         private String title;
         private String description;
         private String imageUrl;
+        private boolean isFavorites;
 
         private Long userId;
         private String userNickname;
@@ -38,6 +39,7 @@ public class LinkInfo {
                 .imageUrl(link.getOpenGraph().getImageUrl())
                 .userId(link.getUser().getId())
                 .userNickname(link.getUser().getNickname())
+                .isFavorites(link.isFavorites())
                 .createDate(link.getCreateDate())
                 .updateDate(link.getUpdateDate())
                 .build();
@@ -58,6 +60,7 @@ public class LinkInfo {
         private String title;
         private String description;
         private String imageUrl;
+        private boolean isFavorites;
 
         private Long userId;
         private String userNickname;
@@ -76,6 +79,7 @@ public class LinkInfo {
                 .imageUrl(link.getOpenGraph().getImageUrl())
                 .userId(link.getUser().getId())
                 .userNickname(link.getUser().getNickname())
+                .isFavorites(link.isFavorites())
                 .createDate(link.getCreateDate())
                 .updateDate(link.getUpdateDate())
                 .gemBoxId(gemBoxId)
@@ -96,6 +100,7 @@ public class LinkInfo {
         private String title;
         private String description;
         private String imageUrl;
+        private boolean isFavorites;
 
         private Long userId;
         private String userNickname;
@@ -111,6 +116,7 @@ public class LinkInfo {
                 .title(link.getOpenGraph().getTitle())
                 .description(link.getOpenGraph().getDescription())
                 .imageUrl(link.getOpenGraph().getImageUrl())
+                .isFavorites(link.isFavorites())
                 .userId(link.getUser().getId())
                 .userNickname(link.getUser().getNickname())
                 .createDate(link.getCreateDate())

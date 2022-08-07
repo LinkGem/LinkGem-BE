@@ -12,7 +12,7 @@ import com.linkgem.domain.link.LinkDeleteService;
 import com.linkgem.domain.link.LinkInfo;
 import com.linkgem.domain.link.LinkQuery;
 import com.linkgem.domain.link.LinkSearchService;
-import com.linkgem.domain.link.opengraph.LinkUpdateService;
+import com.linkgem.domain.link.LinkUpdateService;
 
 import lombok.RequiredArgsConstructor;
 

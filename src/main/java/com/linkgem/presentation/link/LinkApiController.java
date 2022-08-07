@@ -54,7 +54,7 @@ public class LinkApiController {
     }
 
     @ApiOperation(value = "링크 상세 조회", notes = "링크를 상세하게 조회한다")
-    @GetMapping(value = "{id}")
+    @GetMapping(value = "/{id}")
     public CommonResponse<LinkResponse.SearchDetailLinkResponse> findById(
         HttpServletRequest httpServletRequest,
         @PathVariable(value = "id") Long id
@@ -65,7 +65,7 @@ public class LinkApiController {
         return CommonResponse.of(linkResponse);
     }
 
-    @ApiOperation(value = "링크 목록 조회", notes = "링크를 목록을 조회한다")
+    @ApiOperation(value = "링크 목록 조회", notes = "링크 목록을 조회한다")
     @GetMapping
     public CommonResponse<Pages<LinkResponse.SearchLinkResponse>> findAll(
         HttpServletRequest httpServletRequest,
@@ -103,14 +103,15 @@ public class LinkApiController {
     }
 
     @ApiOperation(value = "링크 수정", notes = "링크를 수정한다")
-    @PatchMapping
-    public CommonResponse updateLink(
+    @PatchMapping(value = "/{id}")
+    public CommonResponse<LinkResponse.Main> updateLink(
         HttpServletRequest httpServletRequest,
+        @PathVariable Long id,
         @RequestBody @Valid LinkRequest.UpdateLinkRequest request
     ) {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-        LinkCommand.Update updateCommand = request.to(userId);
+        LinkCommand.Update updateCommand = request.to(id, userId);
         LinkInfo.Main updateInfo = linkFacade.update(updateCommand);
 
         return CommonResponse.of(LinkResponse.Main.of(updateInfo));

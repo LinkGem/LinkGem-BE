@@ -13,6 +13,7 @@ public class LinkQuery {
     public static class SearchLinks {
         private Long userId;
         private Long gemBoxId;
+        private Boolean isFavorites;
     }
 
 }

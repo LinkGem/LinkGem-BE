@@ -37,6 +37,7 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
                 link.openGraph.title,
                 link.openGraph.description,
                 link.openGraph.imageUrl,
+                link.isFavorites,
                 link.user.id.as("userId"),
                 link.user.nickname,
                 link.createDate,
@@ -59,6 +60,9 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
 
         if (Objects.nonNull(searchLinks.getGemBoxId())) {
             whereBuilder.and(link.gemBox.id.eq(searchLinks.getGemBoxId()));
+        }
+        if (Objects.nonNull(searchLinks.getIsFavorites())) {
+            whereBuilder.and(link.isFavorites.eq(searchLinks.getIsFavorites()));
         }
         return whereBuilder;
     }

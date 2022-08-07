@@ -6,6 +6,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.linkgem.domain.link.LinkCommand;
 import com.linkgem.domain.link.LinkQuery;
 import com.linkgem.domain.link.opengraph.OpenGraph;
@@ -23,10 +25,15 @@ public class LinkRequest {
     @Setter
     @Getter
     public static class SearchLinksRequest {
+
+        @ApiModelProperty(value = "잼박스 고유 아이디")
         private Long gemBoxId;
 
+        @ApiModelProperty(value = "즐겨찾기 조회", allowableValues = "true, false")
+        private Boolean isFavorites;
+
         public LinkQuery.SearchLinks to(Long userId) {
-            return new LinkQuery.SearchLinks(userId, this.gemBoxId);
+            return new LinkQuery.SearchLinks(userId, this.gemBoxId, this.isFavorites);
         }
     }
 
@@ -73,19 +80,18 @@ public class LinkRequest {
     @Getter
     public static class UpdateLinkRequest {
 
-        @ApiModelProperty(value = "링크 id", required = true)
-        @NotNull(message = "link id는 필수 값입니다.")
-        private Long id;
-
         private String memo;
 
         private Long gemBoxId;
 
-        public LinkCommand.Update to(Long userId) {
+        private Boolean isFavorites;
+
+        public LinkCommand.Update to(Long id, Long userId) {
             return LinkCommand.Update.builder()
                 .userId(userId)
-                .id(this.id)
+                .id(id)
                 .memo(this.memo)
+                .isFavorites(this.isFavorites)
                 .gemBoxId(this.gemBoxId)
                 .build();
         }

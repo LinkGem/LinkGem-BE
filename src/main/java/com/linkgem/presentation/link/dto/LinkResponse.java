@@ -30,6 +30,8 @@ public class LinkResponse {
         private Long userId;
         private String userNickname;
 
+        private Boolean isFavorites;
+
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
 
@@ -43,6 +45,7 @@ public class LinkResponse {
                 .imageUrl(linkInfo.getImageUrl())
                 .userId(linkInfo.getUserId())
                 .userNickname(linkInfo.getUserNickname())
+                .isFavorites(linkInfo.isFavorites())
                 .createDate(linkInfo.getCreateDate())
                 .updateDate(linkInfo.getUpdateDate())
                 .build();
@@ -62,6 +65,7 @@ public class LinkResponse {
         private String title;
         private String description;
         private String imageUrl;
+        private Boolean isFavorites;
 
         private Long userId;
         private String userNickname;
@@ -85,6 +89,7 @@ public class LinkResponse {
                 .imageUrl(linkInfo.getImageUrl())
                 .userId(linkInfo.getUserId())
                 .userNickname(linkInfo.getUserNickname())
+                .isFavorites(linkInfo.isFavorites())
                 .createDate(linkInfo.getCreateDate())
                 .updateDate(linkInfo.getUpdateDate())
                 .gemBoxId(linkInfo.getGemBoxId())
@@ -109,6 +114,7 @@ public class LinkResponse {
 
         private Long userId;
         private String userNickname;
+        private Boolean isFavorites;
 
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
@@ -123,6 +129,7 @@ public class LinkResponse {
                 .imageUrl(search.getImageUrl())
                 .userId(search.getUserId())
                 .userNickname(search.getUserNickname())
+                .isFavorites(search.isFavorites())
                 .createDate(search.getCreateDate())
                 .updateDate(search.getUpdateDate())
                 .build();

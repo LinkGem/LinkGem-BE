@@ -1,4 +1,4 @@
-package com.linkgem.domain.link.opengraph;
+package com.linkgem.domain.link;
 
 import java.util.Objects;
 
@@ -8,10 +8,6 @@ import org.springframework.util.StringUtils;
 
 import com.linkgem.domain.gembox.GemBox;
 import com.linkgem.domain.gembox.GemBoxReader;
-import com.linkgem.domain.link.Link;
-import com.linkgem.domain.link.LinkCommand;
-import com.linkgem.domain.link.LinkInfo;
-import com.linkgem.domain.link.LinkReader;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,6 +31,10 @@ public class LinkUpdateServiceImpl implements LinkUpdateService {
 
         if (Objects.nonNull(updateCommand.getGemBoxId())) {
             this.updateGemBox(findLink, updateCommand.getGemBoxId(), userId);
+        }
+
+        if (Objects.nonNull(updateCommand.getIsFavorites())) {
+            findLink.updateFavorites(updateCommand.getIsFavorites());
         }
 
         return LinkInfo.Main.of(findLink);
