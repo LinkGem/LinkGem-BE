@@ -41,12 +41,4 @@ public class UserServiceImpl implements UserService {
     user.updateUserPhaseRegistered();
 
   }
-
-  @Override
-  @Transactional
-  public void leave(Long userId) {
-    User user = userRepository.findById(userId).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-    user.updateUserPhaseDeleted();
-
-  }
 }

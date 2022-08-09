@@ -34,12 +34,4 @@ public class UserApiController {
 		return ResponseEntity.ok().build();
 	}
 
-	@ApiOperation(value = "회원 탈퇴", notes = "회원을 탈퇴한다.")
-	@PatchMapping("/leave")
-	public ResponseEntity<Void> leave(HttpServletRequest httpServletRequest) {
-		Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-		userService.leave(userId);
-		return ResponseEntity.ok().build();
-	}
-
 }

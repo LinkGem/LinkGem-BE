@@ -18,6 +18,8 @@ import com.linkgem.domain.user.UserProfile;
 import com.linkgem.infrastructure.user.UserRepository;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
+import com.linkgem.presentation.oauth.dto.OauthRequest;
+import com.linkgem.presentation.oauth.dto.OauthResponse;
 import com.linkgem.presentation.oauth.dto.OauthResponse.LoginResponse;
 import com.linkgem.presentation.oauth.dto.OauthResponse.OauthTokenResponse;
 import com.linkgem.presentation.oauth.dto.OauthResponse.TokenReissueResponse;
@@ -71,6 +73,20 @@ public class OauthServiceImpl implements OauthService {
 			throw new BusinessException(ErrorCode.ACCESS_TOKEN_NOT_EXPIRED);
 	}
 
+	@Override
+	@Transactional
+	public OauthResponse.OauthLeaveResponse leave(OauthRequest.OauthLeaveRequest oauthLeaveRequest) {
+		String code = oauthLeaveRequest.getCode();
+		String providerName = oauthLeaveRequest.getProviderName();
+		Long userId = oauthLeaveRequest.getUserId();
+		User user = userRepository.findById(userId).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+		user.updateUserPhaseDeleted();
+		OauthProvider provider = inMemoryProviderRepository.findByProviderName(providerName);
+		OauthTokenResponse tokenResponse = getToken(code, provider);
+		String accessToken = tokenResponse.getAccessToken();
+		return leaveOauth(accessToken, provider);
+	}
+
 	private OauthTokenResponse getToken(String code, OauthProvider provider) {
 		return WebClient.create()
 			.post()
@@ -86,6 +102,33 @@ public class OauthServiceImpl implements OauthService {
 			.bodyToMono(OauthTokenResponse.class)
 			.block();
 	}
+
+	private OauthResponse.OauthLeaveResponse leaveOauth(String accessToken,OauthProvider provider){
+		return WebClient.create()
+			.post()
+			.uri(provider.getTokenUrl())
+			.headers(header -> {
+				header.setBasicAuth(provider.getClientId(), provider.getClientSecret());
+				header.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+				header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+				header.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));
+			})
+			.bodyValue(leaveRequest(accessToken, provider))
+			.retrieve()
+			.bodyToMono(OauthResponse.OauthLeaveResponse.class)
+			.block();
+	}
+
+	private MultiValueMap<String, String> leaveRequest(String accessToken, OauthProvider provider) {
+		MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+		formData.add("service_provider", "naver");
+		formData.add("grant_type", "delete");
+		formData.add("access_token", accessToken);
+		formData.add("client_id", provider.getClientId());
+		formData.add("client_secret", provider.getClientSecret());
+		return formData;
+	}
+
 
 	private MultiValueMap<String, String> tokenRequest(String code, OauthProvider provider) {
 		MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
