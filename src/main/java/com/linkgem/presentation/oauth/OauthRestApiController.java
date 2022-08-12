@@ -47,9 +47,10 @@ public class OauthRestApiController {
 		TokenReissueResponse tokenReissueResponse = oauthService.reissue(accessToken, refreshToken);
 		return ResponseEntity.ok((CommonResponse.of(tokenReissueResponse)));
 	}
-
+	@ApiOperation(value = "회원 탈퇴", notes = "회원탈퇴를 진행한다.")
+	@PostMapping("/leave")
 	public OauthResponse.OauthLeaveResponse leave(@RequestBody OauthRequest.OauthLeaveRequest oauthLeaveRequest) {
-		return null;
+		return oauthService.leave(oauthLeaveRequest);
 	}
 
 }

@@ -35,6 +35,8 @@ public class User extends BaseEntity {
 	@Column(name = "career_year")
 	private int careerYear;
 
+	private String profileImageUrl;
+
 	@Builder
 	public User(String loginEmail, String nickname, String oauthId, String name) {
 		this.loginEmail = loginEmail;
@@ -64,7 +66,11 @@ public class User extends BaseEntity {
 		this.userPhase = UserPhase.DELETED;
 	}
 
-	public void resetReady(){
+	public void updateProfileImageUrl(String profileImageUrl) {
+		this.profileImageUrl = profileImageUrl;
+	}
+
+	public void resetReady() {
 		this.userPhase = UserPhase.READY;
 		this.job = null;
 		this.nickname = null;
