@@ -70,5 +70,14 @@ public class OauthResponse {
       this.accessToken = accessToken;
     }
   }
+  @ApiModel(description = "회원탈퇴 요청 응답")
+  @Getter
+  @NoArgsConstructor
+  public static class OauthLeaveResponse{
+
+    private String result;
+    private String error;
+    private String error_description;
+  }
 
 }

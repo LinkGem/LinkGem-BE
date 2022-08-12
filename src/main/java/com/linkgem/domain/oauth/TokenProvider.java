@@ -1,19 +1,22 @@
 package com.linkgem.domain.oauth;
 
-import com.linkgem.presentation.common.exception.BusinessException;
-import com.linkgem.presentation.common.exception.ErrorCode;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.linkgem.presentation.common.exception.BusinessException;
+import com.linkgem.presentation.common.exception.ErrorCode;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 
 @Service
 public class TokenProvider {
@@ -109,7 +112,7 @@ public class TokenProvider {
     } catch (ExpiredJwtException exception) {
       return true;
     } catch (Exception e) {
-      return false;
+      throw new BusinessException(ErrorCode.ACCESS_TOKEN_NOT_VALID);
     }
   }
 
