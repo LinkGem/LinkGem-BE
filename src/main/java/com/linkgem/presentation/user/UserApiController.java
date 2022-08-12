@@ -29,7 +29,7 @@ public class UserApiController {
 
 	private final UserService userService;
 
-	@ApiOperation(value = "추가정보 추가", notes = "유저의 직업,경력,닉네임 추가한다.")
+	@ApiOperation(value = "추가정보 추가", notes = "유저의 직업,경력,닉네임을 추가한다.")
 	@PatchMapping("/addDetailInfo")
 	public ResponseEntity<Void> addDetailInfo(
 		HttpServletRequest httpServletRequest,
@@ -38,6 +38,8 @@ public class UserApiController {
 		userService.addDetailInfo(userId, addDetailInfoRequest);
 		return ResponseEntity.ok().build();
 	}
+
+	@ApiOperation(value = "유저 세팅 API", notes = "유저의 직업,경력,닉네임, 프로필사진을 추가한다.")
 	@PostMapping("/settingUserInfo")
 	public ResponseEntity<UserResponse.SettingResponse> settingUserInfo(HttpServletRequest httpServletRequest,
 		@RequestParam MultipartFile profileImage,@RequestParam String nickName, @RequestParam String jobName,
