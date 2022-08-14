@@ -42,7 +42,7 @@ public class UserApiController {
 	@ApiOperation(value = "유저 세팅 API", notes = "유저의 직업,경력,닉네임, 프로필사진을 추가한다.")
 	@PostMapping("/settingUserInfo")
 	public ResponseEntity<UserResponse.SettingResponse> settingUserInfo(HttpServletRequest httpServletRequest,
-		@RequestParam MultipartFile profileImage,@RequestParam String nickName, @RequestParam String jobName,
+		@RequestParam(required = false) MultipartFile profileImage,@RequestParam String nickName, @RequestParam String jobName,
 		@RequestParam Integer careerYear) {
 		Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 		UserResponse.SettingResponse settingResponse = userService.settingUserInfo(userId, profileImage, nickName,

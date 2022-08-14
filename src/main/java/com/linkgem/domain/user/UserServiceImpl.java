@@ -71,6 +71,9 @@ public class UserServiceImpl implements UserService {
 		user.updateCareerYear(careerYear);
 		user.updateJob(jobName);
 		user.updateNickname(nickName);
+		if(profileImage.isEmpty()){
+			return UserResponse.SettingResponse.of(userId,nickName,jobName,careerYear, null);
+		}
 		FileCommand.UploadFile uploadFile = FileCommand.UploadFile.of(profileImage,
 			Directory.USER_PROFILE, userId, userId);
 		FileInfo fileInfo = fileStore.store(uploadFile);
