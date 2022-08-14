@@ -58,6 +58,9 @@ public class OauthServiceImpl implements OauthService {
 			.refreshToken(refreshToken)
 			.mailEmail(user.getMailEmail())
 			.userPhase(user.getUserPhase())
+			.careerYear(user.getCareerYear())
+			.jobName(user.getJob())
+			.profileImageUrl(user.getProfileImageUrl())
 			.build();
 	}
 
