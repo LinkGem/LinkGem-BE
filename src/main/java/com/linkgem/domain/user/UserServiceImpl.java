@@ -52,34 +52,34 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public UserResponse.SettingResponse settingUserInfo(Long userId, MultipartFile profileImage, String nickName, String jobName,
+	public UserResponse.SettingResponse settingUserInfo(Long userId, MultipartFile profileImage, String nickName,
+		String jobName,
 		Integer careerYear) {
-
-		if (nickName.isBlank()) {
-			throw new BusinessException(ErrorCode.USER_NICKNAME_NOT_VALID);
-		} else if (userRepository.existsByNickname(nickName)) {
-			throw new BusinessException(ErrorCode.USER_NICKNAME_ALREADY_EXIST);
-		} else if (Objects.isNull(careerYear)
+		if (Objects.isNull(careerYear)
 			|| careerYear < 0) {
 			throw new BusinessException(ErrorCode.CAREER_YEAR_NOT_VALID);
 		} else if (jobName.isBlank()) {
 			throw new BusinessException(ErrorCode.JOB_NOT_VALID);
 		}
-
 		User user = userRepository.findById(userId)
 			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+		if (Objects.nonNull(nickName)) {
+			if (userRepository.existsByNickname(nickName)) {
+				throw new BusinessException(ErrorCode.USER_NICKNAME_ALREADY_EXIST);
+			} else {
+				user.updateNickname(nickName);
+			}
+		}
 		user.updateCareerYear(careerYear);
 		user.updateJob(jobName);
-		user.updateNickname(nickName);
-		if(Objects.isNull(profileImage)){
-			return UserResponse.SettingResponse.of(userId,nickName,jobName,careerYear, null);
+		if (Objects.isNull(profileImage)) {
+			return UserResponse.SettingResponse.of(userId, nickName, jobName, careerYear, null);
 		}
 		FileCommand.UploadFile uploadFile = FileCommand.UploadFile.of(profileImage,
 			Directory.USER_PROFILE, userId, userId);
 		FileInfo fileInfo = fileStore.store(uploadFile);
 		user.updateProfileImageUrl(fileInfo.getUrl());
-		return UserResponse.SettingResponse.of(userId,nickName,jobName,careerYear, fileInfo.getUrl());
-
+		return UserResponse.SettingResponse.of(userId, nickName, jobName, careerYear, fileInfo.getUrl());
 
 	}
 }
