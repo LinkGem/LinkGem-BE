@@ -3,10 +3,7 @@ package com.linkgem.presentation.link.dto;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.linkgem.domain.link.LinkCommand;
 import com.linkgem.domain.link.LinkQuery;
@@ -29,11 +26,14 @@ public class LinkRequest {
         @ApiModelProperty(value = "잼박스 고유 아이디")
         private Long gemBoxId;
 
+        @ApiModelProperty(value = "잼박스 저장 여부")
+        private Boolean hasGembox;
+
         @ApiModelProperty(value = "즐겨찾기 조회", allowableValues = "true, false")
         private Boolean isFavorites;
 
         public LinkQuery.SearchLinks to(Long userId) {
-            return new LinkQuery.SearchLinks(userId, this.gemBoxId, this.isFavorites);
+            return new LinkQuery.SearchLinks(userId, this.gemBoxId, this.isFavorites, this.hasGembox);
         }
     }
 

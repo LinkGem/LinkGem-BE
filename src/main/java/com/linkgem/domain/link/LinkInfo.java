@@ -101,6 +101,7 @@ public class LinkInfo {
         private String description;
         private String imageUrl;
         private boolean isFavorites;
+        private Long gemboxId;
 
         private Long userId;
         private String userNickname;

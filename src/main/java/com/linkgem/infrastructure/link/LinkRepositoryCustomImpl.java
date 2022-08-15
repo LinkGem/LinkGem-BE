@@ -38,6 +38,7 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
                 link.openGraph.description,
                 link.openGraph.imageUrl,
                 link.isFavorites,
+                link.gemBox.id,
                 link.user.id.as("userId"),
                 link.user.nickname,
                 link.createDate,
@@ -58,9 +59,14 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
         BooleanBuilder whereBuilder = new BooleanBuilder();
         whereBuilder.and(link.user.id.eq(searchLinks.getUserId()));
 
-        if (Objects.nonNull(searchLinks.getGemBoxId())) {
+        if (searchLinks.getGemBoxId() == null) {
+            if (searchLinks.getHasGembox() != null) {
+                whereBuilder.and(searchLinks.getHasGembox() ? link.gemBox.id.isNotNull() : link.gemBox.id.isNull());
+            }
+        } else {
             whereBuilder.and(link.gemBox.id.eq(searchLinks.getGemBoxId()));
         }
+
         if (Objects.nonNull(searchLinks.getIsFavorites())) {
             whereBuilder.and(link.isFavorites.eq(searchLinks.getIsFavorites()));
         }

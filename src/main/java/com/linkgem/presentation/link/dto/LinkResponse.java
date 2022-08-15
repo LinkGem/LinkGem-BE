@@ -111,6 +111,7 @@ public class LinkResponse {
         private String title;
         private String description;
         private String imageUrl;
+        private Long gemboxId;
 
         private Long userId;
         private String userNickname;
@@ -127,6 +128,7 @@ public class LinkResponse {
                 .title(search.getTitle())
                 .description(search.getDescription())
                 .imageUrl(search.getImageUrl())
+                .gemboxId(search.getGemboxId())
                 .userId(search.getUserId())
                 .userNickname(search.getUserNickname())
                 .isFavorites(search.isFavorites())
