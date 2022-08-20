@@ -3,14 +3,14 @@ package com.linkgem.domain.link;
 import java.time.LocalDateTime;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class LinkInfo {
+    private LinkInfo() {
+    }
 
-    @Builder
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
     public static class Main {
 
@@ -21,143 +21,74 @@ public class LinkInfo {
         private String title;
         private String description;
         private String imageUrl;
+        private String siteName;
         private boolean isFavorites;
+
+        private Long gemBoxId;
 
         private Long userId;
         private String userNickname;
 
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
+
+        public Main(Link link) {
+            this.id = link.getId();
+            this.memo = link.getMemo();
+            this.url = link.getUrl();
+            this.title = link.getOpenGraph().getTitle();
+            this.description = link.getOpenGraph().getDescription();
+            this.imageUrl = link.getOpenGraph().getImageUrl();
+            this.siteName = link.getOpenGraph().getSiteName();
+            this.isFavorites = link.isFavorites();
+            this.gemBoxId = link.getGemBox() == null ? null : link.getGemBox().getId();
+            this.userId = link.getUser().getId();
+            this.userNickname = link.getUser().getNickname();
+            this.createDate = link.getCreateDate();
+            this.updateDate = link.getUpdateDate();
+        }
 
         public static Main of(Link link) {
-            return Main.builder()
-                .id(link.getId())
-                .memo(link.getMemo())
-                .url(link.getUrl())
-                .title(link.getOpenGraph().getTitle())
-                .description(link.getOpenGraph().getDescription())
-                .imageUrl(link.getOpenGraph().getImageUrl())
-                .userId(link.getUser().getId())
-                .userNickname(link.getUser().getNickname())
-                .isFavorites(link.isFavorites())
-                .createDate(link.getCreateDate())
-                .updateDate(link.getUpdateDate())
-                .build();
+            return new Main(link);
         }
     }
 
-    @Builder
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
-    public static class Detail {
-        private Long gemBoxId;
-        private String gemBoxName;
+    public static class Detail extends Main {
 
-        private Long id;
-        private String memo;
-        private String url;
+        public Detail(Link link) {
+            super(link);
+        }
 
-        private String title;
-        private String description;
-        private String imageUrl;
-        private boolean isFavorites;
-
-        private Long userId;
-        private String userNickname;
-
-        private LocalDateTime createDate;
-        private LocalDateTime updateDate;
-
-        public static Detail of(Link link, Long gemBoxId, String gemBoxName) {
-
-            return Detail.builder()
-                .id(link.getId())
-                .memo(link.getMemo())
-                .url(link.getUrl())
-                .title(link.getOpenGraph().getTitle())
-                .description(link.getOpenGraph().getDescription())
-                .imageUrl(link.getOpenGraph().getImageUrl())
-                .userId(link.getUser().getId())
-                .userNickname(link.getUser().getNickname())
-                .isFavorites(link.isFavorites())
-                .createDate(link.getCreateDate())
-                .updateDate(link.getUpdateDate())
-                .gemBoxId(gemBoxId)
-                .gemBoxName(gemBoxName)
-                .build();
+        public static Detail of(Link link) {
+            return new Detail(link);
         }
     }
 
-    @Builder
-    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
-    public static class Search {
+    public static class Search extends Main {
 
-        private Long id;
-        private String memo;
-        private String url;
-
-        private String title;
-        private String description;
-        private String imageUrl;
-        private boolean isFavorites;
-        private Long gemboxId;
-
-        private Long userId;
-        private String userNickname;
-
-        private LocalDateTime createDate;
-        private LocalDateTime updateDate;
+        public Search(Link link) {
+            super(link);
+        }
 
         public static Search of(Link link) {
-            return Search.builder()
-                .id(link.getId())
-                .memo(link.getMemo())
-                .url(link.getUrl())
-                .title(link.getOpenGraph().getTitle())
-                .description(link.getOpenGraph().getDescription())
-                .imageUrl(link.getOpenGraph().getImageUrl())
-                .isFavorites(link.isFavorites())
-                .userId(link.getUser().getId())
-                .userNickname(link.getUser().getNickname())
-                .createDate(link.getCreateDate())
-                .updateDate(link.getUpdateDate())
-                .build();
+            return new Search(link);
         }
     }
 
-    @Builder
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
-    public static class Create {
+    public static class Create extends Main {
 
-        private Long id;
-        private String memo;
-        private String url;
-
-        private String title;
-        private String description;
-        private String imageUrl;
-
-        private Long userId;
-        private String userNickname;
-
-        private LocalDateTime createDate;
-        private LocalDateTime updateDate;
+        public Create(Link link) {
+            super(link);
+        }
 
         public static Create of(Link link) {
-            return Create.builder()
-                .id(link.getId())
-                .memo(link.getMemo())
-                .url(link.getUrl())
-                .title(link.getOpenGraph().getTitle())
-                .description(link.getOpenGraph().getDescription())
-                .imageUrl(link.getOpenGraph().getImageUrl())
-                .userId(link.getUser().getId())
-                .userNickname(link.getUser().getNickname())
-                .createDate(link.getCreateDate())
-                .updateDate(link.getUpdateDate())
-                .build();
+            return new Create(link);
         }
     }
 }
