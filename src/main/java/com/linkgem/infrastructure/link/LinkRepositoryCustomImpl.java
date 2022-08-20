@@ -5,11 +5,13 @@ import static com.linkgem.domain.user.QUser.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
+import com.linkgem.domain.link.Link;
 import com.linkgem.domain.link.LinkInfo;
 import com.linkgem.domain.link.LinkQuery;
 import com.querydsl.core.BooleanBuilder;
@@ -31,18 +33,7 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
         List<LinkInfo.Search> results = queryFactory
             .select(Projections.constructor(
                 LinkInfo.Search.class,
-                link.id,
-                link.memo,
-                link.url,
-                link.openGraph.title,
-                link.openGraph.description,
-                link.openGraph.imageUrl,
-                link.isFavorites,
-                link.gemBox.id,
-                link.user.id.as("userId"),
-                link.user.nickname,
-                link.createDate,
-                link.updateDate
+                link
             ))
             .from(link)
             .join(link.user, user)
@@ -53,6 +44,19 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
             .fetch();
 
         return PageableExecutionUtils.getPage(results, pageable, () -> this.getLinkTotalCount(whereBuilder));
+    }
+
+    @Override
+    public Optional<Link> findOneJoinUser(Long id, Long userId) {
+        return Optional.ofNullable(
+            queryFactory.selectFrom(link)
+                .join(link.user).fetchJoin()
+                .where(
+                    link.id.eq(id),
+                    link.user.id.eq(userId)
+                )
+                .fetchOne()
+        );
     }
 
     private BooleanBuilder createWhereBuilder(LinkQuery.SearchLinks searchLinks) {

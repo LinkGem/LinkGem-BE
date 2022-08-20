@@ -36,4 +36,9 @@ public class LinkReaderImpl implements LinkReader {
         return this.find(id, userId)
             .orElseThrow(() -> new BusinessException(ErrorCode.LINK_NOT_FOUND));
     }
+
+    @Override
+    public Optional<Link> findOneJoinUser(Long id, Long userId) {
+        return linkRepository.findOneJoinUser(id, userId);
+    }
 }

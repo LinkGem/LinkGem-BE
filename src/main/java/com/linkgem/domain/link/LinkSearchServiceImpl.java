@@ -4,6 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.linkgem.presentation.common.exception.BusinessException;
+import com.linkgem.presentation.common.exception.ErrorCode;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -18,16 +21,9 @@ public class LinkSearchServiceImpl implements LinkSearchService {
 
     @Override
     public LinkInfo.Detail findById(Long id, Long userId) {
-        Link findLink = linkReader.get(id, userId);
+        Link link = linkReader.findOneJoinUser(id, userId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.LINK_NOT_FOUND));
 
-        Long gemBoxId = null;
-        String gemBoxName = null;
-
-        if (findLink.getGemBox() != null) {
-            gemBoxId = findLink.getGemBox().getId();
-            gemBoxName = findLink.getGemBox().getName();
-        }
-
-        return LinkInfo.Detail.of(findLink, gemBoxId, gemBoxName);
+        return LinkInfo.Detail.of(link);
     }
 }

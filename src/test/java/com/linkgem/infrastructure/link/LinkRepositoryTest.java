@@ -24,11 +24,12 @@ class LinkRepositoryTest {
     private LinkRepository linkRepository;
 
     @Test
-    public void 링크를_저장한다() {
+    void 링크를_저장한다() {
         OpenGraph openGraph = OpenGraph.builder()
             .description("description")
             .imageUrl("imageUrl")
             .title("title")
+            .siteName("siteName")
             .build();
 
         Link link = Link.builder()
@@ -46,7 +47,7 @@ class LinkRepositoryTest {
     }
 
     @Test
-    public void 링크를_삭제한다() {
+    void 링크를_삭제한다() {
         Link link = Link.builder()
             .url("www.naver.com")
             .memo("GOOD")
