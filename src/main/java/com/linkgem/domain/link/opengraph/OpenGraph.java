@@ -25,11 +25,15 @@ public class OpenGraph {
     @Column(name = "image_url", length = 1000)
     private String imageUrl;
 
+    @Column(name = "site_name", columnDefinition = "varchar(255) default ''")
+    private String siteName;
+
     @Builder
-    private OpenGraph(String description, String title, String imageUrl) {
+    private OpenGraph(String description, String title, String imageUrl, String siteName) {
         this.description = description;
         this.title = title;
         this.imageUrl = imageUrl;
+        this.siteName = siteName;
     }
 
     public void updateImageUrl(String imageUrl) {
@@ -37,7 +41,7 @@ public class OpenGraph {
     }
 
     public static OpenGraph createEmpty() {
-        return new OpenGraph("", "", "");
+        return new OpenGraph("", "", "", "");
     }
 
 }

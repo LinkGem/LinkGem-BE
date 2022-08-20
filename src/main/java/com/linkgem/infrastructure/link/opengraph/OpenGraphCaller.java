@@ -1,15 +1,18 @@
 package com.linkgem.infrastructure.link.opengraph;
 
-import com.linkgem.domain.link.opengraph.OpenGraph;
 import java.util.Optional;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import com.linkgem.domain.link.opengraph.OpenGraph;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
@@ -24,6 +27,7 @@ public class OpenGraphCaller {
     private final String imageOgTag = "og:image";
     private final String titleOgTag = "og:title";
     private final String descriptionOgTag = "og:description";
+    private final String siteNameOgTag = "og:site_name";
 
     public Optional<Result> call(String url) {
         Optional<Result> defaultOpenGraph = Optional.empty();
@@ -52,6 +56,7 @@ public class OpenGraphCaller {
         String imageUrl = "";
         String title = "";
         String description = "";
+        String siteName = "";
 
         for (Element openGraphElement : openGraphElements) {
 
@@ -70,12 +75,16 @@ public class OpenGraphCaller {
                 case descriptionOgTag:
                     description = contentValue;
                     break;
+                case siteNameOgTag:
+                    siteName = contentValue;
+                    break;
             }
         }
         return Optional.ofNullable(Result.builder()
             .title(title)
             .description(description)
             .imageUrl(imageUrl)
+            .siteName(siteName)
             .build());
     }
 
@@ -88,12 +97,14 @@ public class OpenGraphCaller {
         private String imageUrl;
         private String title;
         private String description;
+        private String siteName;
 
         @Builder
-        public Result(String imageUrl, String title, String description) {
+        public Result(String imageUrl, String title, String description, String siteName) {
             this.imageUrl = imageUrl;
             this.title = title;
             this.description = description;
+            this.siteName = siteName;
         }
 
         public OpenGraph to() {
@@ -101,6 +112,7 @@ public class OpenGraphCaller {
                 .imageUrl(this.imageUrl)
                 .title(this.title)
                 .description(this.description)
+                .siteName(this.siteName)
                 .build();
         }
     }
