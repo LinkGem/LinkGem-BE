@@ -3,7 +3,6 @@ package com.linkgem.domain.gembox;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,7 +49,7 @@ public class GemBox extends BaseEntity {
     @Column(name = "user_id", nullable = true)
     private Long userId;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) // (1)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "gem_box_id")
     private List<Link> links = new ArrayList<>();
 

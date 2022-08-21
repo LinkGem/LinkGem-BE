@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.linkgem.domain.link.LinkDeleteService;
 import com.linkgem.domain.link.LinkReader;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
@@ -22,6 +23,7 @@ public class GemBoxServiceImpl implements GemBoxService {
     private final GemBoxReader gemBoxReader;
 
     private final LinkReader linkReader;
+    private final LinkDeleteService linkDeleteService;
 
     private final GemBoxDomainService gemBoxDomainService;
 
@@ -51,10 +53,10 @@ public class GemBoxServiceImpl implements GemBoxService {
             return;
         }
 
-        command.getLinkIds().forEach(linkId -> {
-            linkReader.find(linkId, command.getUserId())
-                .ifPresent(link -> createdGemBox.addLink(link));
-        });
+        command
+            .getLinkIds()
+            .forEach(linkId -> linkReader.find(linkId, command.getUserId())
+                .ifPresent(createdGemBox::addLink));
     }
 
     @Transactional
@@ -105,8 +107,14 @@ public class GemBoxServiceImpl implements GemBoxService {
         GemBox gemBox = gemBoxReader.find(command.getId(), command.getUserId())
             .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
 
-        //TODO : 링크삭제 로직을 추가해야한다
+        linkDeleteService.deleteAllByGemBoxId(gemBox.getId());
         gemBoxStore.delete(gemBox);
+    }
+
+    @Override
+    public void deleteAllByUserId(Long userId) {
+        linkDeleteService.deleteAllByUserId(userId);
+        gemBoxStore.deleteAllByUserId(userId);
     }
 
 }

@@ -22,4 +22,9 @@ public class GemBoxStoreImpl implements GemBoxStore {
     public void delete(GemBox gemBox) {
         gemBoxRepository.delete(gemBox);
     }
+
+    @Override
+    public void deleteAllByUserId(Long userId) {
+        gemBoxRepository.deleteAllByUserId(userId);
+    }
 }

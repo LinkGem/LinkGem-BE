@@ -14,4 +14,6 @@ public interface GemBoxRepository extends JpaRepository<GemBox, Long>, GemBoxRep
 
     List<GemBox> findAllByUserId(Long userId);
 
+    void deleteAllByUserId(Long userId);
+
 }

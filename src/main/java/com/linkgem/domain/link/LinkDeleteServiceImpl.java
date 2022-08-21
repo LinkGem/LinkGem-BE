@@ -2,7 +2,6 @@ package com.linkgem.domain.link;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -32,18 +31,33 @@ public class LinkDeleteServiceImpl implements LinkDeleteService {
             .map(id -> linkReader.find(id, userId))
             .filter(Optional::isPresent)
             .map(Optional::get)
-            .map(deleteLink())
+            .map(this::deleteLink)
             .collect(Collectors.toList())
             ;
     }
 
-    private Function<Link, Long> deleteLink() {
-        return link -> {
+    @Override
+    public List<Long> deleteAllByUserId(Long userId) {
+        return linkReader.findAllByUserId(userId)
+            .stream()
+            .map(this::deleteLink)
+            .collect(Collectors.toList());
 
-            if (link.hasImageUrl()) {
-                fileStore.delete(new FileCommand.DeleteFile(link.getOpenGraph().getImageUrl()));
-            }
-            return linkStore.delete(link);
-        };
+    }
+
+    @Override
+    public List<Long> deleteAllByGemBoxId(Long gemBoxId) {
+        return linkReader.findAllByGemBoxId(gemBoxId)
+            .stream()
+            .map(this::deleteLink)
+            .collect(Collectors.toList());
+    }
+
+    private Long deleteLink(Link link) {
+
+        if (link.hasImageUrl()) {
+            fileStore.delete(new FileCommand.DeleteFile(link.getOpenGraph().getImageUrl()));
+        }
+        return linkStore.delete(link);
     }
 }

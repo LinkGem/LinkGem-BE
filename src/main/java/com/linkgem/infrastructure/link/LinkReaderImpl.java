@@ -1,5 +1,6 @@
 package com.linkgem.infrastructure.link;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -24,6 +25,16 @@ public class LinkReaderImpl implements LinkReader {
     @Override
     public Page<LinkInfo.Search> findAll(LinkQuery.SearchLinks searchLinks, Pageable pageable) {
         return linkRepository.findAll(searchLinks, pageable);
+    }
+
+    @Override
+    public List<Link> findAllByUserId(Long userId) {
+        return linkRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public List<Link> findAllByGemBoxId(Long gemBoxId) {
+        return linkRepository.findAllByGemBoxId(gemBoxId);
     }
 
     @Override
