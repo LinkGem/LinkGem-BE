@@ -13,7 +13,6 @@ import com.linkgem.domain.common.file.FileStore;
 import com.linkgem.infrastructure.user.UserRepository;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
-import com.linkgem.presentation.user.dto.UserRequest;
 import com.linkgem.presentation.user.dto.UserRequest.AddDetailInfoRequest;
 import com.linkgem.presentation.user.dto.UserResponse;
 
@@ -75,6 +74,11 @@ public class UserServiceImpl implements UserService {
 		if (Objects.isNull(profileImage)) {
 			return UserResponse.SettingResponse.of(userId, nickName, jobName, careerYear, null);
 		}
+
+		if (Objects.nonNull(user.getProfileImageUrl())) {
+			fileStore.delete(FileCommand.DeleteFile.of(user.getProfileImageUrl()));
+		}
+
 		FileCommand.UploadFile uploadFile = FileCommand.UploadFile.of(profileImage,
 			Directory.USER_PROFILE, userId, userId);
 		FileInfo fileInfo = fileStore.store(uploadFile);

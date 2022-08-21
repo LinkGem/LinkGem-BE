@@ -23,7 +23,6 @@ public class S3ObjectKeyCreator {
         Long userId,
         Long id
     ) {
-        RandomStringUtils.random(12);
         return new StringBuilder()
             .append(profile)
             .append("/")
@@ -33,7 +32,7 @@ public class S3ObjectKeyCreator {
             .append("/")
             .append(userId)
             .append("/")
-            .append(RandomStringUtils.randomAlphabetic(10))
+            .append(RandomStringUtils.randomAlphanumeric(12))
             .append("_")
             .append(directory.name())
             .append("_")

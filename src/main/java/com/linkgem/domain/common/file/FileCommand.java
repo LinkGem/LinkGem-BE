@@ -38,5 +38,9 @@ public class FileCommand {
     @Getter
     public static class DeleteFile {
         private String url;
+
+        public static DeleteFile of(String url) {
+            return new DeleteFile(url);
+        }
     }
 }
