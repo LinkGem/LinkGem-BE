@@ -1,5 +1,6 @@
 package com.linkgem.infrastructure.common.aws;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +11,7 @@ public class S3ObjectKeyCreator {
 
     private final String profile;
 
-    private final String IMAGE_DIRECTORY = "image";
+    private static final String IMAGE_DIRECTORY = "image";
 
     public S3ObjectKeyCreator(
         @Value("${spring.profiles.active}") String profile) {
@@ -22,6 +23,7 @@ public class S3ObjectKeyCreator {
         Long userId,
         Long id
     ) {
+        RandomStringUtils.random(12);
         return new StringBuilder()
             .append(profile)
             .append("/")
@@ -31,7 +33,11 @@ public class S3ObjectKeyCreator {
             .append("/")
             .append(userId)
             .append("/")
-            .append(directory.name()).append("_").append(id)
+            .append(RandomStringUtils.randomAlphabetic(10))
+            .append("_")
+            .append(directory.name())
+            .append("_")
+            .append(id)
             .toString();
     }
 }
