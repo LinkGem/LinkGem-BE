@@ -17,6 +17,9 @@ import lombok.Setter;
 
 public class LinkRequest {
 
+    private LinkRequest() {
+    }
+
     @ApiModel(description = "링크 목록 조회 요청")
     @NoArgsConstructor
     @Setter
@@ -32,8 +35,11 @@ public class LinkRequest {
         @ApiModelProperty(value = "즐겨찾기 조회", allowableValues = "true, false")
         private Boolean isFavorites;
 
+        @ApiModelProperty(value = "메모 저장 여부", allowableValues = "true, false")
+        private Boolean hasMemo;
+
         public LinkQuery.SearchLinks to(Long userId) {
-            return new LinkQuery.SearchLinks(userId, this.gemBoxId, this.isFavorites, this.hasGembox);
+            return new LinkQuery.SearchLinks(userId, this.gemBoxId, this.isFavorites, this.hasGembox, this.hasMemo);
         }
     }
 

@@ -74,6 +74,11 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
         if (Objects.nonNull(searchLinks.getIsFavorites())) {
             whereBuilder.and(link.isFavorites.eq(searchLinks.getIsFavorites()));
         }
+
+        if (Objects.nonNull(searchLinks.getHasMemo())) {
+            whereBuilder.and(searchLinks.getHasMemo() ? link.memo.isNotEmpty() : link.memo.isEmpty());
+        }
+
         return whereBuilder;
     }
 

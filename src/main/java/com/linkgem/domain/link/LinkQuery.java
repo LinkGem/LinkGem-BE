@@ -15,6 +15,7 @@ public class LinkQuery {
         private Long gemBoxId;
         private Boolean isFavorites;
         private Boolean hasGembox;
+        private Boolean hasMemo;
     }
 
 }
