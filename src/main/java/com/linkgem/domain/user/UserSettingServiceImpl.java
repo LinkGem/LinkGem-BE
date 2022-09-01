@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserSettingServiceImpl implements UserSettingService {
 
 	private final UserRepository userRepository;
 
@@ -64,7 +64,9 @@ public class UserServiceImpl implements UserService {
 			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 		if (Objects.nonNull(nickName)) {
 			if (userRepository.existsByNickname(nickName)) {
-				throw new BusinessException(ErrorCode.USER_NICKNAME_ALREADY_EXIST);
+				if(!Objects.equals(userRepository.findByNickname(nickName).get().getId(), userId)) {
+					throw new BusinessException(ErrorCode.USER_NICKNAME_ALREADY_EXIST);
+				}
 			} else {
 				user.updateNickname(nickName);
 			}
