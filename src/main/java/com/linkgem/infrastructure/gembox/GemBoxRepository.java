@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.linkgem.domain.gembox.GemBox;
 
@@ -14,6 +15,7 @@ public interface GemBoxRepository extends JpaRepository<GemBox, Long>, GemBoxRep
 
     List<GemBox> findAllByUserId(Long userId);
 
+    @Transactional
     void deleteAllByUserId(Long userId);
 
 }

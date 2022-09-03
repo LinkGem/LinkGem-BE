@@ -1,17 +1,19 @@
 package com.linkgem.infrastructure.link;
 
-import com.linkgem.domain.link.Link;
-import com.linkgem.domain.link.opengraph.OpenGraph;
-import com.linkgem.domain.user.User;
-import com.linkgem.infrastructure.config.TestQueryDslConfig;
-import com.linkgem.infrastructure.user.UserRepository;
 import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+
+import com.linkgem.domain.link.Link;
+import com.linkgem.domain.link.opengraph.OpenGraph;
+import com.linkgem.domain.user.User;
+import com.linkgem.infrastructure.config.TestQueryDslConfig;
+import com.linkgem.infrastructure.user.UserRepository;
 
 @Import(TestQueryDslConfig.class)
 @DataJpaTest
@@ -77,5 +79,34 @@ class LinkRepositoryTest {
             .build();
 
         return userRepository.save(user);
+    }
+
+    @Test
+    void 링크전부삭제(){
+        User tester = createUser("tester", "www.naver.com");
+        Link link = Link.builder()
+            .url("www.naver.com")
+            .memo("GOOD")
+            .user(tester)
+            .openGraph(null)
+            .build();
+        Link link2 = Link.builder()
+            .url("www.naver.com")
+            .memo("GOOD")
+            .user(tester)
+            .openGraph(null)
+            .build();
+
+        linkRepository.save(link);
+        linkRepository.save(link2);
+        System.out.println("link.getId() = " + link.getId());
+        System.out.println("link2.getId() = " + link2.getId());
+        Long id = tester.getId();
+        linkRepository.deleteAllByUserId(id);
+        Optional<Link> foundLink = linkRepository.findById(link.getId());
+        Optional<Link> foundLink2 = linkRepository.findById(link2.getId());
+        Assertions.assertTrue(foundLink.isEmpty());
+        Assertions.assertTrue(foundLink2.isEmpty());
+
     }
 }

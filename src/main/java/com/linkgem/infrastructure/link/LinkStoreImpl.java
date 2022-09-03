@@ -23,4 +23,9 @@ public class LinkStoreImpl implements LinkStore {
         repository.delete(link);
         return link.getId();
     }
+
+    @Override
+    public void deleteAllByUserId(Long userId) {
+        repository.deleteAllByUserId(userId);
+    }
 }

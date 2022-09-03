@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.linkgem.domain.link.Link;
 
@@ -14,4 +15,6 @@ public interface LinkRepository extends JpaRepository<Link, Long>, LinkRepositor
     List<Link> findAllByUserId(Long userId);
 
     List<Link> findAllByGemBoxId(Long gemBoxId);
+    @Transactional
+    void deleteAllByUserId(Long userId);
 }
