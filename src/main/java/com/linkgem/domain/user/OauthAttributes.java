@@ -1,15 +1,17 @@
-package com.linkgem.domain.oauth;
+package com.linkgem.domain.user;
 
-import com.linkgem.domain.user.UserProfile;
 import java.util.Arrays;
 import java.util.Map;
+
+import com.linkgem.presentation.common.exception.BusinessException;
+import com.linkgem.presentation.common.exception.ErrorCode;
 
 public enum OauthAttributes {
   NAVER("naver") {
     @Override
-    public UserProfile of(Map<String, Object> attributes) {
+    public UserInfo.UserProfile of(Map<String, Object> attributes) {
       Map<String, Object> response = (Map<String, Object>) attributes.get("response");
-      return UserProfile.builder()
+      return UserInfo.UserProfile.builder()
           .oauthId(NAVER.providerName + "_" + response.get("id").toString())
           .loginEmail((String) response.get("email"))
           .name((String) response.get("name"))
@@ -18,8 +20,8 @@ public enum OauthAttributes {
   },
   GOOGLE("google") {
     @Override
-    public UserProfile of(Map<String, Object> attributes) {
-      return UserProfile.builder()
+    public UserInfo.UserProfile of(Map<String, Object> attributes) {
+      return UserInfo.UserProfile.builder()
           .oauthId(GOOGLE.providerName + "_" + attributes.get("sub").toString())
           .loginEmail((String) attributes.get("email"))
           .name((String) attributes.get("name"))
@@ -33,13 +35,13 @@ public enum OauthAttributes {
     this.providerName = name;
   }
 
-  public static UserProfile extract(String providerName, Map<String, Object> attributes) {
+  public static UserInfo.UserProfile extract(String providerName, Map<String, Object> attributes) {
     return Arrays.stream(values())
         .filter(provider -> providerName.equals(provider.providerName))
         .findFirst()
-        .orElseThrow(IllegalArgumentException::new)
+        .orElseThrow(()->new BusinessException(ErrorCode.PROVIDER_NOT_VALID))
         .of(attributes);
   }
 
-  public abstract UserProfile of(Map<String, Object> attributes);
+  public abstract UserInfo.UserProfile of(Map<String, Object> attributes);
 }

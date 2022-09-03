@@ -62,20 +62,22 @@ public class User extends BaseEntity {
 		this.userPhase = UserPhase.REGISTERED;
 	}
 
-	public void updateUserPhaseDeleted() {
-		this.userPhase = UserPhase.DELETED;
-	}
-
 	public void updateProfileImageUrl(String profileImageUrl) {
 		this.profileImageUrl = profileImageUrl;
 	}
 
-	public void resetReady() {
+	public void updateUserPhaseReady() {
 		this.userPhase = UserPhase.READY;
+	}
+
+	public void leave() {
+		this.userPhase = UserPhase.DELETED;
 		this.job = null;
 		this.nickname = null;
 		this.careerYear = 0;
 		this.mailEmail = null;
+		this.profileImageUrl = null;
+
 	}
 
 }

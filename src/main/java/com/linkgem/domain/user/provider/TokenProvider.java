@@ -1,4 +1,4 @@
-package com.linkgem.domain.oauth;
+package com.linkgem.domain.user.provider;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;

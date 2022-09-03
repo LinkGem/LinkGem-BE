@@ -15,7 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.linkgem.domain.user.UserServiceImpl;
+import com.linkgem.domain.user.UserSettingServiceImpl;
 import com.linkgem.infrastructure.config.Interceptor.JwtTokenInterceptor;
 
 @WebMvcTest(UserApiController.class)
@@ -27,7 +27,7 @@ class UserApiControllerTest {
 	@MockBean
 	private JwtTokenInterceptor jwtTokenInterceptor;
 	@MockBean
-	UserServiceImpl userService;
+	UserSettingServiceImpl userService;
 
 	@Autowired
 	private ObjectMapper objectMapper;
