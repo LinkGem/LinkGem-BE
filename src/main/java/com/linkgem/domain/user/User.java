@@ -36,7 +36,7 @@ public class User extends BaseEntity {
 	private UserPhase userPhase;
 	@Column(name = "career_year")
 	private int careerYear;
-	@Column(name = "profile_imgae_url")
+	@Column(name = "profile_image_url")
 	private String profileImageUrl;
 	@Column(name = "mail_auth")
 	@Convert(converter = MailAuthConvertor.class)
