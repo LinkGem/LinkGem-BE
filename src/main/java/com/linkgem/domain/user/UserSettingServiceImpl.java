@@ -10,7 +10,6 @@ import com.linkgem.domain.common.file.Directory;
 import com.linkgem.domain.common.file.FileCommand;
 import com.linkgem.domain.common.file.FileInfo;
 import com.linkgem.domain.common.file.FileStore;
-import com.linkgem.infrastructure.user.UserRepository;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
 import com.linkgem.presentation.user.dto.UserRequest.AddDetailInfoRequest;
@@ -22,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserSettingServiceImpl implements UserSettingService {
 
-	private final UserRepository userRepository;
+	private final UserReader userReader;
 
 	private final FileStore fileStore;
 
@@ -32,7 +31,7 @@ public class UserSettingServiceImpl implements UserSettingService {
 
 		if (addDetailInfoRequest.getUserNickname().isBlank()) {
 			throw new BusinessException(ErrorCode.USER_NICKNAME_NOT_VALID);
-		} else if (userRepository.existsByNickname(addDetailInfoRequest.getUserNickname())) {
+		} else if (userReader.existsByNickname(addDetailInfoRequest.getUserNickname())) {
 			throw new BusinessException(ErrorCode.USER_NICKNAME_ALREADY_EXIST);
 		} else if (Objects.isNull(addDetailInfoRequest.getCareerYear())
 			|| addDetailInfoRequest.getCareerYear() < 0) {
@@ -40,7 +39,7 @@ public class UserSettingServiceImpl implements UserSettingService {
 		} else if (addDetailInfoRequest.getJobName().isBlank()) {
 			throw new BusinessException(ErrorCode.JOB_NOT_VALID);
 		}
-		User user = userRepository.findById(userId)
+		User user = userReader.find(userId)
 			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 		user.updateCareerYear(addDetailInfoRequest.getCareerYear());
 		user.updateJob(addDetailInfoRequest.getJobName());
@@ -60,11 +59,11 @@ public class UserSettingServiceImpl implements UserSettingService {
 		} else if (jobName.isBlank()) {
 			throw new BusinessException(ErrorCode.JOB_NOT_VALID);
 		}
-		User user = userRepository.findById(userId)
+		User user = userReader.find(userId)
 			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 		if (Objects.nonNull(nickName)) {
-			if (userRepository.existsByNickname(nickName)) {
-				if(!Objects.equals(userRepository.findByNickname(nickName).get().getId(), userId)) {
+			if (userReader.existsByNickname(nickName)) {
+				if (!Objects.equals(userReader.findByNickname(nickName).get().getId(), userId)) {
 					throw new BusinessException(ErrorCode.USER_NICKNAME_ALREADY_EXIST);
 				}
 			} else {
@@ -78,7 +77,9 @@ public class UserSettingServiceImpl implements UserSettingService {
 		}
 
 		if (Objects.nonNull(user.getProfileImageUrl())) {
-			fileStore.delete(FileCommand.DeleteFile.of(user.getProfileImageUrl()));
+			if (!user.getProfileImageUrl().contains("DEFAULT_USERPROFILE")) {
+				fileStore.delete(FileCommand.DeleteFile.of(user.getProfileImageUrl()));
+			}
 		}
 
 		FileCommand.UploadFile uploadFile = FileCommand.UploadFile.of(profileImage,

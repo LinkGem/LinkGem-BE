@@ -26,7 +26,6 @@ public class UserLeaveServiceNaverImpl implements UserLeaveService {
 	private final UserReader userReader;
 	private final OauthProvider oauthProvider;
 	private final GemBoxStore gemBoxStore;
-
 	private final LinkStore linkStore;
 
 	@Override

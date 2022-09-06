@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linkgem.domain.user.UserLeaveService;
 import com.linkgem.domain.user.UserLoginService;
+import com.linkgem.domain.user.UserMailAuthService;
 import com.linkgem.domain.user.UserSettingService;
 import com.linkgem.domain.user.UserTokenReissueService;
 import com.linkgem.presentation.common.exception.BusinessException;
@@ -24,6 +25,8 @@ public class UserFacade {
   private final List<UserLeaveService> userLeaveServices;
   private final UserTokenReissueService userTokenReissueService;
   private final List<UserLoginService> userLoginServices;
+
+  private final UserMailAuthService userMailAuthService;
 
   public UserResponse.LoginResponse login(String provider, String code){
     UserLoginService userLoginService = userLoginServices.stream()

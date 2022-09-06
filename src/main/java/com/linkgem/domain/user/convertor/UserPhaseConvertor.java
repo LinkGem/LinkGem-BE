@@ -1,9 +1,11 @@
-package com.linkgem.domain.user;
+package com.linkgem.domain.user.convertor;
 
 import java.util.Objects;
 import java.util.stream.Stream;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
+import com.linkgem.domain.user.UserPhase;
 
 @Converter(autoApply = true)
 public class UserPhaseConvertor implements AttributeConverter<UserPhase,String> {

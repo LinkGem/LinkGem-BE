@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.linkgem.domain.common.BaseEntity;
+import com.linkgem.domain.user.convertor.MailAuthConvertor;
+import com.linkgem.domain.user.convertor.UserPhaseConvertor;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -34,8 +36,11 @@ public class User extends BaseEntity {
 	private UserPhase userPhase;
 	@Column(name = "career_year")
 	private int careerYear;
-
+	@Column(name = "profile_imgae_url")
 	private String profileImageUrl;
+	@Column(name = "mail_auth")
+	@Convert(converter = MailAuthConvertor.class)
+	private Boolean mailAuth;
 
 	@Builder
 	public User(String loginEmail, String nickname, String oauthId, String name) {
@@ -44,6 +49,7 @@ public class User extends BaseEntity {
 		this.oauthId = oauthId;
 		this.userPhase = UserPhase.READY;
 		this.name = name;
+		this.mailAuth = false;
 	}
 
 	public void updateNickname(String nickname) {
@@ -78,6 +84,10 @@ public class User extends BaseEntity {
 		this.mailEmail = null;
 		this.profileImageUrl = null;
 
+	}
+
+	public void mailAuth() {
+		this.mailAuth = true;
 	}
 
 }
