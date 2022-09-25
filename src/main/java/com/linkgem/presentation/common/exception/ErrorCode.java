@@ -27,10 +27,15 @@ public enum ErrorCode {
     CAREER_YEAR_NOT_VALID(HttpStatus.BAD_REQUEST, "커리어 연차가 유효하지않습니다."),
     JOB_NOT_VALID(HttpStatus.BAD_REQUEST, "직업이 유효하지않습니다."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다"),
-	USER_NICKNAME_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다."),
+    USER_NICKNAME_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다."),
     FILE_EMPTY(HttpStatus.BAD_REQUEST, "빈 파일입니다."),
-    S3_FILE_UPLOAD_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "S3 파일 업로드 시 오류가 발생했습니다.");
+    S3_FILE_UPLOAD_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "S3 파일 업로드 시 오류가 발생했습니다."),
 
-	private final HttpStatus httpStatus;
-	private final String message;
+    NOTIFICATION_NOT_FOUND_CREATE_TYPE(HttpStatus.NOT_FOUND, "존재하지 않는 알림 생성 서비스입니다."),
+    NOTIFICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않은 알림입니다."),
+
+    ;
+
+    private final HttpStatus httpStatus;
+    private final String message;
 }
