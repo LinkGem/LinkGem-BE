@@ -8,4 +8,6 @@ public interface UserReader {
 	Optional<User> findByLoginEmail(String loginEmail);
 	boolean existsByNickname(String nickName);
 	Optional<User> findByNickname(String nickName);
+
+    User get(Long id);
 }
