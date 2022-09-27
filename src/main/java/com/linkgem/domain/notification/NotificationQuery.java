@@ -16,9 +16,9 @@ public class NotificationQuery {
         private LocalDateTime searchStartDate;
 
         @Builder
-        public Search(Long userId) {
+        public Search(Long userId, LocalDateTime searchStartDate) {
             this.userId = userId;
-            this.searchStartDate = LocalDateTime.now().minusMonths(3);
+            this.searchStartDate = searchStartDate;
         }
     }
 

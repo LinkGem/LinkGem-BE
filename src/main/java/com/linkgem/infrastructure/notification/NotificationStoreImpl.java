@@ -17,4 +17,9 @@ public class NotificationStoreImpl implements NotificationStore {
     public Notification create(Notification notification) {
         return notificationRepository.save(notification);
     }
+
+    @Override
+    public long updateAllToRead(Long userId) {
+        return notificationRepository.updateAllToRead(userId);
+    }
 }

@@ -5,4 +5,6 @@ public interface NotificationUpdater {
 
     void updateToDeleted(Long notificationId);
 
+    long updateAllToRead(Long userId);
+
 }

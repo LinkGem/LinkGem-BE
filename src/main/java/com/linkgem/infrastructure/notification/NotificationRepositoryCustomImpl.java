@@ -82,4 +82,15 @@ public class NotificationRepositoryCustomImpl implements NotificationRepositoryC
             )
             .fetchOne();
     }
+
+    @Override
+    public long updateAllToRead(Long userId) {
+        return queryFactory.update(notification)
+            .set(notification.isRead, true)
+            .where(
+                notification.receiver.id.eq(userId),
+                notification.isRead.isFalse()
+            ).execute();
+
+    }
 }

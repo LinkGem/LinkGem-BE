@@ -12,4 +12,6 @@ public interface NotificationRepositoryCustom {
 
     Long getUnReadNotificationCount(NotificationQuery.Search searchQuery);
 
+    long updateAllToRead(Long userId);
+
 }

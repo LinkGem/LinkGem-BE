@@ -28,16 +28,9 @@ public class NotificationFacade {
 
         Page<NotificationInfo.Main> notifications = notificationSearchService.findAll(searchQuery, pageable);
 
-        //읽지 않은 알림을 읽음 상태로 변경한다
-        updateNotificationsToRead(notifications);
+        notificationUpdater.updateAllToRead(searchQuery.getUserId());
 
         return notifications;
-    }
-
-    private void updateNotificationsToRead(Page<NotificationInfo.Main> notifications) {
-        notifications.stream()
-            .filter(main -> !main.isRead())
-            .forEach(main -> notificationUpdater.updateToRead(main.getId()));
     }
 
     public Long getUnReadNotificationCount(NotificationQuery.Search searchQuery) {

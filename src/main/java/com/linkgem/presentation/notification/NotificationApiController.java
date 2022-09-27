@@ -1,5 +1,6 @@
 package com.linkgem.presentation.notification;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +49,7 @@ public class NotificationApiController {
 
         NotificationQuery.Search searchQuery = NotificationQuery.Search.builder()
             .userId(userId)
+            .searchStartDate(LocalDateTime.now().minusMonths(3))
             .build();
 
         Page<NotificationInfo.Main> notifications = notificationFacade.findAll(searchQuery, pageable);
@@ -78,6 +80,7 @@ public class NotificationApiController {
 
         NotificationQuery.Search searchQuery = NotificationQuery.Search.builder()
             .userId(userId)
+            .searchStartDate(LocalDateTime.now().minusDays(1))
             .build();
 
         return CommonResponse.of(

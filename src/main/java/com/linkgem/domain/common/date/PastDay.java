@@ -14,7 +14,13 @@ public class PastDay {
             return "";
         }
 
-        long pastDays = Duration.between(date, LocalDateTime.now()).toDays();
+        long pastHours = Duration.between(date, LocalDateTime.now()).toHours();
+
+        long pastDays = pastHours / 24;
+
+        if (isDoublePasted(pastHours)) {
+            pastDays++;
+        }
 
         if (pastDays > 120) {
             return "오래 전";
@@ -29,5 +35,14 @@ public class PastDay {
         } else {
             return String.format("%d일 전", pastDays);
         }
+    }
+
+    /**
+     * 시간상으로 하루가 지나지 않았지만 일수는 변했을 경우
+     * @param pastHours 경과 시간
+     * @return true/false
+     */
+    private static boolean isDoublePasted(long pastHours) {
+        return pastHours % 24 > 0;
     }
 }
