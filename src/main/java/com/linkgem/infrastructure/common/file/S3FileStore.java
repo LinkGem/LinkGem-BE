@@ -2,6 +2,7 @@ package com.linkgem.infrastructure.common.file;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -74,6 +75,8 @@ public class S3FileStore implements FileStore {
                 uploadCommand.getId()
             );
 
+        } catch (MalformedURLException e) {
+            return FileInfo.empty();
         } catch (IOException e) {
             e.printStackTrace();
             throw new BusinessException(ErrorCode.S3_FILE_UPLOAD_FAIL);
@@ -104,8 +107,6 @@ public class S3FileStore implements FileStore {
 
         String fileUrl = awsS3Manager.upload(s3FileCommand);
 
-        FileInfo fileInfo = new FileInfo(fileUrl);
-
-        return fileInfo;
+        return new FileInfo(fileUrl);
     }
 }

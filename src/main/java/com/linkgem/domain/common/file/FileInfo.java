@@ -8,4 +8,8 @@ import lombok.Getter;
 public class FileInfo {
 
     private String url;
+
+    public static FileInfo empty() {
+        return new FileInfo("");
+    }
 }
