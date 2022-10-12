@@ -38,7 +38,6 @@ public class UserResponse {
 	@ApiModel(description = "로그인 요청 응답")
 	@NoArgsConstructor
 	public static class LoginResponse {
-
 		private Long id;
 		private String loginEmail;
 		private String mailEmail;

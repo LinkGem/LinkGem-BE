@@ -25,7 +25,6 @@ public class UserFacade {
   private final UserTokenReissueService userTokenReissueService;
   private final List<UserLoginService> userLoginServices;
 
-
   public UserResponse.LoginResponse login(String provider, String code){
     UserLoginService userLoginService = userLoginServices.stream()
         .filter(p -> p.getLoginService(provider))

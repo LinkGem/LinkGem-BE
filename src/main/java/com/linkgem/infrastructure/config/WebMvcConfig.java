@@ -18,7 +18,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtTokenInterceptor)
             .addPathPatterns("/**")
-            .excludePathPatterns("/", "/api/v1/user/oauth/**",
+            .excludePathPatterns("/", "/api/v1/user/oauth/**","/api/v1/auth/mail/check",
                 "/v2/**", // swagger
                 "/webjars/**", // swagger
                 "/swagger**", // swagger

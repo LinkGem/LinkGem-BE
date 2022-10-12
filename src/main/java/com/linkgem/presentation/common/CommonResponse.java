@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 public class CommonResponse<T> {
-    private T result;
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private final T result;
+    private final LocalDateTime timestamp = LocalDateTime.now();
 
     private CommonResponse(T result) {
         this.result = result;

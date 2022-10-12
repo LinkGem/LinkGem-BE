@@ -35,24 +35,24 @@ public class UserApiController {
 
 	@ApiOperation(value = "추가정보 추가", notes = "유저의 직업,경력,닉네임을 추가한다.")
 	@PatchMapping("/addDetailInfo")
-	public ResponseEntity<Void> addDetailInfo(
+	public ResponseEntity<CommonResponse<Void>> addDetailInfo(
 		HttpServletRequest httpServletRequest,
 		@RequestBody AddDetailInfoRequest addDetailInfoRequest) {
 		Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 		userFacade.addDetailInfo(userId, addDetailInfoRequest);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(CommonResponse.of(null));
 	}
 
 	@ApiOperation(value = "유저 세팅 API", notes = "유저의 직업,경력,닉네임, 프로필사진을 추가한다.")
 	@PostMapping("/settingUserInfo")
-	public ResponseEntity<UserResponse.SettingResponse> settingUserInfo(HttpServletRequest httpServletRequest,
+	public ResponseEntity<CommonResponse<UserResponse.SettingResponse>> settingUserInfo(HttpServletRequest httpServletRequest,
 		@RequestParam(required = false) MultipartFile profileImage, @RequestParam String nickName,
 		@RequestParam String jobName,
 		@RequestParam Integer careerYear) {
 		Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 		UserResponse.SettingResponse settingResponse = userFacade.settingUserInfo(userId, profileImage, nickName,
 			jobName, careerYear);
-		return ResponseEntity.ok(settingResponse);
+		return ResponseEntity.ok(CommonResponse.of(settingResponse));
 	}
 
 	@ApiOperation(value = "소셜로그인", notes = "소셜 로그인을 진행한다.")
