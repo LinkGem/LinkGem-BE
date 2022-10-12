@@ -1,0 +1,114 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<style>
+    h3 {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 150%;
+    }
+    p {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+    }
+    button {
+        padding: 16px 33px;
+        background: #5200ff;
+        border-radius: 8px;
+        border: none;
+        color: white;
+        cursor: pointer;
+
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 23px;
+    }
+
+    .firstHr {
+        border: 3px solid #5200ff;
+        margin-bottom: 48px;
+    }
+
+    .secondHr {
+        margin-top: 40px;
+        margin-bottom: 40px;
+        border: 1px solid #cecece;
+    }
+
+    h2 {
+        margin-top: 0px;
+        margin-bottom: 8px;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 30.1867px;
+        line-height: 45px;
+        letter-spacing: -0.03em;
+        color: #5200ff;
+    }
+    span {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 150%;
+
+        color: #8e8e8e;
+    }
+</style>
+<body>
+<hr style="border: 3px solid #5200ff;
+        margin-bottom: 48px;"/>
+<div>
+    <h3 style=" font-style: normal;
+          font-weight: 700;
+          font-size: 28px;
+          line-height: 150%;">Hello, 😊</h3>
+    <p style="font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 150%;">
+        안녕하세요,<strong th:text="${name}">이름</strong> 키퍼님
+        <br />
+        이메일 주소가 맞는지 확인하려고 해요. 링크잼 회원이 맞으신가요?
+    </p>
+</div>
+
+<form th:action="${redirectUrl}" method="post">
+    <button style="padding: 16px 33px;
+            background: #5200ff;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            cursor: pointer;
+
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 23px;
+            height: 60px;">네, 맞아요</button>
+</form>
+
+<hr style=" margin-top: 40px;
+        margin-bottom: 40px;
+        border: 1px solid #cecece;"/>
+
+<div>
+    <h2 style=" margin-top: 0px;
+          margin-bottom: 8px;
+          font-style: normal;
+          font-weight: 800;
+          font-size: 30.1867px;
+          line-height: 45px;
+          letter-spacing: -0.03em;
+          color: #5200ff;">LINK GEM</h2>
+    <span style=" font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 150%;
+
+          color: #8e8e8e;">Copyright @ Link Gem. All rights reserved.</span>
+</div>
+</body>
+</html>

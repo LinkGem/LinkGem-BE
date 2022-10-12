@@ -16,24 +16,24 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JwtTokenInterceptor implements HandlerInterceptor {
 
-  private final TokenProvider tokenProvider;
+	private final TokenProvider tokenProvider;
 
-  public static String USER_INFORMATION_NAME = "userId";
+	public static String USER_INFORMATION_NAME = "userId";
 
-  public static String USER_TOKEN_HEADER = "authorization";
+	public static String USER_TOKEN_HEADER = "authorization";
 
-  @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-    String authentication = request.getHeader(USER_TOKEN_HEADER);
+		String authentication = request.getHeader(USER_TOKEN_HEADER);
 
-    if (authentication != null) {
-      String userId = tokenProvider.isValidAccessToken(authentication);
-      request.setAttribute(USER_INFORMATION_NAME,Long.valueOf(userId));
-      return true;
-    } else {
-      throw new BusinessException(ErrorCode.ACCESS_TOKEN_IS_EMPTY);
-    }
+		if (authentication != null) {
+			String userId = tokenProvider.isValidAccessToken(authentication);
+			request.setAttribute(USER_INFORMATION_NAME, Long.valueOf(userId));
+			return true;
+		} else {
+			throw new BusinessException(ErrorCode.ACCESS_TOKEN_IS_EMPTY);
+		}
 
-  }
+	}
 }

@@ -13,64 +13,64 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
-    /**
-     * @RequestBody 예외 핸들러
-     * @param e
-     * @return
-     */
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> bindHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-        ErrorResponse response = ErrorResponse.builder()
-            .code("HttpMessageNotReadableException")
-            .message(e.getMessage())
-            .build();
+	/**
+	 * @RequestBody 예외 핸들러
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<ErrorResponse> bindHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+		ErrorResponse response = ErrorResponse.builder()
+			.code("HttpMessageNotReadableException")
+			.message(e.getMessage())
+			.build();
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
 
-    /**
-     * @Valid 관련 예외 핸들러
-     * @param e
-     * @return
-     */
-    @ExceptionHandler(BindException.class)
-    protected ResponseEntity<ErrorResponse> bindException(BindException e) {
-        ErrorResponse response = ErrorResponse.builder()
-            .code("Bad Request")
-            .message("Bad Request")
-            .errors(e)
-            .build();
+	/**
+	 * @Valid 관련 예외 핸들러
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(BindException.class)
+	protected ResponseEntity<ErrorResponse> bindException(BindException e) {
+		ErrorResponse response = ErrorResponse.builder()
+			.code("Bad Request")
+			.message("Bad Request")
+			.errors(e)
+			.build();
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
 
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ErrorResponse> onBusinessException(BusinessException e) {
+	@ExceptionHandler(BusinessException.class)
+	public ResponseEntity<ErrorResponse> onBusinessException(BusinessException e) {
 
-        ErrorCode errorCode = e.getErrorCode();
+		ErrorCode errorCode = e.getErrorCode();
 
-        final ErrorResponse response =
-            ErrorResponse
-                .builder()
-                .code(errorCode.name())
-                .message(e.getMessage())
-                .build();
+		final ErrorResponse response =
+			ErrorResponse
+				.builder()
+				.code(errorCode.name())
+				.message(e.getMessage())
+				.build();
 
-        return new ResponseEntity<>(response, errorCode.getHttpStatus());
-    }
+		return new ResponseEntity<>(response, errorCode.getHttpStatus());
+	}
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> onException(Exception e) {
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ErrorResponse> onException(Exception e) {
 
-        log.error("", e);
+		log.error("", e);
 
-        final ErrorResponse response =
-            ErrorResponse
-                .builder()
-                .code(HttpStatus.INTERNAL_SERVER_ERROR.name())
-                .message(e.toString())
-                .build();
+		final ErrorResponse response =
+			ErrorResponse
+				.builder()
+				.code(HttpStatus.INTERNAL_SERVER_ERROR.name())
+				.message(e.toString())
+				.build();
 
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+		return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }

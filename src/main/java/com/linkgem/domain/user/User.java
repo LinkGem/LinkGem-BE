@@ -1,23 +1,21 @@
 package com.linkgem.domain.user;
 
+import com.linkgem.domain.common.BaseEntity;
+import com.linkgem.domain.user.convertor.UserPhaseConvertor;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.linkgem.domain.common.BaseEntity;
-import com.linkgem.domain.user.convertor.MailAuthConvertor;
-import com.linkgem.domain.user.convertor.UserPhaseConvertor;
-
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
 	@Id
@@ -38,9 +36,6 @@ public class User extends BaseEntity {
 	private int careerYear;
 	@Column(name = "profile_image_url")
 	private String profileImageUrl;
-	@Column(name = "mail_auth")
-	@Convert(converter = MailAuthConvertor.class)
-	private Boolean mailAuth;
 
 	@Builder
 	public User(String loginEmail, String nickname, String oauthId, String name) {
@@ -49,7 +44,6 @@ public class User extends BaseEntity {
 		this.oauthId = oauthId;
 		this.userPhase = UserPhase.READY;
 		this.name = name;
-		this.mailAuth = false;
 	}
 
 	public void updateNickname(String nickname) {
@@ -86,8 +80,11 @@ public class User extends BaseEntity {
 
 	}
 
-	public void mailAuth() {
-		this.mailAuth = true;
+	public void saveMailEmail(String mailEmail){
+		this.mailEmail = mailEmail;
 	}
+
+	
+
 
 }
