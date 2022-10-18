@@ -8,7 +8,6 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,10 +39,11 @@ public class MailAuthServiceImpl implements MailAuthService {
         String nickname = user.getNickname();
         String certificationCode = UUID.randomUUID().toString();
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        log.info("이메일 주소" + emailAddress);
+        String replacedEmailAddress = emailAddress.replace("\"", "");
+        log.info("이메일 주소: " + replacedEmailAddress);
         try {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-            messageHelper.setTo(new InternetAddress(emailAddress));
+            messageHelper.setTo(replacedEmailAddress);
             messageHelper.setSubject("링크잼 이메일 인증메일 입니다.");
             Context context = new Context();
             context.setVariable("name", nickname);
