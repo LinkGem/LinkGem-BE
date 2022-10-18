@@ -40,6 +40,7 @@ public class MailAuthServiceImpl implements MailAuthService {
         String nickname = user.getNickname();
         String certificationCode = UUID.randomUUID().toString();
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        log.info("이메일 주소" + emailAddress);
         try {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             messageHelper.setTo(new InternetAddress(emailAddress));
