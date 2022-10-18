@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -20,6 +21,7 @@ import org.thymeleaf.context.Context;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MailAuthServiceImpl implements MailAuthService {
 
     private final JavaMailSender javaMailSender;
@@ -50,7 +52,7 @@ public class MailAuthServiceImpl implements MailAuthService {
             messageHelper.setText(html, true);
             javaMailSender.send(mimeMessage);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("mail sending errors : {} {}", e.toString(),e.getMessage());
             throw new BusinessException(ErrorCode.MAIL_SEND_ERROR);
         }
         LocalDateTime expiredDate = LocalDateTime.now().plusSeconds(180);
