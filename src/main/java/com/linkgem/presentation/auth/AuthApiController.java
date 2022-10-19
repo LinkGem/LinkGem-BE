@@ -1,28 +1,23 @@
 package com.linkgem.presentation.auth;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import java.net.URI;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.linkgem.domain.auth.AuthInfo;
 import com.linkgem.domain.auth.MailAuthService;
 import com.linkgem.presentation.auth.dto.AuthResponse;
 import com.linkgem.presentation.common.CommonResponse;
 import com.linkgem.presentation.common.UserAuthenticationProvider;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import java.net.URI;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "인증")
 @RestController
 @RequiredArgsConstructor
@@ -33,7 +28,7 @@ public class AuthApiController {
 
 	@ApiOperation(value = "인증 메일 전송", notes = "인증 메일을 전송한다.")
 	@PostMapping("/mail/send")
-	public ResponseEntity<CommonResponse<Void>> sendMail(HttpServletRequest httpServletRequest, @RequestBody String emailAddress) {
+	public ResponseEntity<CommonResponse<Void>> sendMail(HttpServletRequest httpServletRequest, @RequestParam String emailAddress) {
 		Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 		mailAuthService.mailSend(emailAddress, userId);
 		return ResponseEntity.ok(CommonResponse.of(null));
