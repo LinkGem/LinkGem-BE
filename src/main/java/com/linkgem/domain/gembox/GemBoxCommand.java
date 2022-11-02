@@ -16,9 +16,14 @@ public class GemBoxCommand {
         private String name;
         private List<Long> linkIds;
         private Long userId;
+        private Boolean isDefault;
 
         public GemBox toEntity() {
-            return new GemBox(this.name, this.userId);
+            return new GemBox(this.name, this.userId, this.isDefault);
+        }
+
+        public static Create createDefault(Long userId) {
+            return new Create(GemBox.DEFAULT_GEMBOX_NAME, null, userId, true);
         }
     }
 
