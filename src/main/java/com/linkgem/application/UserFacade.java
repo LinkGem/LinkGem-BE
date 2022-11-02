@@ -1,5 +1,6 @@
 package com.linkgem.application;
 
+import com.linkgem.domain.user.UserInfoService;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -25,6 +26,8 @@ public class UserFacade {
   private final UserTokenReissueService userTokenReissueService;
   private final List<UserLoginService> userLoginServices;
 
+  private final UserInfoService userInfoService;
+
   public UserResponse.LoginResponse login(String provider, String code){
     UserLoginService userLoginService = userLoginServices.stream()
         .filter(p -> p.getLoginService(provider))
@@ -33,6 +36,7 @@ public class UserFacade {
     return userLoginService.login(provider, code);
 
   }
+
 
   public UserResponse.TokenReissueResponse reissue(String accessToken,String refreshToken){
     return userTokenReissueService.reissue(accessToken, refreshToken);
@@ -53,6 +57,10 @@ public class UserFacade {
   public UserResponse.SettingResponse settingUserInfo(Long userId, MultipartFile profileImage, String nickName, String jobName, Integer careerYear){
     return userSettingService.settingUserInfo(userId, profileImage, nickName,
         jobName, careerYear);
+  }
+
+  public UserResponse.UserInfoResponse info(Long userId){
+    return userInfoService.info(userId);
   }
 
 

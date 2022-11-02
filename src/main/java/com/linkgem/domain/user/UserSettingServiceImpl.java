@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 public class UserSettingServiceImpl implements UserSettingService {
 
 	private final UserReader userReader;
-
 	private final FileStore fileStore;
 
     private final S3ObjectKeyCreator s3ObjectKeyCreator;
