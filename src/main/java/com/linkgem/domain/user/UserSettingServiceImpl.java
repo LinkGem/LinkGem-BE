@@ -77,6 +77,10 @@ public class UserSettingServiceImpl implements UserSettingService {
 		}
 		user.updateCareerYear(careerYear);
 		user.updateJob(jobName);
+
+		//기본 잼박스 생성
+		gemBoxService.create(GemBoxCommand.Create.createDefault(userId));
+
 		if (Objects.isNull(profileImage)) {
 			return UserResponse.SettingResponse.of(userId, nickName, jobName, careerYear, null);
 		}
@@ -86,9 +90,6 @@ public class UserSettingServiceImpl implements UserSettingService {
 				fileStore.delete(FileCommand.DeleteFile.of(user.getProfileImageUrl()));
 			}
 		}
-
-		//기본 잼박스 생성
-		gemBoxService.create(GemBoxCommand.Create.createDefault(userId));
 
 		//유저 프로필 이미지 생성
         final String objectKey =
