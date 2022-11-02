@@ -10,6 +10,8 @@ import com.linkgem.domain.common.file.Directory;
 import com.linkgem.domain.common.file.FileCommand;
 import com.linkgem.domain.common.file.FileInfo;
 import com.linkgem.domain.common.file.FileStore;
+import com.linkgem.domain.gembox.GemBoxCommand;
+import com.linkgem.domain.gembox.GemBoxService;
 import com.linkgem.infrastructure.common.aws.S3ObjectKeyCreator;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserSettingServiceImpl implements UserSettingService {
 
+	private final GemBoxService gemBoxService;
 	private final UserReader userReader;
 	private final FileStore fileStore;
 
@@ -84,9 +87,12 @@ public class UserSettingServiceImpl implements UserSettingService {
 			}
 		}
 
-        final String objectKey =
-            s3ObjectKeyCreator.create(Directory.LINK, userId);
+		//기본 잼박스 생성
+		gemBoxService.create(GemBoxCommand.Create.createDefault(userId));
 
+		//유저 프로필 이미지 생성
+        final String objectKey =
+            s3ObjectKeyCreator.create(Directory.USER_PROFILE, userId);
         FileCommand.UploadFile uploadFile = FileCommand.UploadFile.of(profileImage, objectKey);
 
 		FileInfo fileInfo = fileStore.store(uploadFile);
