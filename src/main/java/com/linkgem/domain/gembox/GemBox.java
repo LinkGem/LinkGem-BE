@@ -38,6 +38,7 @@ public class GemBox extends BaseEntity {
     public static final String GEMBOX_NAME_REGEX = "^[a-zA-Zㄱ-ㅎ가-힣0-9 \\s]{1,8}$";
 
     public static final Long MAX_GEMBOX = 8L;
+    public static final String DEFAULT_GEMBOX_NAME = "기본 잼박스";
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -53,9 +54,18 @@ public class GemBox extends BaseEntity {
     @JoinColumn(name = "gem_box_id")
     private List<Link> links = new ArrayList<>();
 
+    @Column(name = "is_default", columnDefinition = "boolean default false")
+    private Boolean isDefault;
+
     public GemBox(String name, Long userId) {
         this.name = name;
         this.userId = userId;
+    }
+
+    public GemBox(String name, Long userId, Boolean isDefault) {
+        this.name = name;
+        this.userId = userId;
+        this.isDefault = isDefault;
     }
 
     public void updateName(String name) {
@@ -71,6 +81,6 @@ public class GemBox extends BaseEntity {
             return false;
         }
 
-        return this.id == id;
+        return this.id.equals(id);
     }
 }
