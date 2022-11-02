@@ -7,6 +7,7 @@ import com.linkgem.domain.common.file.Directory;
 import com.linkgem.domain.common.file.FileCommand;
 import com.linkgem.domain.common.file.FileInfo;
 import com.linkgem.domain.common.file.FileStore;
+import com.linkgem.domain.gembox.GemBoxReader;
 import com.linkgem.domain.link.opengraph.OpenGraph;
 import com.linkgem.domain.link.opengraph.OpenGraphReader;
 import com.linkgem.domain.user.User;
@@ -31,6 +32,8 @@ public class LinkCreateServiceImpl implements LinkCreateService {
 
     private final S3ObjectKeyCreator s3ObjectKeyCreator;
 
+    private final GemBoxReader gemBoxReader;
+
     @Transactional
     @Override
     public LinkInfo.Create create(LinkCommand.Create createCommand) {
@@ -46,6 +49,9 @@ public class LinkCreateServiceImpl implements LinkCreateService {
             .user(user)
             .openGraph(openGraph)
             .build();
+
+        gemBoxReader.findDefault(user.getId())
+            .ifPresent(link::updateGemBox);
 
         Link createdLink = linkStore.create(link);
 

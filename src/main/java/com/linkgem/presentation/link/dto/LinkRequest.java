@@ -29,9 +29,6 @@ public class LinkRequest {
         @ApiModelProperty(value = "잼박스 고유 아이디")
         private Long gemBoxId;
 
-        @ApiModelProperty(value = "잼박스 저장 여부")
-        private Boolean hasGembox;
-
         @ApiModelProperty(value = "즐겨찾기 조회", allowableValues = "true, false")
         private Boolean isFavorites;
 
@@ -39,7 +36,7 @@ public class LinkRequest {
         private Boolean hasMemo;
 
         public LinkQuery.SearchLinks to(Long userId) {
-            return new LinkQuery.SearchLinks(userId, this.gemBoxId, this.isFavorites, this.hasGembox, this.hasMemo);
+            return new LinkQuery.SearchLinks(userId, this.gemBoxId, this.isFavorites, this.hasMemo);
         }
     }
 

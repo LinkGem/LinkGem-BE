@@ -63,11 +63,7 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
         BooleanBuilder whereBuilder = new BooleanBuilder();
         whereBuilder.and(link.user.id.eq(searchLinks.getUserId()));
 
-        if (searchLinks.getGemBoxId() == null) {
-            if (searchLinks.getHasGembox() != null) {
-                whereBuilder.and(searchLinks.getHasGembox() ? link.gemBox.id.isNotNull() : link.gemBox.id.isNull());
-            }
-        } else {
+        if (searchLinks.getGemBoxId() != null) {
             whereBuilder.and(link.gemBox.id.eq(searchLinks.getGemBoxId()));
         }
 

@@ -70,7 +70,7 @@ public class LinkApiController {
     public CommonResponse<Pages<LinkResponse.SearchLinkResponse>> findAll(
         HttpServletRequest httpServletRequest,
         @PageableDefault(page = 0, size = 10) Pageable pageable,
-        LinkRequest.SearchLinksRequest request
+        @Valid LinkRequest.SearchLinksRequest request
     ) {
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
         LinkQuery.SearchLinks searchLinks = request.to(userId);
