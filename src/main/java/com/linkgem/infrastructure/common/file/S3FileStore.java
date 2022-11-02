@@ -9,13 +9,11 @@ import java.net.URLConnection;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.linkgem.domain.common.file.Directory;
 import com.linkgem.domain.common.file.FileCommand;
 import com.linkgem.domain.common.file.FileInfo;
 import com.linkgem.domain.common.file.FileStore;
 import com.linkgem.infrastructure.common.aws.AwsS3Manager;
 import com.linkgem.infrastructure.common.aws.S3FileCommand;
-import com.linkgem.infrastructure.common.aws.S3ObjectKeyCreator;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
 
@@ -26,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 public class S3FileStore implements FileStore {
 
     private final AwsS3Manager awsS3Manager;
-    private final S3ObjectKeyCreator s3ObjectKeyCreator;
 
     @Override
     public FileInfo store(FileCommand.UploadFile uploadCommand) {
@@ -45,9 +42,7 @@ public class S3FileStore implements FileStore {
                 inputStream,
                 contentType,
                 contentLength,
-                uploadCommand.getDirectory(),
-                uploadCommand.getUserId(),
-                uploadCommand.getId()
+                uploadCommand.getObjectKey()
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,9 +65,7 @@ public class S3FileStore implements FileStore {
                 inputStream,
                 contentType,
                 contentLength,
-                uploadCommand.getDirectory(),
-                uploadCommand.getUserId(),
-                uploadCommand.getId()
+                uploadCommand.getObjectKey()
             );
 
         } catch (MalformedURLException e) {
@@ -92,11 +85,8 @@ public class S3FileStore implements FileStore {
         InputStream inputStream,
         String contentType,
         Long contentLength,
-        Directory directory,
-        Long userId,
-        Long id
+        String objectKey
     ) {
-        final String objectKey = s3ObjectKeyCreator.create(directory, userId, id);
 
         S3FileCommand.Upload s3FileCommand = S3FileCommand.Upload.builder()
             .inputStream(inputStream)

@@ -11,6 +11,7 @@ import com.linkgem.domain.link.opengraph.OpenGraph;
 import com.linkgem.domain.link.opengraph.OpenGraphReader;
 import com.linkgem.domain.user.User;
 import com.linkgem.domain.user.UserReader;
+import com.linkgem.infrastructure.common.aws.S3ObjectKeyCreator;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
 
@@ -27,6 +28,8 @@ public class LinkCreateServiceImpl implements LinkCreateService {
     private final UserReader userReader;
 
     private final OpenGraphReader openGraphReader;
+
+    private final S3ObjectKeyCreator s3ObjectKeyCreator;
 
     @Transactional
     @Override
@@ -57,8 +60,11 @@ public class LinkCreateServiceImpl implements LinkCreateService {
 
         final String imageUrl = createdLink.getOpenGraph().getImageUrl();
 
+        final String objectKey =
+            s3ObjectKeyCreator.create(Directory.LINK, createdLink.getUser().getId(), createdLink.getId());
+
         FileCommand.UploadUrlFile uploadCommand =
-            FileCommand.UploadUrlFile.of(imageUrl, Directory.LINK, createdLink.getUser().getId(), createdLink.getId());
+            FileCommand.UploadUrlFile.of(imageUrl, objectKey);
 
         FileInfo fileInfo = fileStore.store(uploadCommand);
 

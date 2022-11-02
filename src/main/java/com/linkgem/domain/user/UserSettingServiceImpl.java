@@ -10,6 +10,7 @@ import com.linkgem.domain.common.file.Directory;
 import com.linkgem.domain.common.file.FileCommand;
 import com.linkgem.domain.common.file.FileInfo;
 import com.linkgem.domain.common.file.FileStore;
+import com.linkgem.infrastructure.common.aws.S3ObjectKeyCreator;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
 import com.linkgem.presentation.user.dto.UserRequest.AddDetailInfoRequest;
@@ -24,6 +25,8 @@ public class UserSettingServiceImpl implements UserSettingService {
 	private final UserReader userReader;
 
 	private final FileStore fileStore;
+
+    private final S3ObjectKeyCreator s3ObjectKeyCreator;
 
 	@Override
 	@Transactional
@@ -82,8 +85,11 @@ public class UserSettingServiceImpl implements UserSettingService {
 			}
 		}
 
-		FileCommand.UploadFile uploadFile = FileCommand.UploadFile.of(profileImage,
-			Directory.USER_PROFILE, userId, userId);
+        final String objectKey =
+            s3ObjectKeyCreator.create(Directory.LINK, userId);
+
+        FileCommand.UploadFile uploadFile = FileCommand.UploadFile.of(profileImage, objectKey);
+
 		FileInfo fileInfo = fileStore.store(uploadFile);
 		user.updateProfileImageUrl(fileInfo.getUrl());
 		return UserResponse.SettingResponse.of(userId, nickName, jobName, careerYear, fileInfo.getUrl());
