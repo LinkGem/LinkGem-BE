@@ -73,11 +73,18 @@ public class UserApiController {
 		return ResponseEntity.ok(CommonResponse.of(tokenReissueResponse));
 	}
 
-	@ApiOperation(value = "회원 탈퇴", notes = "회원탈퇴를 진행한다.")
+	@ApiOperation(value = "유저 탈퇴", notes = "유저 탈퇴를 진행한다.")
 	@PostMapping("oauth/leave")
 	public ResponseEntity<CommonResponse<UserResponse.UserLeaveResponse>> leave(
 		@RequestBody UserRequest.UserLeaveRequest userLeaveRequest) {
 		UserResponse.UserLeaveResponse userLeaveResponse = userFacade.leave(userLeaveRequest);
 		return ResponseEntity.ok(CommonResponse.of(userLeaveResponse));
+	}
+
+	@ApiOperation(value = "유저 정보 API", notes = "유저 정보를 반환한다.")
+	@GetMapping("/info")
+	public ResponseEntity<CommonResponse<UserResponse.UserInfoResponse>> info(HttpServletRequest httpServletRequest){
+		Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+		return ResponseEntity.ok(CommonResponse.of(userFacade.info(userId)));
 	}
 }

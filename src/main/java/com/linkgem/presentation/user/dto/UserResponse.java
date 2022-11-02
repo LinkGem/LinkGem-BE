@@ -100,7 +100,7 @@ public class UserResponse {
 		}
 	}
 
-	@ApiModel(description = "회원탈퇴 요청 응답")
+	@ApiModel(description = "유저 탈퇴 요청 응답")
 	@Getter
 	@NoArgsConstructor
 	public static class UserLeaveResponse {
@@ -108,6 +108,21 @@ public class UserResponse {
 		private String result;
 		private String error;
 		private String error_description;
+	}
+
+	@ApiModel(description = "유저 정보 요청 응답")
+	@Getter
+	@AllArgsConstructor
+	@Builder
+	public static class UserInfoResponse{
+		private Long userId;
+		private String loginEmail;
+		private String mailEmail;
+		private String name;
+		private String nickname;
+		private String job;
+		private int careerYear;
+		private String profileImageUrl;
 	}
 
 
