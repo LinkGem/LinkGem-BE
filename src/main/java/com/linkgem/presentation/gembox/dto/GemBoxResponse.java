@@ -13,25 +13,36 @@ public class GemBoxResponse {
     @ApiModel(description = "잼박스 목록 응답")
     @AllArgsConstructor
     @Getter
-    public static class GemBox {
+    public static class Main {
         private Long id;
         private String name;
+        private Boolean isDefault;
 
-        public static GemBox of(GemBoxInfo.Main gemboxInfo) {
-            return new GemBox(gemboxInfo.getId(), gemboxInfo.getName());
+        public static Main of(GemBoxInfo.Main gemboxInfo) {
+            return new Main(gemboxInfo.getId(), gemboxInfo.getName(), gemboxInfo.getIsDefault());
         }
     }
 
     @ApiModel(description = "잼박스 목록 응답")
-    @AllArgsConstructor
     @Getter
-    public static class Search {
-        private Long id;
-        private String name;
+    public static class Search extends Main {
+
         private String imageUrl;
+        private Long linkCount;
+
+        public Search(Long id, String name, Boolean isDefault, Long linkCount, String imageUrl) {
+            super(id, name, isDefault);
+            this.imageUrl = imageUrl;
+            this.linkCount = linkCount;
+        }
 
         public static Search of(GemBoxInfo.Search gemboxInfo) {
-            return new Search(gemboxInfo.getId(), gemboxInfo.getName(), gemboxInfo.getImageUrl());
+            return new Search(
+                gemboxInfo.getId(),
+                gemboxInfo.getName(),
+                gemboxInfo.getIsDefault(),
+                gemboxInfo.getLinkCount(),
+                gemboxInfo.getImageUrl());
         }
     }
 

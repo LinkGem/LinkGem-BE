@@ -12,12 +12,13 @@ import org.springframework.data.support.PageableExecutionUtils;
 import com.linkgem.domain.gembox.GemBoxInfo;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class GemBoxRepositoryImpl implements GemBoxRepositoryCustom {
+public class GemBoxRepositoryCustomImpl implements GemBoxRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
@@ -29,6 +30,10 @@ public class GemBoxRepositoryImpl implements GemBoxRepositoryCustom {
                     GemBoxInfo.Search.class,
                     gemBox.id,
                     gemBox.name,
+                    gemBox.isDefault,
+                    JPAExpressions.select(link.count())
+                        .from(link)
+                        .where(link.gemBox.id.eq(gemBox.id)),
                     new CaseBuilder().when(link.openGraph.imageUrl.isNull())
                         .then("")
                         .otherwise(link.openGraph.imageUrl)

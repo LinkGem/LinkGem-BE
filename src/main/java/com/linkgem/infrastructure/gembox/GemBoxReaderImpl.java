@@ -37,6 +37,11 @@ public class GemBoxReaderImpl implements GemBoxReader {
     }
 
     @Override
+    public Optional<GemBox> findDefault(Long userId) {
+        return repository.findByUserIdAndIsDefault(userId, true);
+    }
+
+    @Override
     public GemBox get(Long id, Long userId) {
         return this.find(id, userId)
             .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));

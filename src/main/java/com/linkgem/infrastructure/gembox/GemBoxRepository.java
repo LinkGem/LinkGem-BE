@@ -13,6 +13,8 @@ public interface GemBoxRepository extends JpaRepository<GemBox, Long>, GemBoxRep
 
     Optional<GemBox> findByIdAndUserId(Long id, Long userId);
 
+    Optional<GemBox> findByUserIdAndIsDefault(Long userId, Boolean isDefault);
+
     List<GemBox> findAllByUserId(Long userId);
 
     @Transactional

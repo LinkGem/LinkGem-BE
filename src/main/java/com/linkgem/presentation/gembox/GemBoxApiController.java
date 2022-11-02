@@ -40,7 +40,7 @@ public class GemBoxApiController {
 
     @ApiOperation(value = "잼박스 조회", notes = "잼박스를 조회한다")
     @GetMapping(value = "/{id}")
-    public CommonResponse<GemBoxResponse.GemBox> find(
+    public CommonResponse<GemBoxResponse.Main> find(
         HttpServletRequest httpServletRequest,
         @ApiParam(value = "잼박스 고유 아이디", example = "1") @PathVariable Long id
     ) {
@@ -48,7 +48,7 @@ public class GemBoxApiController {
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
         GemBoxInfo.Main gemboxInfo = gemBoxFacade.find(GemBoxQuery.SearchDetail.of(id, userId));
 
-        return CommonResponse.of(GemBoxResponse.GemBox.of(gemboxInfo));
+        return CommonResponse.of(GemBoxResponse.Main.of(gemboxInfo));
     }
 
     @ApiOperation(value = "잼박스 목록 조회", notes = "잼박스 목록을 조회한다")

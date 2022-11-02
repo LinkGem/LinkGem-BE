@@ -19,6 +19,8 @@ public class GemBoxInfo {
 
         private String name;
 
+        private Boolean isDefault;
+
         public static Main of(GemBox gemBox) {
             return Main.builder()
                 .id(gemBox.getId())
@@ -27,14 +29,16 @@ public class GemBoxInfo {
         }
     }
 
-    @AllArgsConstructor
     @Getter
-    public static class Search {
-        private Long id;
-
-        private String name;
-
+    public static class Search extends Main {
         private String imageUrl;
+        private Long linkCount;
+
+        public Search(Long id, String name, Boolean isDefault, Long linkCount, String imageUrl) {
+            super(id, name, isDefault);
+            this.linkCount = linkCount;
+            this.imageUrl = imageUrl;
+        }
     }
 
     @Builder
