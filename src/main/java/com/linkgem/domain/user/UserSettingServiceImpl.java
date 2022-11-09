@@ -1,11 +1,5 @@
 package com.linkgem.domain.user;
 
-import java.util.Objects;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.linkgem.domain.common.file.Directory;
 import com.linkgem.domain.common.file.FileCommand;
 import com.linkgem.domain.common.file.FileInfo;
@@ -17,8 +11,11 @@ import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
 import com.linkgem.presentation.user.dto.UserRequest.AddDetailInfoRequest;
 import com.linkgem.presentation.user.dto.UserResponse;
-
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +48,9 @@ public class UserSettingServiceImpl implements UserSettingService {
 		user.updateNickname(addDetailInfoRequest.getUserNickname());
 		user.updateUserPhaseRegistered();
 
+		//기본 잼박스 생성
+		gemBoxService.create(GemBoxCommand.Create.createDefault(userId));
+
 	}
 
 	@Override
@@ -77,9 +77,6 @@ public class UserSettingServiceImpl implements UserSettingService {
 		}
 		user.updateCareerYear(careerYear);
 		user.updateJob(jobName);
-
-		//기본 잼박스 생성
-		gemBoxService.create(GemBoxCommand.Create.createDefault(userId));
 
 		if (Objects.isNull(profileImage)) {
 			return UserResponse.SettingResponse.of(userId, nickName, jobName, careerYear, null);
