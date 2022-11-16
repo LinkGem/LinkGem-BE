@@ -1,5 +1,7 @@
 package com.linkgem.domain.commonlink;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import com.linkgem.domain.common.BaseEntity;
 import com.linkgem.domain.link.opengraph.OpenGraph;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,4 +31,11 @@ public class CommonLink extends BaseEntity {
 
     @Embedded
     private OpenGraph openGraph;
+
+    @Builder
+    private CommonLink(String url, OpenGraph openGraph) {
+        Objects.requireNonNull(url, "url is required");
+        this.url = url;
+        this.openGraph = openGraph;
+    }
 }
