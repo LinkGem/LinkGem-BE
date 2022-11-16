@@ -14,6 +14,11 @@ public class CommonLinkStoreImpl implements CommonLinkStore {
     private final CommonLinkRepository commonLinkRepository;
 
     @Override
+    public void delete(CommonLink commonLink) {
+        commonLinkRepository.delete(commonLink);
+    }
+
+    @Override
     public CommonLink create(CommonLink commonLink) {
         return commonLinkRepository.save(commonLink);
     }
