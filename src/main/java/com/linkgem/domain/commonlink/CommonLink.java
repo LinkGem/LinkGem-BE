@@ -1,4 +1,4 @@
-package com.linkgem.domain.link.commonlink;
+package com.linkgem.domain.commonlink;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
