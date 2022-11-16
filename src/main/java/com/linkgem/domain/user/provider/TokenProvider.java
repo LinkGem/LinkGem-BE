@@ -59,7 +59,7 @@ public class TokenProvider {
   }
 
   private Date createAccessExpireDate() {
-    return Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
+    return Date.from(Instant.now().plus(5, ChronoUnit.MINUTES));
 
   }
 
