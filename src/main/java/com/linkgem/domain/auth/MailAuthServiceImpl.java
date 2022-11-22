@@ -54,7 +54,7 @@ public class MailAuthServiceImpl implements MailAuthService {
             messageHelper.setText(html, true);
             javaMailSender.send(mimeMessage);
         } catch (Exception e) {
-            log.error("mail sending errors : {} {}", e.toString(),e.getMessage());
+            log.error("mail sending errors : {}",e.getMessage());
             throw new BusinessException(ErrorCode.MAIL_SEND_ERROR);
         }
         LocalDateTime expiredDate = LocalDateTime.now().plusSeconds(180);

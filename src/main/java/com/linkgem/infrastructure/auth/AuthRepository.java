@@ -1,14 +1,16 @@
 package com.linkgem.infrastructure.auth;
 
+import com.linkgem.domain.auth.Auth;
 import com.linkgem.domain.auth.AuthType;
 import java.util.Optional;
-
+import javax.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.linkgem.domain.auth.Auth;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface AuthRepository extends JpaRepository<Auth,Long>,AuthRepositoryCustom {
-
-	Optional<Auth> findByUserId(Long userId);
-	Optional<Auth> findByUserIdAndAuthType(Long userId, AuthType authType);
+	@Lock(value = LockModeType.PESSIMISTIC_WRITE)
+	@Query("select a from Auth a where a.user.id = :userId and a.authType = :authType")
+	Optional<Auth> findByUserIdAndAuthType(@Param("userId") Long userId,@Param("authType") AuthType authType);
 }

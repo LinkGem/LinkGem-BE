@@ -14,6 +14,6 @@ public class AuthStoreImpl implements AuthStore {
 	private final AuthRepository authRepository;
 	@Override
 	public Auth create(Auth auth) {
-		return authRepository.save(auth);
+		return authRepository.saveAndFlush(auth);
 	}
 }
