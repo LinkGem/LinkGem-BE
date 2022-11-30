@@ -18,22 +18,20 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class NotificationRepositoryCustomImpl implements NotificationRepositoryCustom {
+public class NotificationQueryDslRepositoryImpl implements NotificationQueryDslRepository {
 
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<NotificationInfo.Main> findAll(NotificationQuery.Search searchQuery, Pageable pageable) {
+    public Page<NotificationInfo.Main> findAll(NotificationQuery.FindAll findAllQuery, Pageable pageable) {
 
-        BooleanBuilder whereBuilder = getFindAllWhereQuery(searchQuery);
+        BooleanBuilder whereBuilder = getFindAllWhereQuery(findAllQuery);
 
         List<NotificationInfo.Main> results = queryFactory
             .select(Projections.constructor(
                 NotificationInfo.Main.class,
                 notification.id,
-                notification.category,
-                notification.emoticon,
-                notification.title,
+                notification.type,
                 notification.content,
                 notification.button,
                 notification.isRead,
@@ -47,36 +45,36 @@ public class NotificationRepositoryCustomImpl implements NotificationRepositoryC
             .fetch();
 
         return PageableExecutionUtils.getPage(
-            results, pageable, () -> this.findAllCount(whereBuilder)
+            results, pageable, () -> this.getNotificationTotalCount(whereBuilder)
         );
     }
 
-    private Long findAllCount(BooleanBuilder whereBuilder) {
+    private Long getNotificationTotalCount(BooleanBuilder whereBuilder) {
         return queryFactory.select(notification.count())
             .from(notification)
             .where(whereBuilder)
             .fetchOne();
     }
 
-    private BooleanBuilder getFindAllWhereQuery(NotificationQuery.Search searchQuery) {
+    private BooleanBuilder getFindAllWhereQuery(NotificationQuery.FindAll findAllQuery) {
         BooleanBuilder whereBuilder = new BooleanBuilder();
 
         whereBuilder
-            .and(notification.receiver.id.eq(searchQuery.getUserId()))
+            .and(notification.receiver.id.eq(findAllQuery.getUserId()))
             .and(notification.isDeleted.isFalse())
-            .and(notification.createDate.between(searchQuery.getSearchStartDate(), LocalDateTime.now()))
+            .and(notification.createDate.between(findAllQuery.getSearchStartDate(), LocalDateTime.now()))
         ;
 
         return whereBuilder;
     }
 
     @Override
-    public Long getUnReadNotificationCount(NotificationQuery.Search searchQuery) {
+    public Long getUnReadNotificationCount(NotificationQuery.FindAll findAllQuery) {
         return queryFactory.select(notification.count())
             .from(notification)
             .where(
-                notification.receiver.id.eq(searchQuery.getUserId()),
-                notification.createDate.between(searchQuery.getSearchStartDate(), LocalDateTime.now()),
+                notification.receiver.id.eq(findAllQuery.getUserId()),
+                notification.createDate.between(findAllQuery.getSearchStartDate(), LocalDateTime.now()),
                 notification.isDeleted.isFalse(),
                 notification.isRead.isFalse()
             )

@@ -8,7 +8,7 @@ import com.linkgem.domain.notification.NotificationQuery;
 
 public interface NotificationSearchService {
 
-    Page<NotificationInfo.Main> findAll(NotificationQuery.Search searchQuery, Pageable pageable);
+    Page<NotificationInfo.Main> findAll(NotificationQuery.FindAll findAllQuery, Pageable pageable);
 
-    Long getUnReadNotificationCount(NotificationQuery.Search searchQuery);
+    Long getUnReadNotificationCount(NotificationQuery.FindAll findAllQuery);
 }

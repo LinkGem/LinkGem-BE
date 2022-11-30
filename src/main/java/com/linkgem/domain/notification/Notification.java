@@ -31,18 +31,13 @@ public class Notification extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private NotificationCategory category;
-
-    private String emoticon;
-
-    @Column(nullable = false)
-    private String title;
+    private NotificationType type;
 
     @Column(nullable = false, length = 1000)
     private String content;
 
     @Embedded
-    private Button button;
+    private NotificationButton button = new NotificationButton();
 
     @Column(name = "is_read", nullable = false)
     private boolean isRead;
@@ -54,20 +49,12 @@ public class Notification extends BaseEntity {
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id", nullable = true)
-    private User sender;
-
     @Builder
-    public Notification(NotificationCategory category, String emoticon, String title, String content,
-        Button button, User receiver, User sender) {
-        this.category = category;
-        this.emoticon = emoticon;
-        this.title = title;
+    public Notification(NotificationType type, String content, NotificationButton button, User receiver) {
+        this.type = type;
         this.content = content;
         this.button = button;
         this.receiver = receiver;
-        this.sender = sender;
         this.isRead = false;
         this.isDeleted = false;
     }

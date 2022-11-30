@@ -3,9 +3,9 @@ package com.linkgem.presentation.notification.dto;
 import java.time.LocalDateTime;
 
 import com.linkgem.domain.common.date.PastDay;
-import com.linkgem.domain.notification.ButtonAction;
-import com.linkgem.domain.notification.NotificationCategory;
+import com.linkgem.domain.notification.NotificationButtonAction;
 import com.linkgem.domain.notification.NotificationInfo;
+import com.linkgem.domain.notification.NotificationType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,38 +27,46 @@ public class NotificationResponse {
         }
     }
 
+    @Getter
+    public static class ButtonMain {
+
+        private NotificationButtonAction buttonAction;
+
+        private String buttonText;
+
+        private String buttonValue;
+
+        public ButtonMain(NotificationInfo.ButtonMain buttonMain) {
+            this.buttonAction = buttonMain.getButtonAction();
+            this.buttonText = buttonMain.getButtonText();
+            this.buttonValue = buttonMain.getButtonValue();
+        }
+    }
+
     @Builder
     @AllArgsConstructor
     @Getter
     public static class Main {
         private Long id;
 
-        private NotificationCategory category;
+        private NotificationType type;
 
-        private String emoticon;
-
-        private String title;
+        private Boolean isRead;
 
         private String content;
 
-        private ButtonAction buttonAction;
-
-        private String buttonTitle;
-
-        private String buttonValue;
+        private ButtonMain button;
 
         private LocalDateTime createDate;
 
         public static Main of(NotificationInfo.Main notification) {
+
             return Main.builder()
                 .id(notification.getId())
-                .category(notification.getCategory())
-                .emoticon(notification.getEmoticon())
-                .title(notification.getTitle())
+                .type(notification.getType())
                 .content(notification.getContent())
-                .buttonAction(notification.getButtonAction())
-                .buttonTitle(notification.getButtonTitle())
-                .buttonValue(notification.getButtonValue())
+                .isRead(notification.isRead())
+                .button(new ButtonMain(notification.getButton()))
                 .createDate(notification.getCreateDate())
                 .build();
         }
@@ -71,6 +79,5 @@ public class NotificationResponse {
 
             return PastDay.getPastDay(createDate);
         }
-
     }
 }

@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class NotificationUpdaterImpl implements NotificationUpdater {
+public class NotificationUpdateImpl implements NotificationUpdate {
 
     private final NotificationReader notificationReader;
 

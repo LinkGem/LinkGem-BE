@@ -6,9 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface NotificationReader {
-    Page<NotificationInfo.Main> findAll(NotificationQuery.Search searchQuery, Pageable pageable);
+    Page<NotificationInfo.Main> findAll(NotificationQuery.FindAll findAllQuery, Pageable pageable);
 
-    Long getUnReadNotificationCount(NotificationQuery.Search searchQuery);
+    Long getUnReadNotificationCount(NotificationQuery.FindAll findAllQuery);
 
     Optional<Notification> find(Long notificationId);
 }

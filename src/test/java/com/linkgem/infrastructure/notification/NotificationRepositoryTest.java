@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.linkgem.domain.notification.NotificationInfo;
@@ -26,11 +25,11 @@ class NotificationRepositoryTest {
     @DisplayName("알림 목록을 조회한다")
     @Test
     void 알림_목록_조회() {
-        NotificationQuery.Search search = NotificationQuery.Search.builder()
+        NotificationQuery.FindAll findAll = NotificationQuery.FindAll.builder()
             .userId(1L)
             .build();
 
-        Page<NotificationInfo.Main> notifications = notificationRepository.findAll(search, Pageable.ofSize(20));
+        Page<NotificationInfo.Main> notifications = notificationRepository.findAll(findAll, Pageable.ofSize(20));
         Assertions.assertEquals(2L, notifications.getTotalElements());
     }
 

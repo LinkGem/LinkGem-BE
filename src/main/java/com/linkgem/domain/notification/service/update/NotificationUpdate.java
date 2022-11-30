@@ -1,6 +1,6 @@
 package com.linkgem.domain.notification.service.update;
 
-public interface NotificationUpdater {
+public interface NotificationUpdate {
     void updateToRead(Long notificationId);
 
     void updateToDeleted(Long notificationId);

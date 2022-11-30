@@ -6,11 +6,11 @@ import org.springframework.data.domain.Pageable;
 import com.linkgem.domain.notification.NotificationInfo;
 import com.linkgem.domain.notification.NotificationQuery;
 
-public interface NotificationRepositoryCustom {
+public interface NotificationQueryDslRepository {
 
-    Page<NotificationInfo.Main> findAll(NotificationQuery.Search searchQuery, Pageable pageable);
+    Page<NotificationInfo.Main> findAll(NotificationQuery.FindAll findAllQuery, Pageable pageable);
 
-    Long getUnReadNotificationCount(NotificationQuery.Search searchQuery);
+    Long getUnReadNotificationCount(NotificationQuery.FindAll findAllQuery);
 
     long updateAllToRead(Long userId);
 

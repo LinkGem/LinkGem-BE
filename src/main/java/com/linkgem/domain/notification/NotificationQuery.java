@@ -10,13 +10,13 @@ public class NotificationQuery {
     }
 
     @Getter
-    public static class Search {
+    public static class FindAll {
         private Long userId;
 
         private LocalDateTime searchStartDate;
 
         @Builder
-        public Search(Long userId, LocalDateTime searchStartDate) {
+        public FindAll(Long userId, LocalDateTime searchStartDate) {
             this.userId = userId;
             this.searchStartDate = searchStartDate;
         }

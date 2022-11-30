@@ -13,26 +13,15 @@ public class NotificationCommand {
     @AllArgsConstructor
     @Getter
     public static class Create {
-        private NotificationCategory category;
-        private String emoticon;
-        private String title;
+        private NotificationType type;
         private String content;
-        private ButtonAction buttonAction;
-        private String buttonTitle;
+        private NotificationButtonAction buttonAction;
+        private String buttonText;
         private String buttonValue;
         private Long receiverId;
-        private Long senderId;
 
-        public Notification toEntity() {
-
-            return Notification.builder()
-                .category(category)
-                .emoticon(emoticon)
-                .title(title)
-                .content(content)
-                .button(new Button(buttonAction, buttonTitle, buttonValue))
-                .build();
+        public boolean hasButton() {
+            return buttonAction != null && buttonText != null && buttonValue != null;
         }
-
     }
 }

@@ -20,13 +20,13 @@ public class NotificationReaderImpl implements NotificationReader {
     private final NotificationRepository notificationRepository;
 
     @Override
-    public Page<NotificationInfo.Main> findAll(NotificationQuery.Search searchQuery, Pageable pageable) {
-        return notificationRepository.findAll(searchQuery, pageable);
+    public Page<NotificationInfo.Main> findAll(NotificationQuery.FindAll findAllQuery, Pageable pageable) {
+        return notificationRepository.findAll(findAllQuery, pageable);
     }
 
     @Override
-    public Long getUnReadNotificationCount(NotificationQuery.Search searchQuery) {
-        return notificationRepository.getUnReadNotificationCount(searchQuery);
+    public Long getUnReadNotificationCount(NotificationQuery.FindAll findAllQuery) {
+        return notificationRepository.getUnReadNotificationCount(findAllQuery);
     }
 
     @Override

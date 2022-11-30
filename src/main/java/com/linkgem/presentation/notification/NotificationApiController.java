@@ -47,12 +47,12 @@ public class NotificationApiController {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
-        NotificationQuery.Search searchQuery = NotificationQuery.Search.builder()
+        NotificationQuery.FindAll findAllQuery = NotificationQuery.FindAll.builder()
             .userId(userId)
             .searchStartDate(LocalDateTime.now().minusMonths(3))
             .build();
 
-        Page<NotificationInfo.Main> notifications = notificationFacade.findAll(searchQuery, pageable);
+        Page<NotificationInfo.Main> notifications = notificationFacade.findAll(findAllQuery, pageable);
 
         List<NotificationResponse.Main> responses = notifications
             .getContent()
@@ -78,14 +78,14 @@ public class NotificationApiController {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
-        NotificationQuery.Search searchQuery = NotificationQuery.Search.builder()
+        NotificationQuery.FindAll findAllQuery = NotificationQuery.FindAll.builder()
             .userId(userId)
             .searchStartDate(LocalDateTime.now().minusDays(1))
             .build();
 
         return CommonResponse.of(
             new NotificationResponse.NewNotificationInformation(
-                notificationFacade.getUnReadNotificationCount(searchQuery))
+                notificationFacade.getUnReadNotificationCount(findAllQuery))
         );
     }
 
@@ -96,10 +96,7 @@ public class NotificationApiController {
         @PathVariable Long receiverId,
         @Valid NotificationRequest.Create createRequest
     ) {
-
-        Long senderId = UserAuthenticationProvider.provider(httpServletRequest);
-
-        NotificationCommand.Create createCommand = createRequest.toCommand(receiverId, senderId);
+        NotificationCommand.Create createCommand = createRequest.toCommand(receiverId);
 
         return CommonResponse.of(NotificationResponse.Main.of(notificationFacade.create(createCommand)));
     }

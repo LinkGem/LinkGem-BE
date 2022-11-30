@@ -18,12 +18,12 @@ public class NotificationSearchServiceImpl implements NotificationSearchService 
     private final NotificationReader notificationReader;
 
     @Override
-    public Page<NotificationInfo.Main> findAll(NotificationQuery.Search searchQuery, Pageable pageable) {
-        return notificationReader.findAll(searchQuery, pageable);
+    public Page<NotificationInfo.Main> findAll(NotificationQuery.FindAll findAllQuery, Pageable pageable) {
+        return notificationReader.findAll(findAllQuery, pageable);
     }
 
     @Override
-    public Long getUnReadNotificationCount(NotificationQuery.Search searchQuery) {
-        return notificationReader.getUnReadNotificationCount(searchQuery);
+    public Long getUnReadNotificationCount(NotificationQuery.FindAll findAllQuery) {
+        return notificationReader.getUnReadNotificationCount(findAllQuery);
     }
 }
