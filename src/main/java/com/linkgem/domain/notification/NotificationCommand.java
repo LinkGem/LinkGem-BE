@@ -38,4 +38,16 @@ public class NotificationCommand {
             return new NotificationCommand.Read(notificationId, userId);
         }
     }
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class Delete {
+        private long notificationId;
+        private long userId;
+
+        public static NotificationCommand.Delete of(long notificationId, long userId) {
+            return new NotificationCommand.Delete(notificationId, userId);
+        }
+    }
+
 }

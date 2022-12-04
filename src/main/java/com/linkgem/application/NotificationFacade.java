@@ -10,6 +10,7 @@ import com.linkgem.domain.notification.NotificationCommand;
 import com.linkgem.domain.notification.NotificationInfo;
 import com.linkgem.domain.notification.NotificationQuery;
 import com.linkgem.domain.notification.service.create.NotificationCreate;
+import com.linkgem.domain.notification.service.delete.NotificationDelete;
 import com.linkgem.domain.notification.service.search.NotificationSearch;
 import com.linkgem.domain.notification.service.update.NotificationUpdate;
 
@@ -21,6 +22,7 @@ public class NotificationFacade {
     private final NotificationSearch notificationSearch;
     private final NotificationCreate notificationCreate;
     private final NotificationUpdate notificationUpdate;
+    private final NotificationDelete notificationDelete;
 
     public NotificationInfo.Main create(NotificationCommand.Create createCommand) {
         return notificationCreate.create(createCommand);
@@ -36,5 +38,9 @@ public class NotificationFacade {
 
     public void readNotification(NotificationCommand.Read command) {
         notificationUpdate.readNotification(command);
+    }
+
+    public void deleteNotification(NotificationCommand.Delete command) {
+        notificationDelete.delete(command);
     }
 }

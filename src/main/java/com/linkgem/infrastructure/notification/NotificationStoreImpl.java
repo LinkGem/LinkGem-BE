@@ -19,7 +19,7 @@ public class NotificationStoreImpl implements NotificationStore {
     }
 
     @Override
-    public long updateAllToRead(Long userId) {
-        return notificationRepository.updateAllToRead(userId);
+    public void delete(Notification notification) {
+        notificationRepository.delete(notification);
     }
 }

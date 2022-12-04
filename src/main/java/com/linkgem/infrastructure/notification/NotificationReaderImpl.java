@@ -26,8 +26,8 @@ public class NotificationReaderImpl implements NotificationReader {
     }
 
     @Override
-    public Optional<Notification> find(Long notificationId) {
-        return notificationRepository.findById(notificationId);
+    public Optional<Notification> findOne(NotificationQuery.FindOne findOneQuery) {
+        return notificationRepository.findOne(findOneQuery);
     }
 
     @Override

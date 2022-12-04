@@ -76,13 +76,4 @@ public class Notification {
     public void read() {
         this.isRead = true;
     }
-
-    public boolean isOwner(long userId) {
-
-        if (this.receiver == null) {
-            return false;
-        }
-
-        return userId == this.receiver.getId();
-    }
 }

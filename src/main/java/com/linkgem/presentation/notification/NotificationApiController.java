@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -121,8 +122,23 @@ public class NotificationApiController {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
-        NotificationCommand.Read readCommand = NotificationCommand.Read.of(notificationId, userId);
-        notificationFacade.readNotification(readCommand);
+        NotificationCommand.Read command = NotificationCommand.Read.of(notificationId, userId);
+        notificationFacade.readNotification(command);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "알림 삭제 요청", notes = "알림 삭제를 요청한다")
+    @DeleteMapping(value = "/{notificationId}")
+    public ResponseEntity<Void> deleteNotification(
+        @PathVariable long notificationId,
+        HttpServletRequest httpServletRequest
+    ) {
+
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+
+        NotificationCommand.Delete command = NotificationCommand.Delete.of(notificationId, userId);
+        notificationFacade.deleteNotification(command);
 
         return ResponseEntity.noContent().build();
     }

@@ -2,11 +2,24 @@ package com.linkgem.domain.notification;
 
 import java.time.LocalDateTime;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 public class NotificationQuery {
     private NotificationQuery() {
+    }
+
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class FindOne {
+        private long notificationId;
+        private long receiverId;
+
+        public static NotificationQuery.FindOne of(long notificationId, Long receiverId) {
+            return new NotificationQuery.FindOne(notificationId, receiverId);
+        }
     }
 
     @Getter
