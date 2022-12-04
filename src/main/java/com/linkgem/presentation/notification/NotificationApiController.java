@@ -72,23 +72,22 @@ public class NotificationApiController {
         );
     }
 
-    @ApiOperation(value = "읽지 않은 알림 수 조회", notes = "읽지 않은 알림 수를 조회한다")
-    @GetMapping(value = "/has-new-notifications")
-    public CommonResponse<NotificationResponse.NewNotificationInformation> getUnReadNotificationCount(
-        HttpServletRequest httpServletRequest
-    ) {
+    @ApiOperation(value = "최신 알림 정보 조회", notes = "최신 알림 정보를 조회한다")
+    @GetMapping(value = "/latest-information")
+    public CommonResponse<List<NotificationResponse.LatestNotification>> findAllLatestInformation(
+        HttpServletRequest httpServletRequest) {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
-        NotificationQuery.FindAll findAllQuery = NotificationQuery.FindAll.builder()
+        NotificationQuery.FindAllLatest findAllLatestQuery = NotificationQuery.FindAllLatest.builder()
             .userId(userId)
-            .searchStartDateTime(LocalDateTime.now().minusDays(1))
+            .searchStartDateTime(SEARCH_START_DATE_TIME)
             .build();
 
-        return CommonResponse.of(
-            new NotificationResponse.NewNotificationInformation(
-                notificationFacade.getUnReadNotificationCount(findAllQuery))
-        );
+        List<NotificationResponse.LatestNotification> responses =
+            NotificationResponse.LatestNotification.ofs(notificationFacade.findAllLatest(findAllLatestQuery));
+
+        return CommonResponse.of(responses);
     }
 
     @ApiOperation(value = "알림 타입 조회", notes = "알림 타입을 조회한다")
