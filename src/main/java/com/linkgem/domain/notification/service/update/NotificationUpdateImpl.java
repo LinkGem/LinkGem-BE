@@ -25,15 +25,6 @@ public class NotificationUpdateImpl implements NotificationUpdate {
             .orElseThrow(() -> new BusinessException(ErrorCode.NOTIFICATION_NOT_FOUND))
             .updateToRead()
         ;
-
-    }
-
-    @Transactional
-    @Override
-    public void updateToDeleted(Long notificationId) {
-        notificationReader.find(notificationId)
-            .orElseThrow(() -> new BusinessException(ErrorCode.NOTIFICATION_NOT_FOUND))
-            .updateToDeleted();
     }
 
     @Transactional

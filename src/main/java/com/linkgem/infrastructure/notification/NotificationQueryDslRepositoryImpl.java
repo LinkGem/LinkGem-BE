@@ -61,8 +61,7 @@ public class NotificationQueryDslRepositoryImpl implements NotificationQueryDslR
 
         whereBuilder
             .and(notification.receiver.id.eq(findAllQuery.getUserId()))
-            .and(notification.isDeleted.isFalse())
-            .and(notification.createDate.between(findAllQuery.getSearchStartDate(), LocalDateTime.now()))
+            .and(notification.createDate.between(findAllQuery.getSearchStartDateTime(), LocalDateTime.now()))
         ;
 
         return whereBuilder;
@@ -74,8 +73,7 @@ public class NotificationQueryDslRepositoryImpl implements NotificationQueryDslR
             .from(notification)
             .where(
                 notification.receiver.id.eq(findAllQuery.getUserId()),
-                notification.createDate.between(findAllQuery.getSearchStartDate(), LocalDateTime.now()),
-                notification.isDeleted.isFalse(),
+                notification.createDate.between(findAllQuery.getSearchStartDateTime(), LocalDateTime.now()),
                 notification.isRead.isFalse()
             )
             .fetchOne();

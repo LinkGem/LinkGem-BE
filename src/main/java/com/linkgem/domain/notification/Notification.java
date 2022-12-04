@@ -42,8 +42,6 @@ public class Notification extends BaseEntity {
     @Column(name = "is_read", nullable = false)
     private boolean isRead;
 
-    @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id", nullable = false)
@@ -56,14 +54,9 @@ public class Notification extends BaseEntity {
         this.button = button;
         this.receiver = receiver;
         this.isRead = false;
-        this.isDeleted = false;
     }
 
     public void updateToRead() {
         this.isRead = true;
-    }
-
-    public void updateToDeleted() {
-        this.isDeleted = true;
     }
 }
