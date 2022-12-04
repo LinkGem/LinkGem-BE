@@ -38,17 +38,17 @@ public class NotificationInfo {
 
         private boolean isRead;
 
-        private LocalDateTime createDate;
+        private LocalDateTime receivedDateTime;
 
         @Builder
         public Main(Long id, NotificationType type, String content,
-            NotificationButton button, boolean isRead, LocalDateTime createDate) {
+            NotificationButton button, boolean isRead, LocalDateTime receivedDateTime) {
             this.id = id;
             this.type = type;
             this.content = content;
             this.isRead = isRead;
             this.button = new ButtonMain(button);
-            this.createDate = createDate;
+            this.receivedDateTime = receivedDateTime;
         }
 
         public static Main of(Notification notification) {
@@ -58,7 +58,7 @@ public class NotificationInfo {
                 .content(notification.getContent())
                 .isRead(notification.isRead())
                 .button(notification.getButton())
-                .createDate(notification.getCreateDate())
+                .receivedDateTime(notification.getReceivedDateTime())
                 .build();
         }
     }

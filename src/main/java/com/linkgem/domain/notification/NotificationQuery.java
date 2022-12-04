@@ -15,10 +15,13 @@ public class NotificationQuery {
 
         private LocalDateTime searchStartDateTime;
 
+        private Boolean isRead;
+
         @Builder
-        public FindAll(Long userId, LocalDateTime searchStartDateTime) {
+        public FindAll(Long userId, LocalDateTime searchStartDateTime, Boolean isRead) {
             this.userId = userId;
             this.searchStartDateTime = searchStartDateTime;
+            this.isRead = isRead;
         }
     }
 

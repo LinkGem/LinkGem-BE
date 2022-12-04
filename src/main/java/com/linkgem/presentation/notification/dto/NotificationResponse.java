@@ -3,7 +3,6 @@ package com.linkgem.presentation.notification.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.linkgem.domain.common.date.PastDay;
 import com.linkgem.domain.notification.NotificationButtonAction;
@@ -61,7 +60,7 @@ public class NotificationResponse {
 
         private ButtonMain button;
 
-        private LocalDateTime createDate;
+        private LocalDateTime receivedDateTime;
 
         public static Main of(NotificationInfo.Main notification) {
 
@@ -71,7 +70,7 @@ public class NotificationResponse {
                 .content(notification.getContent())
                 .isRead(notification.isRead())
                 .button(new ButtonMain(notification.getButton()))
-                .createDate(notification.getCreateDate())
+                .receivedDateTime(notification.getReceivedDateTime())
                 .build();
         }
 
@@ -83,11 +82,11 @@ public class NotificationResponse {
 
         public String getPastDay() {
 
-            if (createDate == null) {
+            if (receivedDateTime == null) {
                 return "";
             }
 
-            return PastDay.getPastDay(createDate);
+            return PastDay.getPastDay(receivedDateTime);
         }
     }
 

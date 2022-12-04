@@ -35,11 +35,11 @@ public class NotificationQueryDslRepositoryImpl implements NotificationQueryDslR
                 notification.content,
                 notification.button,
                 notification.isRead,
-                notification.createDate
+                notification.receivedDateTime
             ))
             .from(notification)
             .where(whereBuilder)
-            .orderBy(notification.createDate.desc())
+            .orderBy(notification.receivedDateTime.desc())
             .limit(pageable.getPageSize())
             .offset(pageable.getOffset())
             .fetch();
@@ -59,9 +59,13 @@ public class NotificationQueryDslRepositoryImpl implements NotificationQueryDslR
     private BooleanBuilder getFindAllWhereQuery(NotificationQuery.FindAll findAllQuery) {
         BooleanBuilder whereBuilder = new BooleanBuilder();
 
+        if (findAllQuery.getIsRead() != null) {
+            whereBuilder.and(notification.isRead.eq(findAllQuery.getIsRead()));
+        }
+
         whereBuilder
             .and(notification.receiver.id.eq(findAllQuery.getUserId()))
-            .and(notification.createDate.between(findAllQuery.getSearchStartDateTime(), LocalDateTime.now()))
+            .and(notification.receivedDateTime.between(findAllQuery.getSearchStartDateTime(), LocalDateTime.now()))
         ;
 
         return whereBuilder;
@@ -73,7 +77,7 @@ public class NotificationQueryDslRepositoryImpl implements NotificationQueryDslR
             .from(notification)
             .where(
                 notification.receiver.id.eq(findAllQuery.getUserId()),
-                notification.createDate.between(findAllQuery.getSearchStartDateTime(), LocalDateTime.now()),
+                notification.receivedDateTime.between(findAllQuery.getSearchStartDateTime(), LocalDateTime.now()),
                 notification.isRead.isFalse()
             )
             .fetchOne();

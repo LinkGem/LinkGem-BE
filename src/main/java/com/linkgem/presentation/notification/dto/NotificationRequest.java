@@ -41,4 +41,10 @@ public class NotificationRequest {
                 .build();
         }
     }
+
+    @AllArgsConstructor
+    @Getter
+    public static class FindAll {
+        private Boolean isRead;
+    }
 }

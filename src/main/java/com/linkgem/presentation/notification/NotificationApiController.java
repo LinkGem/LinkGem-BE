@@ -44,6 +44,7 @@ public class NotificationApiController {
     @ApiOperation(value = "알림 목록 조회", notes = "알림 목록을 조회한다")
     @GetMapping
     public CommonResponse<Pages<NotificationResponse.Main>> findAll(
+        NotificationRequest.FindAll findAllRequestDto,
         HttpServletRequest httpServletRequest,
         @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
@@ -51,6 +52,7 @@ public class NotificationApiController {
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
         NotificationQuery.FindAll findAllQuery = NotificationQuery.FindAll.builder()
+            .isRead(findAllRequestDto.getIsRead())
             .userId(userId)
             .searchStartDateTime(SEARCH_START_DATE_TIME)
             .build();
