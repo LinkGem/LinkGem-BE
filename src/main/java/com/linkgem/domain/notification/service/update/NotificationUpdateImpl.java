@@ -3,6 +3,7 @@ package com.linkgem.domain.notification.service.update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.linkgem.domain.notification.NotificationCommand;
 import com.linkgem.domain.notification.NotificationReader;
 import com.linkgem.domain.notification.NotificationStore;
 import com.linkgem.presentation.common.exception.BusinessException;
@@ -20,17 +21,10 @@ public class NotificationUpdateImpl implements NotificationUpdate {
 
     @Transactional
     @Override
-    public void updateToRead(Long notificationId) {
-        notificationReader.find(notificationId)
+    public void readNotification(NotificationCommand.Read command) {
+        notificationReader.find(command.getNotificationId())
+            .filter(notification -> notification.isOwner(command.getUserId()))
             .orElseThrow(() -> new BusinessException(ErrorCode.NOTIFICATION_NOT_FOUND))
-            .updateToRead()
-        ;
+            .read();
     }
-
-    @Transactional
-    @Override
-    public long updateAllToRead(Long userId) {
-        return notificationStore.updateAllToRead(userId);
-    }
-
 }

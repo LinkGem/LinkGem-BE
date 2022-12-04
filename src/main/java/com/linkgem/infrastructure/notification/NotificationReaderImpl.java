@@ -26,11 +26,6 @@ public class NotificationReaderImpl implements NotificationReader {
     }
 
     @Override
-    public Long getUnReadNotificationCount(NotificationQuery.FindAll findAllQuery) {
-        return notificationRepository.getUnReadNotificationCount(findAllQuery);
-    }
-
-    @Override
     public Optional<Notification> find(Long notificationId) {
         return notificationRepository.findById(notificationId);
     }

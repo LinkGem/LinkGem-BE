@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 public interface NotificationReader {
     Page<NotificationInfo.Main> findAll(NotificationQuery.FindAll findAllQuery, Pageable pageable);
 
-    Long getUnReadNotificationCount(NotificationQuery.FindAll findAllQuery);
-
     Optional<Notification> find(Long notificationId);
 
     List<NotificationInfo.LatestNotification> findAllLatest(NotificationQuery.FindAllLatest findAllLatestQuery);

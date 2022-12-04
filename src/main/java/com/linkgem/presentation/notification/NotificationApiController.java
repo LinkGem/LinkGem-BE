@@ -10,7 +10,9 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -102,12 +104,26 @@ public class NotificationApiController {
     @ApiOperation(value = "알림 전송", notes = "알림을 전송한다")
     @PostMapping(value = "/{receiverId}")
     public CommonResponse<NotificationResponse.Main> sendNotification(
-        HttpServletRequest httpServletRequest,
         @PathVariable Long receiverId,
         @Valid NotificationRequest.Create createRequest
     ) {
         NotificationCommand.Create createCommand = createRequest.toCommand(receiverId);
 
         return CommonResponse.of(NotificationResponse.Main.of(notificationFacade.create(createCommand)));
+    }
+
+    @ApiOperation(value = "알림 읽기 요청", notes = "알림 읽기를 요청한다")
+    @PatchMapping(value = "/{notificationId}/is-read")
+    public ResponseEntity<Void> updateNotification(
+        @PathVariable long notificationId,
+        HttpServletRequest httpServletRequest
+    ) {
+
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+
+        NotificationCommand.Read readCommand = NotificationCommand.Read.of(notificationId, userId);
+        notificationFacade.readNotification(readCommand);
+
+        return ResponseEntity.noContent().build();
     }
 }

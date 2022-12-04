@@ -11,6 +11,7 @@ import com.linkgem.domain.notification.NotificationInfo;
 import com.linkgem.domain.notification.NotificationQuery;
 import com.linkgem.domain.notification.service.create.NotificationCreate;
 import com.linkgem.domain.notification.service.search.NotificationSearch;
+import com.linkgem.domain.notification.service.update.NotificationUpdate;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class NotificationFacade {
     private final NotificationSearch notificationSearch;
     private final NotificationCreate notificationCreate;
+    private final NotificationUpdate notificationUpdate;
 
     public NotificationInfo.Main create(NotificationCommand.Create createCommand) {
         return notificationCreate.create(createCommand);
@@ -30,5 +32,9 @@ public class NotificationFacade {
 
     public List<NotificationInfo.LatestNotification> findAllLatest(NotificationQuery.FindAllLatest findAllLatestQuery) {
         return notificationSearch.findAllLatest(findAllLatestQuery);
+    }
+
+    public void readNotification(NotificationCommand.Read command) {
+        notificationUpdate.readNotification(command);
     }
 }

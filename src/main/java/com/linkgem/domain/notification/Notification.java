@@ -50,7 +50,7 @@ public class Notification {
     @Column(name = "is_read", nullable = false)
     private boolean isRead;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
@@ -73,7 +73,16 @@ public class Notification {
         this.isRead = false;
     }
 
-    public void updateToRead() {
+    public void read() {
         this.isRead = true;
+    }
+
+    public boolean isOwner(long userId) {
+
+        if (this.receiver == null) {
+            return false;
+        }
+
+        return userId == this.receiver.getId();
     }
 }
