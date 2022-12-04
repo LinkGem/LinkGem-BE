@@ -1,5 +1,7 @@
 package com.linkgem.infrastructure.notification;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,7 @@ class NotificationRepositoryTest {
     void 알림_목록_조회() {
         NotificationQuery.FindAll findAll = NotificationQuery.FindAll.builder()
             .userId(1L)
+            .searchStartDateTime(LocalDateTime.now().minusDays(1))
             .build();
 
         Page<NotificationInfo.Main> notifications = notificationRepository.findAll(findAll, Pageable.ofSize(20));

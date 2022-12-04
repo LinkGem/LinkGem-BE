@@ -45,7 +45,10 @@ class GemBoxRepositoryTest {
         final String name = "테스트";
         final Long userId = 1L;
 
-        GemBox gemBox = new GemBox(name, userId);
+        GemBox gemBox = GemBox.builder()
+            .name(name)
+            .userId(userId)
+            .build();
 
         return gemBoxRepository.save(gemBox);
 

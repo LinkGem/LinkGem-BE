@@ -18,6 +18,7 @@ import com.linkgem.domain.common.BaseEntity;
 import com.linkgem.domain.link.Link;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -54,15 +55,11 @@ public class GemBox extends BaseEntity {
     @JoinColumn(name = "gem_box_id")
     private List<Link> links = new ArrayList<>();
 
-    @Column(name = "is_default", columnDefinition = "boolean default false")
+    @Column(name = "is_default", nullable = false, columnDefinition = "boolean default false")
     private Boolean isDefault;
 
-    public GemBox(String name, Long userId) {
-        this.name = name;
-        this.userId = userId;
-    }
-
-    public GemBox(String name, Long userId, Boolean isDefault) {
+    @Builder
+    private GemBox(String name, Long userId, boolean isDefault) {
         this.name = name;
         this.userId = userId;
         this.isDefault = isDefault;
