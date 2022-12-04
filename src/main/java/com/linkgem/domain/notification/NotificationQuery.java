@@ -25,4 +25,17 @@ public class NotificationQuery {
         }
     }
 
+    @Getter
+    public static class FindAllLatest {
+        private Long userId;
+
+        private LocalDateTime searchStartDateTime;
+
+        @Builder
+        public FindAllLatest(Long userId, LocalDateTime searchStartDateTime) {
+            this.userId = userId;
+            this.searchStartDateTime = searchStartDateTime;
+        }
+    }
+
 }

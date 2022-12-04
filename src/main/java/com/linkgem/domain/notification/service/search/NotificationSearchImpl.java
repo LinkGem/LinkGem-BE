@@ -1,5 +1,7 @@
 package com.linkgem.domain.notification.service.search;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,8 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class NotificationSearchServiceImpl implements NotificationSearchService {
-
+public class NotificationSearchImpl implements NotificationSearch {
 
     private final NotificationReader notificationReader;
 
@@ -23,7 +24,7 @@ public class NotificationSearchServiceImpl implements NotificationSearchService 
     }
 
     @Override
-    public Long getUnReadNotificationCount(NotificationQuery.FindAll findAllQuery) {
-        return notificationReader.getUnReadNotificationCount(findAllQuery);
+    public List<NotificationInfo.LatestNotification> findAllLatest(NotificationQuery.FindAllLatest findAllLatestQuery) {
+        return notificationReader.findAllLatest(findAllLatestQuery);
     }
 }

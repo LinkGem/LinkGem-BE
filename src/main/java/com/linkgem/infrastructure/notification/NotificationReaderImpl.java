@@ -1,5 +1,6 @@
 package com.linkgem.infrastructure.notification;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -32,5 +33,10 @@ public class NotificationReaderImpl implements NotificationReader {
     @Override
     public Optional<Notification> find(Long notificationId) {
         return notificationRepository.findById(notificationId);
+    }
+
+    @Override
+    public List<NotificationInfo.LatestNotification> findAllLatest(NotificationQuery.FindAllLatest findAllLatestQuery) {
+        return notificationRepository.findAllLatest(findAllLatestQuery);
     }
 }

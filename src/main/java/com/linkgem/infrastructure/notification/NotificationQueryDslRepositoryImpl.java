@@ -2,7 +2,6 @@ package com.linkgem.infrastructure.notification;
 
 import static com.linkgem.domain.notification.QNotification.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -65,7 +64,7 @@ public class NotificationQueryDslRepositoryImpl implements NotificationQueryDslR
 
         whereBuilder
             .and(notification.receiver.id.eq(findAllQuery.getUserId()))
-            .and(notification.receivedDateTime.between(findAllQuery.getSearchStartDateTime(), LocalDateTime.now()))
+            .and(notification.receivedDateTime.goe(findAllQuery.getSearchStartDateTime()))
         ;
 
         return whereBuilder;
@@ -77,7 +76,7 @@ public class NotificationQueryDslRepositoryImpl implements NotificationQueryDslR
             .from(notification)
             .where(
                 notification.receiver.id.eq(findAllQuery.getUserId()),
-                notification.receivedDateTime.between(findAllQuery.getSearchStartDateTime(), LocalDateTime.now()),
+                notification.receivedDateTime.goe(findAllQuery.getSearchStartDateTime()),
                 notification.isRead.isFalse()
             )
             .fetchOne();
@@ -91,6 +90,24 @@ public class NotificationQueryDslRepositoryImpl implements NotificationQueryDslR
                 notification.receiver.id.eq(userId),
                 notification.isRead.isFalse()
             ).execute();
+
+    }
+
+    @Override
+    public List<NotificationInfo.LatestNotification> findAllLatest(NotificationQuery.FindAllLatest findAllLatestQuery) {
+        return queryFactory.select(
+                Projections.constructor(NotificationInfo.LatestNotification.class,
+                    notification.type,
+                    notification.count()
+                ))
+            .from(notification)
+            .where(
+                notification.isRead.isFalse(),
+                notification.receiver.id.eq(findAllLatestQuery.getUserId()),
+                notification.receivedDateTime.goe(findAllLatestQuery.getSearchStartDateTime())
+            )
+            .groupBy(notification.type)
+            .fetch();
 
     }
 }

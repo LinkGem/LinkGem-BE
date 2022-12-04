@@ -1,5 +1,7 @@
 package com.linkgem.infrastructure.notification;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,5 +15,8 @@ public interface NotificationQueryDslRepository {
     Long getUnReadNotificationCount(NotificationQuery.FindAll findAllQuery);
 
     long updateAllToRead(Long userId);
+
+    List<NotificationInfo.LatestNotification> findAllLatest(
+        NotificationQuery.FindAllLatest findAllLatestQuery);
 
 }

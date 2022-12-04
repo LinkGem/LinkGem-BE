@@ -1,5 +1,6 @@
 package com.linkgem.domain.notification;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -11,4 +12,6 @@ public interface NotificationReader {
     Long getUnReadNotificationCount(NotificationQuery.FindAll findAllQuery);
 
     Optional<Notification> find(Long notificationId);
+
+    List<NotificationInfo.LatestNotification> findAllLatest(NotificationQuery.FindAllLatest findAllLatestQuery);
 }

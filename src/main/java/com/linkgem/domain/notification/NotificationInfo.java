@@ -2,8 +2,11 @@ package com.linkgem.domain.notification;
 
 import java.time.LocalDateTime;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class NotificationInfo {
 
@@ -61,5 +64,13 @@ public class NotificationInfo {
                 .receivedDateTime(notification.getReceivedDateTime())
                 .build();
         }
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class LatestNotification {
+        private NotificationType type;
+        private long count;
     }
 }
