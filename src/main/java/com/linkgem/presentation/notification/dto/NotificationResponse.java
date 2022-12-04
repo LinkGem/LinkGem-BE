@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class NotificationResponse {
 
@@ -106,5 +107,23 @@ public class NotificationResponse {
                 .collect(Collectors.toList());
         }
 
+    }
+
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class LatestNotification {
+        private NotificationType type;
+        private long count;
+
+        public static LatestNotification of(NotificationInfo.LatestNotification latestNotification) {
+            return new LatestNotification(latestNotification.getType(), latestNotification.getCount());
+        }
+
+        public static List<LatestNotification> ofs(List<NotificationInfo.LatestNotification> latestNotifications) {
+            return latestNotifications.stream()
+                .map(LatestNotification::of)
+                .collect(Collectors.toList());
+        }
     }
 }
