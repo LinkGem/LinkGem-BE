@@ -3,14 +3,15 @@ package com.linkgem.domain.notification;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@Getter
 @RequiredArgsConstructor
+@Getter
 public enum NotificationType {
-    NOTICE("공지사항"),
-    EVENT("이벤트"),
-    COMMUNITY("커뮤니티"),
-    MESSAGE("개인 메시지"),
+    EVENT("이벤트", 1),
+    COMMUNITY("커뮤니티", 2),
+    NOTICE("공지사항", 3),
+    MESSAGE("내 알림", 4),
     ;
 
     private final String description;
+    private final int order;
 }

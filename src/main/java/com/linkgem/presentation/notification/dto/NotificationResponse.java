@@ -1,12 +1,16 @@
 package com.linkgem.presentation.notification.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.linkgem.domain.common.date.PastDay;
 import com.linkgem.domain.notification.NotificationButtonAction;
 import com.linkgem.domain.notification.NotificationInfo;
 import com.linkgem.domain.notification.NotificationType;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -71,6 +75,12 @@ public class NotificationResponse {
                 .build();
         }
 
+        public static List<Main> ofs(List<NotificationInfo.Main> notifications) {
+            return notifications.stream()
+                .map(Main::of)
+                .collect(Collectors.toList());
+        }
+
         public String getPastDay() {
 
             if (createDate == null) {
@@ -79,5 +89,23 @@ public class NotificationResponse {
 
             return PastDay.getPastDay(createDate);
         }
+    }
+
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class NotificationTypeResponse {
+        private String type;
+        private String name;
+
+        public static NotificationTypeResponse of(NotificationType type) {
+            return new NotificationTypeResponse(type.name(), type.getDescription());
+        }
+
+        public static List<NotificationTypeResponse> ofs(List<NotificationType> types) {
+            return types.stream()
+                .map(NotificationTypeResponse::of)
+                .collect(Collectors.toList());
+        }
+
     }
 }

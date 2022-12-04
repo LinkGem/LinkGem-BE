@@ -1,8 +1,8 @@
 package com.linkgem.presentation.notification;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,6 +21,7 @@ import com.linkgem.domain.common.Pages;
 import com.linkgem.domain.notification.NotificationCommand;
 import com.linkgem.domain.notification.NotificationInfo;
 import com.linkgem.domain.notification.NotificationQuery;
+import com.linkgem.domain.notification.NotificationType;
 import com.linkgem.presentation.common.CommonResponse;
 import com.linkgem.presentation.common.UserAuthenticationProvider;
 import com.linkgem.presentation.notification.dto.NotificationRequest;
@@ -32,11 +33,13 @@ import lombok.RequiredArgsConstructor;
 
 @Api(tags = "알림")
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/v1/notification")
+@RequestMapping(value = "/api/v1/notifications")
 @RestController
 public class NotificationApiController {
 
     private final NotificationFacade notificationFacade;
+
+    private static final LocalDateTime SEARCH_START_DATE_TIME = LocalDateTime.now().minusMonths(3);
 
     @ApiOperation(value = "알림 목록 조회", notes = "알림 목록을 조회한다")
     @GetMapping
@@ -49,16 +52,13 @@ public class NotificationApiController {
 
         NotificationQuery.FindAll findAllQuery = NotificationQuery.FindAll.builder()
             .userId(userId)
-            .searchStartDate(LocalDateTime.now().minusMonths(3))
+            .searchStartDateTime(SEARCH_START_DATE_TIME)
             .build();
 
         Page<NotificationInfo.Main> notifications = notificationFacade.findAll(findAllQuery, pageable);
 
-        List<NotificationResponse.Main> responses = notifications
-            .getContent()
-            .stream()
-            .map(NotificationResponse.Main::of)
-            .collect(Collectors.toList());
+        List<NotificationResponse.Main> responses =
+            NotificationResponse.Main.ofs(notifications.getContent());
 
         return CommonResponse.of(
             Pages.<NotificationResponse.Main>builder()
@@ -80,13 +80,22 @@ public class NotificationApiController {
 
         NotificationQuery.FindAll findAllQuery = NotificationQuery.FindAll.builder()
             .userId(userId)
-            .searchStartDate(LocalDateTime.now().minusDays(1))
+            .searchStartDateTime(LocalDateTime.now().minusDays(1))
             .build();
 
         return CommonResponse.of(
             new NotificationResponse.NewNotificationInformation(
                 notificationFacade.getUnReadNotificationCount(findAllQuery))
         );
+    }
+
+    @ApiOperation(value = "알림 타입 조회", notes = "알림 타입을 조회한다")
+    @GetMapping(value = "/types")
+    public CommonResponse<List<NotificationResponse.NotificationTypeResponse>> findAllNotificationType() {
+        List<NotificationResponse.NotificationTypeResponse> responses =
+            NotificationResponse.NotificationTypeResponse.ofs(Arrays.asList(NotificationType.values()));
+
+        return CommonResponse.of(responses);
     }
 
     @ApiOperation(value = "알림 전송", notes = "알림을 전송한다")
