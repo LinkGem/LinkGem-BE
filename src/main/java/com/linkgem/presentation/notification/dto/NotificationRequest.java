@@ -46,5 +46,6 @@ public class NotificationRequest {
     @Getter
     public static class FindAll {
         private Boolean isRead;
+        private NotificationType type;
     }
 }

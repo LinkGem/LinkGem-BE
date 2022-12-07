@@ -30,11 +30,14 @@ public class NotificationQuery {
 
         private Boolean isRead;
 
+        private NotificationType type;
+
         @Builder
-        public FindAll(Long userId, LocalDateTime searchStartDateTime, Boolean isRead) {
+        public FindAll(Long userId, LocalDateTime searchStartDateTime, Boolean isRead, NotificationType type) {
             this.userId = userId;
             this.searchStartDateTime = searchStartDateTime;
             this.isRead = isRead;
+            this.type = type;
         }
     }
 

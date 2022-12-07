@@ -55,8 +55,9 @@ public class NotificationApiController {
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
         NotificationQuery.FindAll findAllQuery = NotificationQuery.FindAll.builder()
-            .isRead(findAllRequestDto.getIsRead())
             .userId(userId)
+            .isRead(findAllRequestDto.getIsRead())
+            .type(findAllRequestDto.getType())
             .searchStartDateTime(SEARCH_START_DATE_TIME)
             .build();
 

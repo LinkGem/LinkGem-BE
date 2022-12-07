@@ -77,6 +77,10 @@ public class NotificationQueryDslRepositoryImpl implements NotificationQueryDslR
             whereBuilder.and(notification.isRead.eq(findAllQuery.getIsRead()));
         }
 
+        if (findAllQuery.getType() != null) {
+            whereBuilder.and(notification.type.eq(findAllQuery.getType()));
+        }
+
         whereBuilder
             .and(notification.receiver.id.eq(findAllQuery.getUserId()))
             .and(notification.receivedDateTime.goe(findAllQuery.getSearchStartDateTime()))
