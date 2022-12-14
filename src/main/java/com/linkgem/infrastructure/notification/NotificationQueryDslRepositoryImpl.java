@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
 import com.linkgem.domain.notification.Notification;
+import com.linkgem.domain.notification.NotificationCommand;
 import com.linkgem.domain.notification.NotificationInfo;
 import com.linkgem.domain.notification.NotificationQuery;
 import com.querydsl.core.BooleanBuilder;
@@ -105,5 +106,12 @@ public class NotificationQueryDslRepositoryImpl implements NotificationQueryDslR
             .groupBy(notification.type)
             .fetch();
 
+    }
+
+    @Override
+    public void deleteAll(NotificationCommand.DeleteAll deleteAllCommand) {
+        queryFactory.delete(notification)
+            .where(notification.receiver.id.eq(deleteAllCommand.getUserId()))
+            .execute();
     }
 }

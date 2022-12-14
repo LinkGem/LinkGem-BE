@@ -5,4 +5,6 @@ public interface NotificationStore {
 
     void delete(Notification notification);
 
+    void deleteAll(NotificationCommand.DeleteAll deleteAllCommand);
+
 }
