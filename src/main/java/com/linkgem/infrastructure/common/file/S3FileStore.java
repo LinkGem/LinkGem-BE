@@ -53,8 +53,15 @@ public class S3FileStore implements FileStore {
 
     @Override
     public FileInfo store(FileCommand.UploadUrlFile uploadCommand) {
+
+        String urlString = uploadCommand.getUrl();
+
+        if (urlString.startsWith("//")) {
+            urlString = "https:" + urlString;
+        }
+
         try {
-            URL url = new URL(uploadCommand.getUrl());
+            URL url = new URL(urlString);
             URLConnection urlConnection = url.openConnection();
 
             final InputStream inputStream = urlConnection.getInputStream();
