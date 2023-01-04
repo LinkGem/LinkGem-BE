@@ -12,7 +12,7 @@ public class NotificationCreateFactory {
     public NotificationCommand.Create createJoinNotification(User user) {
         return NotificationCommand.Create.builder()
             .type(NotificationType.MESSAGE)
-            .content(String.format(NotificationMessage.JOIN.getMessage(), user.getName()))
+            .content(String.format(NotificationMessage.JOIN.getMessage(), user.getNickname()))
             .receiverId(user.getId())
             .build();
     }
