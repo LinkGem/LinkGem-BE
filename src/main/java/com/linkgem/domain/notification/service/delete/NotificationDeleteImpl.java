@@ -23,13 +23,17 @@ public class NotificationDeleteImpl implements NotificationDelete {
     @Transactional
     @Override
     public void delete(NotificationCommand.Delete deleteCommand) {
-        notificationStore.deleteAll(NotificationCommand.DeleteAll.of(deleteCommand.getUserId()));
-        // NotificationQuery.FindOne findOneQuery =
-        //     NotificationQuery.FindOne.of(deleteCommand.getNotificationId(), deleteCommand.getUserId());
-        //
-        // Notification notification = notificationReader.findOne(findOneQuery)
-        //     .orElseThrow(() -> new BusinessException(ErrorCode.NOTIFICATION_NOT_FOUND));
-        //
-        // notificationStore.delete(notification);
+        NotificationQuery.FindOne findOneQuery =
+            NotificationQuery.FindOne.of(deleteCommand.getNotificationId(), deleteCommand.getUserId());
+
+        Notification notification = notificationReader.findOne(findOneQuery)
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOTIFICATION_NOT_FOUND));
+
+        notificationStore.delete(notification);
+    }
+
+    @Override
+    public void deleteAll(NotificationCommand.DeleteAll deleteCommand) {
+        notificationStore.deleteAll(deleteCommand);
     }
 }

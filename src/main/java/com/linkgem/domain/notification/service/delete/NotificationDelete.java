@@ -5,4 +5,6 @@ import com.linkgem.domain.notification.NotificationCommand;
 public interface NotificationDelete {
 
     void delete(NotificationCommand.Delete deleteCommand);
+
+    void deleteAll(NotificationCommand.DeleteAll deleteCommand);
 }
