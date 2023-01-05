@@ -49,6 +49,11 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew clean build -x test
       shell: bash
+    
+    # zip 파일 생성
+    - name: Make zip file
+      run: zip -r ./$GITHUB_SHA.zip .
+      shell: bash
       
     # S3에 압축파일 업로드
     - name: Upload to S3
