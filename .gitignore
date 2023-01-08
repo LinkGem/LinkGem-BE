@@ -1,6 +1,7 @@
 *.class
 bin/
 build/
+generated/
 
 .gradle
 .ebextensions/
@@ -25,6 +26,9 @@ build/
 
 /.jpb
 
-**/application-*.yml
+application-*.yml
+application.yml
+
+catalina*
 
 
