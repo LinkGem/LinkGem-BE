@@ -65,7 +65,7 @@ jobs:
         aws deploy create-deployment \
           --application-name Github-Actions-Deploy \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name dev-github-actions-group \
+          --deployment-group-name prod-github-actions-group \
           --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip
       
         
