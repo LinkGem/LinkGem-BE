@@ -103,6 +103,8 @@ public class UserResponse {
 	@ApiModel(description = "유저 탈퇴 요청 응답")
 	@Getter
 	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
 	public static class UserLeaveResponse {
 
 		private String result;
