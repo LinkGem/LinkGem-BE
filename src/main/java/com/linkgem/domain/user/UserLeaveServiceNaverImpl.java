@@ -12,6 +12,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.linkgem.domain.gembox.GemBoxStore;
 import com.linkgem.domain.link.LinkStore;
+import com.linkgem.domain.notification.NotificationCommand;
+import com.linkgem.domain.notification.NotificationStore;
+import com.linkgem.domain.notification.service.delete.NotificationDelete;
 import com.linkgem.domain.user.provider.OauthProvider;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
@@ -27,6 +30,7 @@ public class UserLeaveServiceNaverImpl implements UserLeaveService {
 	private final OauthProvider oauthProvider;
 	private final GemBoxStore gemBoxStore;
 	private final LinkStore linkStore;
+	private final NotificationDelete notificationDelete;
 
 	@Override
 	@Transactional
@@ -38,6 +42,7 @@ public class UserLeaveServiceNaverImpl implements UserLeaveService {
 		user.leave();
 		gemBoxStore.deleteAllByUserId(userId);
 		linkStore.deleteAllByUserId(userId);
+		notificationDelete.deleteAll(NotificationCommand.DeleteAll.of(userId));
 		OauthProvider.Provider provider = oauthProvider.getProvider(providerName);
 		UserResponse.OauthTokenResponse oauthTokenResponse = getToken(code, provider);
 		String accessToken = oauthTokenResponse.getAccessToken();

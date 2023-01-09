@@ -1,13 +1,12 @@
-package com.linkgem.infrastructure.notification;
+package com.linkgem.domain.notification.service.search;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.linkgem.domain.notification.Notification;
 import com.linkgem.domain.notification.NotificationInfo;
 import com.linkgem.domain.notification.NotificationQuery;
 import com.linkgem.domain.notification.NotificationReader;
@@ -15,23 +14,20 @@ import com.linkgem.domain.notification.NotificationReader;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Repository
-public class NotificationReaderImpl implements NotificationReader {
+@Service
+public class NotificationSearchImpl implements NotificationSearch {
 
-    private final NotificationRepository notificationRepository;
+    private final NotificationReader notificationReader;
 
+    @Transactional(readOnly = true)
     @Override
     public Page<NotificationInfo.Main> findAll(NotificationQuery.FindAll findAllQuery, Pageable pageable) {
-        return notificationRepository.findAll(findAllQuery, pageable);
+        return notificationReader.findAll(findAllQuery, pageable);
     }
 
-    @Override
-    public Optional<Notification> findOne(NotificationQuery.FindOne findOneQuery) {
-        return notificationRepository.findOne(findOneQuery);
-    }
-
+    @Transactional(readOnly = true)
     @Override
     public List<NotificationInfo.LatestNotification> findAllLatest(NotificationQuery.FindAllLatest findAllLatestQuery) {
-        return notificationRepository.findAllLatest(findAllLatestQuery);
+        return notificationReader.findAllLatest(findAllLatestQuery);
     }
 }

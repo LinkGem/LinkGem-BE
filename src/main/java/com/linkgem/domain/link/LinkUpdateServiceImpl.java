@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import com.linkgem.domain.gembox.GemBox;
 import com.linkgem.domain.gembox.GemBoxReader;
@@ -25,7 +24,7 @@ public class LinkUpdateServiceImpl implements LinkUpdateService {
         final Long userId = updateCommand.getUserId();
         Link findLink = linkReader.get(updateCommand.getId(), userId);
 
-        if (StringUtils.hasText(updateCommand.getMemo())) {
+        if (updateCommand.getMemo() != null) {
             findLink.updateMemo(updateCommand.getMemo());
         }
 

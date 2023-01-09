@@ -1,15 +1,19 @@
 package com.linkgem.presentation.notification.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.linkgem.domain.common.date.PastDay;
-import com.linkgem.domain.notification.ButtonAction;
-import com.linkgem.domain.notification.NotificationCategory;
+import com.linkgem.domain.notification.NotificationButtonAction;
 import com.linkgem.domain.notification.NotificationInfo;
+import com.linkgem.domain.notification.NotificationType;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class NotificationResponse {
 
@@ -27,50 +31,99 @@ public class NotificationResponse {
         }
     }
 
+    @Getter
+    public static class ButtonMain {
+
+        private NotificationButtonAction buttonAction;
+
+        private String buttonText;
+
+        private String buttonValue;
+
+        public ButtonMain(NotificationInfo.ButtonMain buttonMain) {
+            this.buttonAction = buttonMain.getButtonAction();
+            this.buttonText = buttonMain.getButtonText();
+            this.buttonValue = buttonMain.getButtonValue();
+        }
+    }
+
     @Builder
     @AllArgsConstructor
     @Getter
     public static class Main {
         private Long id;
 
-        private NotificationCategory category;
+        private NotificationType type;
 
-        private String emoticon;
-
-        private String title;
+        private Boolean isRead;
 
         private String content;
 
-        private ButtonAction buttonAction;
+        private ButtonMain button;
 
-        private String buttonTitle;
-
-        private String buttonValue;
-
-        private LocalDateTime createDate;
+        private LocalDateTime receivedDateTime;
 
         public static Main of(NotificationInfo.Main notification) {
+
             return Main.builder()
                 .id(notification.getId())
-                .category(notification.getCategory())
-                .emoticon(notification.getEmoticon())
-                .title(notification.getTitle())
+                .type(notification.getType())
                 .content(notification.getContent())
-                .buttonAction(notification.getButtonAction())
-                .buttonTitle(notification.getButtonTitle())
-                .buttonValue(notification.getButtonValue())
-                .createDate(notification.getCreateDate())
+                .isRead(notification.isRead())
+                .button(new ButtonMain(notification.getButton()))
+                .receivedDateTime(notification.getReceivedDateTime())
                 .build();
+        }
+
+        public static List<Main> ofs(List<NotificationInfo.Main> notifications) {
+            return notifications.stream()
+                .map(Main::of)
+                .collect(Collectors.toList());
         }
 
         public String getPastDay() {
 
-            if (createDate == null) {
+            if (receivedDateTime == null) {
                 return "";
             }
 
-            return PastDay.getPastDay(createDate);
+            return PastDay.getPastDay(receivedDateTime);
+        }
+    }
+
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class NotificationTypeResponse {
+        private String type;
+        private String name;
+
+        public static NotificationTypeResponse of(NotificationType type) {
+            return new NotificationTypeResponse(type.name(), type.getDescription());
         }
 
+        public static List<NotificationTypeResponse> ofs(List<NotificationType> types) {
+            return types.stream()
+                .map(NotificationTypeResponse::of)
+                .collect(Collectors.toList());
+        }
+
+    }
+
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class LatestNotification {
+        private NotificationType type;
+        private long count;
+
+        public static LatestNotification of(NotificationInfo.LatestNotification latestNotification) {
+            return new LatestNotification(latestNotification.getType(), latestNotification.getCount());
+        }
+
+        public static List<LatestNotification> ofs(List<NotificationInfo.LatestNotification> latestNotifications) {
+            return latestNotifications.stream()
+                .map(LatestNotification::of)
+                .collect(Collectors.toList());
+        }
     }
 }

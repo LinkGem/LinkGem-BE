@@ -1,8 +1,12 @@
 package com.linkgem.domain.notification;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -12,7 +16,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.linkgem.domain.common.BaseEntity;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.linkgem.domain.user.User;
 
 import lombok.AccessLevel;
@@ -20,10 +27,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class Notification extends BaseEntity {
+public class Notification {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -31,52 +39,41 @@ public class Notification extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private NotificationCategory category;
-
-    private String emoticon;
-
-    @Column(nullable = false)
-    private String title;
+    private NotificationType type;
 
     @Column(nullable = false, length = 1000)
     private String content;
 
     @Embedded
-    private Button button;
+    private NotificationButton button = new NotificationButton();
 
     @Column(name = "is_read", nullable = false)
     private boolean isRead;
 
-    @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id", nullable = true)
-    private User sender;
+    @CreatedDate
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "received_date_time")
+    private LocalDateTime receivedDateTime;
 
     @Builder
-    public Notification(NotificationCategory category, String emoticon, String title, String content,
-        Button button, User receiver, User sender) {
-        this.category = category;
-        this.emoticon = emoticon;
-        this.title = title;
+    public Notification(NotificationType type, String content, NotificationButton button, User receiver) {
+
+        Objects.requireNonNull(type, "type");
+        Objects.requireNonNull(content, "content");
+        Objects.requireNonNull(receiver, "receiver");
+
+        this.type = type;
         this.content = content;
         this.button = button;
         this.receiver = receiver;
-        this.sender = sender;
         this.isRead = false;
-        this.isDeleted = false;
     }
 
-    public void updateToRead() {
+    public void read() {
         this.isRead = true;
-    }
-
-    public void updateToDeleted() {
-        this.isDeleted = true;
     }
 }

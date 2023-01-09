@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.linkgem.domain.link.Link;
 import com.linkgem.domain.link.LinkReader;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
@@ -39,12 +38,15 @@ class GemBoxServiceImplTest {
 
     @DisplayName("잼박스를 저장한다")
     @Test
-    public void 잼박스_저장() {
+    void 잼박스_저장() {
 
         final String name = "테스트";
         final Long userId = 1L;
 
-        GemBox gemBox = new GemBox(name, userId);
+        GemBox gemBox = GemBox.builder()
+            .name(name)
+            .userId(userId)
+            .build();
 
         when(gemBoxDomainService.isFull(any())).thenReturn(false);
         when(gemBoxDomainService.isExisted(any())).thenReturn(false);
@@ -65,7 +67,7 @@ class GemBoxServiceImplTest {
 
     @DisplayName("잼박스를 초과 시 예외를 발생한다")
     @Test
-    public void 잼박스_초과_저장시_예외발생() {
+    void 잼박스_초과_저장시_예외발생() {
 
         final String name = "테스트";
         final Long userId = 1L;
@@ -85,7 +87,7 @@ class GemBoxServiceImplTest {
 
     @DisplayName("잼박스 중복 저장 시 예외를 발생시킨다")
     @Test
-    public void 잼박스_중복_저장시_예외발생() {
+    void 잼박스_중복_저장시_예외발생() {
 
         final String name = "테스트";
         final Long userId = 1L;
@@ -105,13 +107,16 @@ class GemBoxServiceImplTest {
 
     @DisplayName("잼박스를 수정한다")
     @Test
-    public void 잼박스_수정() {
+    void 잼박스_수정() {
 
         final String name = "테스트";
         final Long userId = 1L;
         final Long id = 1L;
 
-        GemBox gemBox = new GemBox(name, userId);
+        GemBox gemBox = GemBox.builder()
+            .name(name)
+            .userId(userId)
+            .build();
 
         when(gemBoxReader.find(anyLong(), anyLong())).thenReturn(Optional.of(gemBox));
         when(gemBoxDomainService.isExisted(any())).thenReturn(false);
@@ -127,15 +132,17 @@ class GemBoxServiceImplTest {
 
     @DisplayName("잼박스 수정시 중복일 경우 예외가 발생한다")
     @Test
-    public void 잼박스_수정시_중복일경우_예외발생() {
+    void 잼박스_수정시_중복일경우_예외발생() {
 
         final String name = "테스트";
         final Long userId = 1L;
         final Long id = 1L;
 
-        GemBox gemBox = new GemBox(name, userId);
+        GemBox gemBox = GemBox.builder()
+            .name(name)
+            .userId(userId)
+            .build();
 
-        // when(gemBoxReader.find(anyLong(), anyLong())).thenReturn(Optional.of(gemBox));
         when(gemBoxDomainService.isExisted(any())).thenReturn(true);
 
         GemBoxCommand.Update command = GemBoxCommand.Update.builder()
@@ -151,7 +158,7 @@ class GemBoxServiceImplTest {
 
     @DisplayName("잼박스 수정시 존재하지 않는 잼박스일 경우 예외가 발생한다")
     @Test
-    public void 잼박스_수정시_존재하지않는잼박스일경우_예외발생() {
+    void 잼박스_수정시_존재하지않는잼박스일경우_예외발생() {
 
         final String name = "테스트";
         final Long userId = 1L;

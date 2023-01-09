@@ -2,8 +2,11 @@ package com.linkgem.domain.notification;
 
 import java.time.LocalDateTime;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class NotificationInfo {
 
@@ -11,52 +14,63 @@ public class NotificationInfo {
     }
 
     @Getter
-    public static class Main {
-        private Long id;
+    public static class ButtonMain {
 
-        private NotificationCategory category;
+        private NotificationButtonAction buttonAction;
 
-        private String emoticon;
-
-        private String title;
-
-        private String content;
-
-        private ButtonAction buttonAction;
-
-        private String buttonTitle;
+        private String buttonText;
 
         private String buttonValue;
 
+        public ButtonMain(NotificationButton notificationButton) {
+            this.buttonAction = notificationButton.getButtonAction();
+            this.buttonText = notificationButton.getButtonText();
+            this.buttonValue = notificationButton.getButtonValue();
+        }
+    }
+
+    @Getter
+    public static class Main {
+        private Long id;
+
+        private NotificationType type;
+
+        private String content;
+
+        private ButtonMain button;
+
         private boolean isRead;
 
-        private LocalDateTime createDate;
+        private LocalDateTime receivedDateTime;
 
         @Builder
-        public Main(Long id, NotificationCategory category, String emoticon, String title, String content,
-            Button button, boolean isRead, LocalDateTime createDate) {
+        public Main(Long id, NotificationType type, String content,
+            NotificationButton button, boolean isRead, LocalDateTime receivedDateTime) {
             this.id = id;
-            this.category = category;
-            this.emoticon = emoticon;
-            this.title = title;
+            this.type = type;
             this.content = content;
-            this.buttonAction = button.getButtonAction();
-            this.buttonTitle = button.getButtonTitle();
-            this.buttonValue = button.getButtonValue();
             this.isRead = isRead;
-            this.createDate = createDate;
+            this.button = new ButtonMain(button);
+            this.receivedDateTime = receivedDateTime;
         }
 
         public static Main of(Notification notification) {
             return Main.builder()
                 .id(notification.getId())
-                .category(notification.getCategory())
-                .emoticon(notification.getEmoticon())
-                .title(notification.getTitle())
+                .type(notification.getType())
                 .content(notification.getContent())
+                .isRead(notification.isRead())
                 .button(notification.getButton())
-                .createDate(notification.getCreateDate())
+                .receivedDateTime(notification.getReceivedDateTime())
                 .build();
         }
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class LatestNotification {
+        private NotificationType type;
+        private long count;
     }
 }

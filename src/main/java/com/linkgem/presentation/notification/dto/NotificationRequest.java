@@ -3,9 +3,9 @@ package com.linkgem.presentation.notification.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.linkgem.domain.notification.ButtonAction;
-import com.linkgem.domain.notification.NotificationCategory;
+import com.linkgem.domain.notification.NotificationButtonAction;
 import com.linkgem.domain.notification.NotificationCommand;
+import com.linkgem.domain.notification.NotificationType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,36 +19,33 @@ public class NotificationRequest {
     public static class Create {
 
         @NotNull
-        private NotificationCategory category;
-
-        private String emoticon;
-
-        private String title;
+        private NotificationType type;
 
         @NotBlank
         private String content;
 
-        @NotNull
-        private ButtonAction buttonAction;
+        private NotificationButtonAction buttonAction;
 
-        @NotBlank
-        private String buttonTitle;
+        private String buttonText;
 
-        @NotBlank
         private String buttonValue;
 
-        public NotificationCommand.Create toCommand(Long receiverId, Long senderId) {
+        public NotificationCommand.Create toCommand(Long receiverId) {
             return NotificationCommand.Create.builder()
-                .category(category)
-                .emoticon(emoticon)
-                .title(title)
-                .content(content)
-                .buttonAction(buttonAction)
-                .buttonTitle(buttonTitle)
-                .buttonValue(buttonValue)
+                .type(this.type)
+                .content(this.content)
+                .buttonAction(this.buttonAction)
+                .buttonText(this.buttonText)
+                .buttonValue(this.buttonValue)
                 .receiverId(receiverId)
-                .senderId(senderId)
                 .build();
         }
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class FindAll {
+        private Boolean isRead;
+        private NotificationType type;
     }
 }

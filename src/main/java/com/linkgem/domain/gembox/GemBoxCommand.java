@@ -9,8 +9,9 @@ import lombok.Getter;
 
 public class GemBoxCommand {
 
-    @Builder
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    private GemBoxCommand() {
+    }
+
     @Getter
     public static class Create {
         private String name;
@@ -19,11 +20,23 @@ public class GemBoxCommand {
         private Boolean isDefault;
 
         public GemBox toEntity() {
-            return new GemBox(this.name, this.userId, this.isDefault);
+            return GemBox.builder()
+                .name(this.name)
+                .userId(this.userId)
+                .isDefault(this.isDefault)
+                .build();
         }
 
         public static Create createDefault(Long userId) {
             return new Create(GemBox.DEFAULT_GEMBOX_NAME, null, userId, true);
+        }
+
+        @Builder
+        private Create(String name, List<Long> linkIds, Long userId, boolean isDefault) {
+            this.name = name;
+            this.linkIds = linkIds;
+            this.userId = userId;
+            this.isDefault = isDefault;
         }
     }
 

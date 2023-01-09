@@ -18,10 +18,6 @@ public class PastDay {
 
         long pastDays = pastHours / 24;
 
-        if (isDoublePasted(pastHours)) {
-            pastDays++;
-        }
-
         if (pastDays > 120) {
             return "오래 전";
         } else if (pastDays > 90) {
@@ -35,14 +31,5 @@ public class PastDay {
         } else {
             return String.format("%d일 전", pastDays);
         }
-    }
-
-    /**
-     * 시간상으로 하루가 지나지 않았지만 일수는 변했을 경우
-     * @param pastHours 경과 시간
-     * @return true/false
-     */
-    private static boolean isDoublePasted(long pastHours) {
-        return pastHours % 24 > 0;
     }
 }

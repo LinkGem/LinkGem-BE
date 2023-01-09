@@ -1,8 +1,8 @@
 package com.linkgem.presentation.notification;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -10,7 +10,10 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,7 @@ import com.linkgem.domain.common.Pages;
 import com.linkgem.domain.notification.NotificationCommand;
 import com.linkgem.domain.notification.NotificationInfo;
 import com.linkgem.domain.notification.NotificationQuery;
+import com.linkgem.domain.notification.NotificationType;
 import com.linkgem.presentation.common.CommonResponse;
 import com.linkgem.presentation.common.UserAuthenticationProvider;
 import com.linkgem.presentation.notification.dto.NotificationRequest;
@@ -32,33 +36,35 @@ import lombok.RequiredArgsConstructor;
 
 @Api(tags = "알림")
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/v1/notification")
+@RequestMapping(value = "/api/v1/notifications")
 @RestController
 public class NotificationApiController {
 
     private final NotificationFacade notificationFacade;
 
+    private static final LocalDateTime SEARCH_START_DATE_TIME = LocalDateTime.now().minusMonths(3);
+
     @ApiOperation(value = "알림 목록 조회", notes = "알림 목록을 조회한다")
     @GetMapping
     public CommonResponse<Pages<NotificationResponse.Main>> findAll(
+        NotificationRequest.FindAll findAllRequestDto,
         HttpServletRequest httpServletRequest,
         @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
-        NotificationQuery.Search searchQuery = NotificationQuery.Search.builder()
+        NotificationQuery.FindAll findAllQuery = NotificationQuery.FindAll.builder()
             .userId(userId)
-            .searchStartDate(LocalDateTime.now().minusMonths(3))
+            .isRead(findAllRequestDto.getIsRead())
+            .type(findAllRequestDto.getType())
+            .searchStartDateTime(SEARCH_START_DATE_TIME)
             .build();
 
-        Page<NotificationInfo.Main> notifications = notificationFacade.findAll(searchQuery, pageable);
+        Page<NotificationInfo.Main> notifications = notificationFacade.findAll(findAllQuery, pageable);
 
-        List<NotificationResponse.Main> responses = notifications
-            .getContent()
-            .stream()
-            .map(NotificationResponse.Main::of)
-            .collect(Collectors.toList());
+        List<NotificationResponse.Main> responses =
+            NotificationResponse.Main.ofs(notifications.getContent());
 
         return CommonResponse.of(
             Pages.<NotificationResponse.Main>builder()
@@ -70,37 +76,71 @@ public class NotificationApiController {
         );
     }
 
-    @ApiOperation(value = "읽지 않은 알림 수 조회", notes = "읽지 않은 알림 수를 조회한다")
-    @GetMapping(value = "/has-new-notifications")
-    public CommonResponse<NotificationResponse.NewNotificationInformation> getUnReadNotificationCount(
-        HttpServletRequest httpServletRequest
-    ) {
+    @ApiOperation(value = "최신 알림 정보 조회", notes = "최신 알림 정보를 조회한다")
+    @GetMapping(value = "/latest-information")
+    public CommonResponse<List<NotificationResponse.LatestNotification>> findAllLatestInformation(
+        HttpServletRequest httpServletRequest) {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
-        NotificationQuery.Search searchQuery = NotificationQuery.Search.builder()
+        NotificationQuery.FindAllLatest findAllLatestQuery = NotificationQuery.FindAllLatest.builder()
             .userId(userId)
-            .searchStartDate(LocalDateTime.now().minusDays(1))
+            .searchStartDateTime(SEARCH_START_DATE_TIME)
             .build();
 
-        return CommonResponse.of(
-            new NotificationResponse.NewNotificationInformation(
-                notificationFacade.getUnReadNotificationCount(searchQuery))
-        );
+        List<NotificationResponse.LatestNotification> responses =
+            NotificationResponse.LatestNotification.ofs(notificationFacade.findAllLatest(findAllLatestQuery));
+
+        return CommonResponse.of(responses);
+    }
+
+    @ApiOperation(value = "알림 타입 조회", notes = "알림 타입을 조회한다")
+    @GetMapping(value = "/types")
+    public CommonResponse<List<NotificationResponse.NotificationTypeResponse>> findAllNotificationType() {
+        List<NotificationResponse.NotificationTypeResponse> responses =
+            NotificationResponse.NotificationTypeResponse.ofs(Arrays.asList(NotificationType.values()));
+
+        return CommonResponse.of(responses);
     }
 
     @ApiOperation(value = "알림 전송", notes = "알림을 전송한다")
     @PostMapping(value = "/{receiverId}")
     public CommonResponse<NotificationResponse.Main> sendNotification(
-        HttpServletRequest httpServletRequest,
         @PathVariable Long receiverId,
         @Valid NotificationRequest.Create createRequest
     ) {
-
-        Long senderId = UserAuthenticationProvider.provider(httpServletRequest);
-
-        NotificationCommand.Create createCommand = createRequest.toCommand(receiverId, senderId);
+        NotificationCommand.Create createCommand = createRequest.toCommand(receiverId);
 
         return CommonResponse.of(NotificationResponse.Main.of(notificationFacade.create(createCommand)));
+    }
+
+    @ApiOperation(value = "알림 읽기 요청", notes = "알림 읽기를 요청한다")
+    @PatchMapping(value = "/{notificationId}/is-read")
+    public ResponseEntity<Void> updateNotification(
+        @PathVariable long notificationId,
+        HttpServletRequest httpServletRequest
+    ) {
+
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+
+        NotificationCommand.Read command = NotificationCommand.Read.of(notificationId, userId);
+        notificationFacade.readNotification(command);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "알림 삭제 요청", notes = "알림 삭제를 요청한다")
+    @DeleteMapping(value = "/{notificationId}")
+    public ResponseEntity<Void> deleteNotification(
+        @PathVariable long notificationId,
+        HttpServletRequest httpServletRequest
+    ) {
+
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+
+        NotificationCommand.Delete command = NotificationCommand.Delete.of(notificationId, userId);
+        notificationFacade.deleteNotification(command);
+
+        return ResponseEntity.noContent().build();
     }
 }
