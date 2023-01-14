@@ -48,7 +48,7 @@ public class Link extends BaseEntity {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gem_box_id")
+    @JoinColumn(name = "gem_box_id", nullable = false)
     private GemBox gemBox;
 
     @Column(name = "is_favorites", nullable = false, columnDefinition = "boolean default false")
