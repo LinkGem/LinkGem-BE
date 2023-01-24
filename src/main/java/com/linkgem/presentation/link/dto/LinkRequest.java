@@ -26,6 +26,9 @@ public class LinkRequest {
     @Getter
     public static class SearchLinksRequest {
 
+        @ApiModelProperty(value = "디폴스 잼박스에 포함 여부")
+        private Boolean isDefault;
+
         @ApiModelProperty(value = "잼박스 고유 아이디")
         private Long gemBoxId;
 
@@ -36,7 +39,7 @@ public class LinkRequest {
         private Boolean hasMemo;
 
         public LinkQuery.SearchLinks to(Long userId) {
-            return new LinkQuery.SearchLinks(userId, this.gemBoxId, this.isFavorites, this.hasMemo);
+            return new LinkQuery.SearchLinks(userId, this.gemBoxId, this.isFavorites, this.hasMemo, this.isDefault);
         }
     }
 

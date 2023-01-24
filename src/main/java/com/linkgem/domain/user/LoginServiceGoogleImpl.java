@@ -1,9 +1,14 @@
 package com.linkgem.domain.user;
 
+import com.linkgem.domain.user.UserInfo.UserProfile;
 import com.linkgem.domain.user.provider.OauthProvider;
+import com.linkgem.domain.user.provider.OauthProvider.Provider;
 import com.linkgem.domain.user.provider.TokenProvider;
 import com.linkgem.infrastructure.common.aws.S3ObjectKeyCreator;
 import com.linkgem.presentation.user.dto.UserResponse;
+import com.linkgem.presentation.user.dto.UserResponse.LoginResponse;
+import com.linkgem.presentation.user.dto.UserResponse.OauthTokenResponse;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
@@ -16,23 +21,24 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 @RequiredArgsConstructor
-public class LoginServiceNaverImpl implements UserLoginService {
+public class LoginServiceGoogleImpl implements UserLoginService {
 
     private final OauthProvider oauthProvider;
     private final UserReader userReader;
     private final UserStore userStore;
     private final TokenProvider tokenProvider;
-
     private final S3ObjectKeyCreator s3ObjectKeyCreator;
 
     @Override
     @Transactional
-    public UserResponse.LoginResponse login(String providerName, String code) {
-        OauthProvider.Provider provider = getProvider(oauthProvider, "naver");
-        UserResponse.OauthTokenResponse oauthTokenResponse = getToken(code, provider);
+    public LoginResponse login(String providerName, String code) {
+        Provider provider = getProvider(oauthProvider, "google");
+        OauthTokenResponse oauthTokenResponse = getToken(code, provider);
         UserInfo.UserProfile userProfile = getUserProfile(providerName, oauthTokenResponse, provider);
         User user = userReader.findByLoginEmail(userProfile.getLoginEmail())
                 .orElseGet(() -> userStore.create(userProfile.toUser()));
@@ -61,17 +67,39 @@ public class LoginServiceNaverImpl implements UserLoginService {
     }
 
     @Override
-    public OauthProvider.Provider getProvider(OauthProvider oauthProvider, String providerName) {
+    public Provider getProvider(OauthProvider oauthProvider, String providerName) {
         return UserLoginService.super.getProvider(oauthProvider, providerName);
     }
 
     @Override
     public Boolean getLoginService(String providerName) {
-        return providerName.equals("naver");
+        return providerName.equals("google");
+    }
+
+    @Override
+    public OauthTokenResponse getToken(String code, Provider provider) {
+        UriComponents uriComponents = UriComponentsBuilder
+                .fromUriString(provider.getTokenUrl())
+                .queryParams(tokenRequest(code, provider))
+                .build(true);
+        URI tokenUri = uriComponents.toUri();
+        return WebClient.create()
+                .post()
+                .uri(tokenUri)
+                .headers(header -> {
+                    header.setBasicAuth(provider.getClientId(), provider.getClientSecret());
+                    header.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+                    header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+                    header.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));
+                })
+                .retrieve()
+                .bodyToMono(OauthTokenResponse.class).block();
     }
 
     private MultiValueMap<String, String> tokenRequest(String code, OauthProvider.Provider provider) {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+        formData.add("client_id", provider.getClientId());
+        formData.add("client_secret", provider.getClientSecret());
         formData.add("code", code);
         formData.add("grant_type", "authorization_code");
         formData.add("redirect_uri", provider.getRedirectUrl());
@@ -79,28 +107,9 @@ public class LoginServiceNaverImpl implements UserLoginService {
     }
 
     @Override
-    public UserResponse.OauthTokenResponse getToken(String code, OauthProvider.Provider provider) {
-        return WebClient.create()
-                .post()
-                .uri(provider.getTokenUrl())
-                .headers(header -> {
-                    header.setBasicAuth(provider.getClientId(), provider.getClientSecret());
-                    header.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-                    header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-                    header.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));
-                })
-                .bodyValue(tokenRequest(code, provider))
-                .retrieve()
-                .bodyToMono(UserResponse.OauthTokenResponse.class)
-                .block();
-    }
-
-    @Override
-    public UserInfo.UserProfile getUserProfile(String providerName, UserResponse.OauthTokenResponse oauthTokenResponse,
-                                               OauthProvider.Provider provider) {
+    public UserProfile getUserProfile(String providerName, OauthTokenResponse oauthTokenResponse, Provider provider) {
         Map<String, Object> userAttributes = getUserAttributes(provider, oauthTokenResponse);
         return OauthAttributes.extract(providerName, userAttributes);
-
     }
 
     private Map<String, Object> getUserAttributes(OauthProvider.Provider provider,
@@ -114,5 +123,4 @@ public class LoginServiceNaverImpl implements UserLoginService {
                 })
                 .block();
     }
-
 }

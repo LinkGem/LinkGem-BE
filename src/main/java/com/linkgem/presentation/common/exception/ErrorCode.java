@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
-
     GEMBOX_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 잼박스 입니다"),
     GEMBOX_ALREADY_EXISTED(HttpStatus.CONFLICT, "이미 존재하는 잼박스 입니다."),
     GEMBOX_IS_FULL(HttpStatus.BAD_REQUEST, String.format("%s%d%s", "잼박스는 최대", GemBox.MAX_GEMBOX, "개 까지 저장이 가능합니다.")),
@@ -36,6 +35,7 @@ public enum ErrorCode {
     NOTIFICATION_NOT_FOUND_CREATE_TYPE(HttpStatus.NOT_FOUND, "존재하지 않는 알림 생성 서비스입니다."),
     NOTIFICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않은 알림입니다."),
 
+    GOOGLE_ERROR(HttpStatus.BAD_REQUEST,"테스트중"),
     PROVIDER_NOT_VALID(HttpStatus.BAD_REQUEST,"PROVIDER가 존재하지 않습니다.");
 
     private final HttpStatus httpStatus;

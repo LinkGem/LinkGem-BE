@@ -75,6 +75,10 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
             whereBuilder.and(searchLinks.getHasMemo() ? link.memo.isNotEmpty() : link.memo.isEmpty());
         }
 
+        if (Objects.nonNull(searchLinks.getIsDefault())) {
+            whereBuilder.and(link.gemBox.isDefault.eq(searchLinks.getIsDefault()));
+        }
+
         return whereBuilder;
     }
 

@@ -54,7 +54,8 @@ public class UserLeaveServiceNaverImpl implements UserLeaveService {
 		return providerName.equals("naver");
 	}
 
-	private UserResponse.OauthTokenResponse getToken(String code, OauthProvider.Provider provider) {
+	@Override
+	public UserResponse.OauthTokenResponse getToken(String code, OauthProvider.Provider provider) {
 		return WebClient.create()
 			.post()
 			.uri(provider.getTokenUrl())
