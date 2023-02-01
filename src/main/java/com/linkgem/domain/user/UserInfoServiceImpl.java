@@ -23,6 +23,7 @@ public class UserInfoServiceImpl implements UserInfoService{
                 .job(user.getJob())
                 .careerYear(user.getCareerYear())
                 .profileImageUrl(user.getProfileImageUrl())
+                .isSavedFirstLink(user.getIsSavedFirstLink())
                 .build();
     }
 }

@@ -125,6 +125,7 @@ public class UserResponse {
 		private String job;
 		private int careerYear;
 		private String profileImageUrl;
+		private Boolean isSavedFirstLink;
 	}
 
 
