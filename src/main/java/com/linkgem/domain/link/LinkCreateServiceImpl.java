@@ -41,6 +41,10 @@ public class LinkCreateServiceImpl implements LinkCreateService {
         User user = userReader.find(createCommand.getUserId())
             .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
+        if (Boolean.FALSE.equals(user.getIsSavedFirstLink())) {
+            user.saveFirstLink();
+        }
+
         OpenGraph openGraph = openGraphReader.call(createCommand.getUrl());
 
         Link link = Link.builder()

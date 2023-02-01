@@ -37,6 +37,9 @@ public class User extends BaseEntity {
 	@Column(name = "profile_image_url")
 	private String profileImageUrl;
 
+	@Column(name = "is_saved_first_link", nullable = false)
+	private Boolean isSavedFirstLink;
+
 	@Builder
 	public User(String loginEmail, String nickname, String oauthId, String name) {
 		this.loginEmail = loginEmail;
@@ -44,6 +47,11 @@ public class User extends BaseEntity {
 		this.oauthId = oauthId;
 		this.userPhase = UserPhase.READY;
 		this.name = name;
+		this.isSavedFirstLink = false;
+	}
+
+	public void saveFirstLink() {
+		this.isSavedFirstLink = true;
 	}
 
 	public void updateNickname(String nickname) {
@@ -77,6 +85,7 @@ public class User extends BaseEntity {
 		this.careerYear = 0;
 		this.mailEmail = null;
 		this.profileImageUrl = null;
+		this.isSavedFirstLink = false;
 
 	}
 
@@ -84,7 +93,7 @@ public class User extends BaseEntity {
 		this.mailEmail = mailEmail;
 	}
 
-	
+
 
 
 }
