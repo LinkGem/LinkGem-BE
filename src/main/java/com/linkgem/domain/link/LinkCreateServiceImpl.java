@@ -69,12 +69,13 @@ public class LinkCreateServiceImpl implements LinkCreateService {
     private void uploadImageUrl(Link createdLink) {
 
         final String imageUrl = createdLink.getOpenGraph().getImageUrl();
+        final String domain = createdLink.getOpenGraph().getDomain();
 
         final String objectKey =
             s3ObjectKeyCreator.create(Directory.LINK, createdLink.getUser().getId(), createdLink.getId());
 
         FileCommand.UploadUrlFile uploadCommand =
-            FileCommand.UploadUrlFile.of(imageUrl, objectKey);
+            FileCommand.UploadUrlFile.of(imageUrl, objectKey, domain);
 
         FileInfo fileInfo = fileStore.store(uploadCommand);
 

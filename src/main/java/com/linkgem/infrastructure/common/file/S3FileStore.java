@@ -56,8 +56,11 @@ public class S3FileStore implements FileStore {
 
         String urlString = uploadCommand.getUrl();
 
+        // brunch에 경우 이미지 url이 "//" 로 시작한다
         if (urlString.startsWith("//")) {
             urlString = "https:" + urlString;
+        } else if (urlString.startsWith("/")) {
+            urlString = "https://" + uploadCommand.getDomain() + urlString;
         }
 
         try {
