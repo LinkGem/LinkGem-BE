@@ -26,9 +26,10 @@ public class FileCommand {
     public static class UploadUrlFile {
         private String url;
         private String objectKey;
+        private String domain;
 
-        public static UploadUrlFile of(String url, String objectKey) {
-            return new UploadUrlFile(url, objectKey);
+        public static UploadUrlFile of(String url, String objectKey, String domain) {
+            return new UploadUrlFile(url, objectKey, domain);
         }
     }
 

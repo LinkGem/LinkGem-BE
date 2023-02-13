@@ -24,6 +24,7 @@ generated/
 .DS_STORE
 .vscode
 
+.github/
 /.jpb
 
 application-*.yml

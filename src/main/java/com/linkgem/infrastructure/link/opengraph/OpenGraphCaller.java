@@ -1,5 +1,6 @@
 package com.linkgem.infrastructure.link.opengraph;
 
+import java.net.URI;
 import java.util.Optional;
 
 import org.jsoup.Jsoup;
@@ -43,7 +44,7 @@ public class OpenGraphCaller {
                 .get()
                 .select(ogTagSelectQuery);
 
-            return createOpenGraph(openGraphElements);
+            return createOpenGraph(openGraphElements, url);
 
         } catch (Exception e) {
             log.error("open graph reading errors : {}", e.toString());
@@ -51,7 +52,7 @@ public class OpenGraphCaller {
         }
     }
 
-    private Optional<Result> createOpenGraph(Elements openGraphElements) {
+    private Optional<Result> createOpenGraph(Elements openGraphElements, String url) {
 
         String imageUrl = "";
         String title = "";
@@ -85,7 +86,16 @@ public class OpenGraphCaller {
             .description(description)
             .imageUrl(imageUrl)
             .siteName(siteName)
+            .domain(extractDomain(url))
             .build());
+    }
+
+    private String extractDomain(String url) {
+        try {
+            return new URI(url).getHost();
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     private String findAttribute(Element openGraphElement) {
@@ -98,13 +108,15 @@ public class OpenGraphCaller {
         private String title;
         private String description;
         private String siteName;
+        private String domain;
 
         @Builder
-        public Result(String imageUrl, String title, String description, String siteName) {
+        public Result(String imageUrl, String title, String description, String siteName, String domain) {
             this.imageUrl = imageUrl;
             this.title = title;
             this.description = description;
             this.siteName = siteName;
+            this.domain = domain;
         }
 
         public OpenGraph to() {
@@ -113,6 +125,7 @@ public class OpenGraphCaller {
                 .title(this.title)
                 .description(this.description)
                 .siteName(this.siteName)
+                .domain(this.domain)
                 .build();
         }
     }
