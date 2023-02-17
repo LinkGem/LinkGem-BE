@@ -49,7 +49,7 @@ public class MailAuthServiceImpl implements MailAuthService {
             Context context = new Context();
             context.setVariable("name", nickname);
             context.setVariable("redirectUrl",
-                    "https://linkgem.co.kr/api/v1/auth/mail/check?randomId=" + certificationCode + "&userId="
+                    "https://prod.linkgem.co.kr/api/v1/auth/mail/check?randomId=" + certificationCode + "&userId="
                             + userId.toString());
             String html = templateEngine.process("mailFormat", context);
             messageHelper.setText(html, true);
