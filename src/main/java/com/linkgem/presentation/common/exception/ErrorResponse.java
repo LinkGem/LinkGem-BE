@@ -19,18 +19,20 @@ public class ErrorResponse {
 
     private String code;
     private String message;
+    private String displayMessage;
     private LocalDateTime timestamp;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Map<String, Object>> fieldErrors;
 
     @Builder
-    private ErrorResponse(final String code, final String message, Errors errors) {
+    private ErrorResponse(final String code, final String message, final String displayMessage, Errors errors) {
         this.code = code;
         this.message = message;
+        this.displayMessage = displayMessage;
         this.timestamp = LocalDateTime.now();
 
-        if(Objects.nonNull(errors)){
+        if (Objects.nonNull(errors)) {
             this.fieldErrors = this.convertToFieldErrors(errors);
         }
     }
