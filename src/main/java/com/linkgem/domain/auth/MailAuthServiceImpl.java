@@ -79,10 +79,10 @@ public class MailAuthServiceImpl implements MailAuthService {
     public URI mailCheck(Long userId, String randomId) {
         Optional<Auth> auth = authReader.findByUserIdAndAuthType(userId, AuthType.MAIL);
         if (auth.isEmpty() || !auth.get().getCertificationCode().equals(randomId) || auth.get().getExpiredDate().isBefore(LocalDateTime.now())) {
-            return URI.create("https://linkgem.co.kr/email/fail");
+            return URI.create("https://prod.linkgem.co.kr/email/fail");
         } else {
             auth.get().authenticate();
-            return URI.create("https://linkgem.co.kr/email/success");
+            return URI.create("https://prod.linkgem.co.kr/email/success");
         }
     }
 
