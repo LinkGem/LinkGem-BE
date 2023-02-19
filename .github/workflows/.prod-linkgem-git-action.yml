@@ -1,12 +1,9 @@
-name: prod-linkgem-git-action
+name: prod-linkgem-web-service
 
 
 on:
   push:
-    branches: [master]
-
-env:
-  S3_BUCKET_NAME: linkgem-deploy
+    branches: [main]
 
 jobs:
  BuildAndDeploy:
@@ -26,13 +23,11 @@ jobs:
     # AWS 접근 세팅
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
-      
       with:
         node-version: '16'
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
-        
+        aws-access-key-id: ${{ secrets.AWS_EB_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_EB_SECRET_ACCESS_KEY }}
+
     # S3 버킷에 YML 파일 복사
     - name: S3 properties files copy
       run: |
@@ -48,28 +43,18 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew clean build -x test
       shell: bash
-    
-    # zip 파일 생성
-    - name: Make zip file
-      run: zip -r ./$GITHUB_SHA.zip .
+
+    - name: Get current time
+      uses: 1466587594/get-current-time@v2
+      id: current-time
+      with:
+        format: YYYY-MM-DDTHH-mm-ss
+        utcOffset: "+09:00"
+
+    - name: Show Current Time
+      run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
       shell: bash
-      
-    # S3에 압축파일 업로드
-    - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip
-    
-    # CODE DEPLOY를 사용하여 배포
-    - name: Code Deploy
-      run: |
-        aws deploy create-deployment \
-          --application-name Github-Actions-Deploy \
-          --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name prod-github-actions-group \
-          --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip
-      
-        
-    
-  
+
  
   
   
