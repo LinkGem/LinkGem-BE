@@ -12,6 +12,9 @@ jar {
     archiveBaseName = 'link-gem'
     archiveFileName = 'link-gem.jar'
     enabled = false
+    from('.ebextensions') {
+        into('.ebextensions' )
+    }
 }
 
 bootJar {
