@@ -3,17 +3,22 @@ package com.linkgem.presentation.gembox.dto;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.linkgem.domain.gembox.GemBox;
 import com.linkgem.domain.gembox.GemBoxCommand;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GemBoxRequest {
 
     @ApiModel(description = "잼박스 생성 요청")
@@ -56,6 +61,18 @@ public class GemBoxRequest {
                 .userId(userId)
                 .build();
         }
+    }
+
+    @ApiModel(description = "링크를 잼박스로 이동 요청")
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    public static class PutLinksToGemboxRequest {
+
+        @ApiModelProperty(value = "링크 아이디 목록", example = "링크 아이디 목록", required = true)
+        @NotNull(message = "링크 ID 목록을 필수 값입니다")
+        @Size(min = 1, message = "최소 한개 이상의 링크 ID가 있어야합니다.")
+        private List<Long> links;
     }
 
 }

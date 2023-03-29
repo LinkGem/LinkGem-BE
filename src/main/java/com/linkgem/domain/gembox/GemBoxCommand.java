@@ -60,4 +60,13 @@ public class GemBoxCommand {
             return new Delete(id, userId);
         }
     }
+
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class PutLinksToGembox {
+        private Long userId;
+        private Long gemBoxId;
+        private List<Long> linkIds;
+    }
 }
