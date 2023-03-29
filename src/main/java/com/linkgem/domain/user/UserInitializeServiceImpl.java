@@ -28,9 +28,5 @@ public class UserInitializeServiceImpl implements UserInitializeService {
         //회원가입 환영 알림
         NotificationCommand.Create joinNotification = notificationCreateFactory.createJoinNotification(user);
         notificationCreate.create(joinNotification);
-
-        //이벤트 알림
-        NotificationCommand.Create eventNotification = notificationCreateFactory.createEventNotification(user);
-        notificationCreate.create(eventNotification);
     }
 }
