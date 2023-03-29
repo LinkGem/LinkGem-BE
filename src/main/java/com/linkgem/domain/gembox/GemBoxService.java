@@ -20,4 +20,6 @@ public interface GemBoxService {
     void delete(GemBoxCommand.Delete command);
 
     void deleteAllByUserId(Long userId);
+
+    void putLinksToGembox(GemBoxCommand.PutLinksToGembox command);
 }

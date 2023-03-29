@@ -117,4 +117,19 @@ public class GemBoxServiceImpl implements GemBoxService {
         gemBoxStore.deleteAllByUserId(userId);
     }
 
+    @Transactional
+    @Override
+    public void putLinksToGembox(GemBoxCommand.PutLinksToGembox command) {
+
+        final Long userId = command.getUserId();
+        final Long gemboxId = command.getGemBoxId();
+
+        GemBox gemBox = gemBoxReader.get(gemboxId, userId);
+
+        command.getLinkIds()
+            .stream()
+            .map(linkId -> linkReader.get(linkId, userId))
+            .forEach(link -> link.updateGemBox(gemBox));
+    }
+
 }

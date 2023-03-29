@@ -113,4 +113,23 @@ public class GemBoxApiController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @ApiOperation(value = "링크들을 잼박스에 넣는다.", notes = "링크들을 잼박스에 넣는다.")
+    @PatchMapping(value = "/{id}/links")
+    public ResponseEntity<Void> pushLinksToGembox(
+        HttpServletRequest httpServletRequest,
+        @ApiParam(value = "잼박스 고유 아이디", example = "1") @PathVariable Long id,
+        @RequestBody @Valid GemBoxRequest.PutLinksToGemboxRequest request
+    ) {
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+
+        GemBoxCommand.PutLinksToGembox command = GemBoxCommand.PutLinksToGembox.builder()
+            .userId(userId)
+            .gemBoxId(id)
+            .linkIds(request.getLinks())
+            .build();
+
+        gemBoxFacade.putLinksToGembox(command);
+        return ResponseEntity.noContent().build();
+    }
 }

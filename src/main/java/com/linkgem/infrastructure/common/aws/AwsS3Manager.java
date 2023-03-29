@@ -20,76 +20,79 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 public class AwsS3Manager {
 
-	final private String accessKey;
+    final private String accessKey;
 
-	final private String secretKey;
+    final private String secretKey;
 
-	final private String domain;
+    final private String domain;
 
-	final private String bucket;
+    final private String bucket;
 
-	final private String region;
+    final private String region;
 
-	final private AmazonS3 s3Client;
+    final private AmazonS3 s3Client;
 
-	public AwsS3Manager(
-		@Value("${aws.credentials.accessKey}") String accessKey,
-		@Value("${aws.credentials.secretKey}") String secretKey,
-		@Value("${aws.s3.domain}") String domain,
-		@Value("${aws.s3.bucket}") String bucket,
-		@Value("${aws.s3.region}") String region
-	) {
-		this.accessKey = accessKey;
-		this.secretKey = secretKey;
-		this.domain = domain;
-		this.bucket = bucket;
-		this.region = region;
+    public AwsS3Manager(
+        @Value("${aws.credentials.accessKey}") String accessKey,
+        @Value("${aws.credentials.secretKey}") String secretKey,
+        @Value("${aws.s3.domain}") String domain,
+        @Value("${aws.s3.bucket}") String bucket,
+        @Value("${aws.s3.region}") String region
+    ) {
+        this.accessKey = accessKey;
+        this.secretKey = secretKey;
+        this.domain = domain;
+        this.bucket = bucket;
+        this.region = region;
 
-		AWSCredentials credentials = new BasicAWSCredentials(
-			accessKey,
-			secretKey
-		);
+        AWSCredentials credentials = new BasicAWSCredentials(
+            accessKey,
+            secretKey
+        );
 
-		this.s3Client = AmazonS3ClientBuilder
-			.standard()
-			.withCredentials(new AWSStaticCredentialsProvider(credentials))
-			.withRegion(Regions.valueOf(region))
-			.build();
+        this.s3Client = AmazonS3ClientBuilder
+            .standard()
+            .withCredentials(new AWSStaticCredentialsProvider(credentials))
+            .withRegion(Regions.valueOf(region))
+            .build();
 
-		log.info("[CONFIG] AWS client create Completed");
-	}
+        log.info("[CONFIG] AWS client create Completed");
+    }
 
-	public String upload(S3FileCommand.Upload uploadCommand) {
+    public String upload(S3FileCommand.Upload uploadCommand) {
 
-		PutObjectRequest putObjectRequest = createPutObject(uploadCommand);
-		s3Client.putObject(putObjectRequest);
-		log.info("[AWS] file upload success to s3 : {}", putObjectRequest.getKey());
+        PutObjectRequest putObjectRequest = createPutObject(uploadCommand);
+        s3Client.putObject(putObjectRequest);
+        log.info("[AWS] file upload success to s3 : {}", putObjectRequest.getKey());
 
-		return String.format("%s/%s", domain, putObjectRequest.getKey());
-	}
+        return String.format("%s/%s", domain, putObjectRequest.getKey());
+    }
 
-	public void delete(FileCommand.DeleteFile deleteCommand) {
+    public void delete(FileCommand.DeleteFile deleteCommand) {
 
-		final String objectKey = deleteCommand.getUrl()
-			.replace(String.format("%s/", this.domain), "");
+        final String objectKey = deleteCommand.getUrl()
+            .replace(String.format("%s/", this.domain), "");
 
-		DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(this.bucket, objectKey);
+        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(this.bucket, objectKey);
 
-		this.s3Client.deleteObject(deleteObjectRequest);
-		log.info("[AWS] delete files in s3 : {}", objectKey);
-	}
+        this.s3Client.deleteObject(deleteObjectRequest);
+        log.info("[AWS] delete files in s3 : {}", objectKey);
+    }
 
-	private PutObjectRequest createPutObject(S3FileCommand.Upload uploadCommand) {
+    private PutObjectRequest createPutObject(S3FileCommand.Upload uploadCommand) {
 
-		ObjectMetadata objectMetadata = new ObjectMetadata();
-		objectMetadata.setContentLength(uploadCommand.getContentLength());
-		objectMetadata.setContentType(uploadCommand.getContentType());
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentType(uploadCommand.getContentType());
 
-		return new PutObjectRequest(
-			this.bucket,
-			uploadCommand.getObjectKey(),
-			uploadCommand.getInputStream(),
-			objectMetadata
-		);
-	}
+        if (uploadCommand.getContentLength() > 0) {
+            objectMetadata.setContentLength(uploadCommand.getContentLength());
+        }
+
+        return new PutObjectRequest(
+            this.bucket,
+            uploadCommand.getObjectKey(),
+            uploadCommand.getInputStream(),
+            objectMetadata
+        );
+    }
 }
