@@ -1,0 +1,17 @@
+services:
+  mariadb:
+    image: mariadb:10.8.3
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: link_gem
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_USER: linkgem
+      MYSQL_PASSWORD: linkgem
+      TZ: Asia/Seoul
+    command:
+      - --character-set-server=utf8mb4
