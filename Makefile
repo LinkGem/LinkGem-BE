@@ -21,7 +21,7 @@ run-local:
 	gradle bootrun --args='--spring.profiles.active=local'
 
 .PHONY: run-docker
-run-local-docker:
+run-docker:
 	docker run -it -p 8080:8080 ${DOCKER_DIST_TAG}:${BUILD_TAG}
 
 .PHONY: deploy
