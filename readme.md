@@ -1,5 +1,18 @@
-# 1. LinkGem API
-## 1.1. development specification
+# LinkGem Backend
+linkgem backend API server
+
+## How to run
+- run
+```
+docker-compose up
+make run-local  
+```
+- build
+```
+make build
+```
+
+## development specification
 - java 17
 - gradle
 - spring boot
@@ -8,10 +21,8 @@
 - queryDSL
 - lombok
 - swagger
-
-## 1.2 로그인 방법
-- OAUTH2
-
-## 1.3 Archive
-- JAR
+- auth
+  - OAUTH2
+- Archive
+  - JAR
 
