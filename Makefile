@@ -22,7 +22,7 @@ run-local:
 
 .PHONY: run-docker
 run-docker:
-	docker run -it -p 8080:8080 ${DOCKER_DIST_TAG}:${BUILD_TAG}
+	docker run -it -p 8080:8080 ${DOCKER_DIST_TAG}:${BUILD_TAG} --spring.profiles.active=local
 
 .PHONY: deploy
 deploy:
