@@ -1,12 +1,11 @@
 package com.linkgem.domain;
 
 import com.linkgem.domain.auth.Auth;
-import com.linkgem.domain.auth.AuthReader;
-import com.linkgem.domain.auth.AuthStore;
+import com.linkgem.domain.auth.AuthPersistence;
 import com.linkgem.domain.auth.AuthType;
 import com.linkgem.domain.auth.MailAuthService;
 import com.linkgem.domain.user.User;
-import com.linkgem.domain.user.UserReader;
+import com.linkgem.domain.user.UserPersistence;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
@@ -22,12 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class test {
 
     @Autowired
-    AuthReader authReader;
-    @Autowired
-    AuthStore authStore;
+    AuthPersistence authPersistence;
 
     @Autowired
-    UserReader userReader;
+    UserPersistence userPersistence;
 
     @Autowired
     MailAuthService mailAuthService;
@@ -57,10 +54,10 @@ public class test {
     @Rollback(value = false)
     @Transactional
     public void test2(){
-        User user = userReader.find(6L).orElseThrow();
+        User user = userPersistence.find(6L).orElseThrow();
         System.out.println("user.getNickname() = " + user.getNickname());
         LocalDateTime expiredDate = LocalDateTime.now().plusSeconds(180);
-        Optional<Auth> foundAuth = authReader.findByUserIdAndAuthType(6L, AuthType.MAIL);
+        Optional<Auth> foundAuth = authPersistence.findByUserIdAndAuthType(6L, AuthType.MAIL);
         System.out.println("foundAuth.isEmpty() = " + foundAuth.isEmpty());
         if (foundAuth.isEmpty()) {
             Auth auth = Auth.builder()
@@ -69,7 +66,7 @@ public class test {
                     .authType(AuthType.MAIL)
                     .user(user)
                     .build();
-            authStore.create(auth);
+            authPersistence.create(auth);
         } else {
             Auth auth = foundAuth.get();
             System.out.println("auth.getId() = " + auth.getId());

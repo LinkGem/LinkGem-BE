@@ -1,7 +1,7 @@
 package com.linkgem.domain.user;
 
-import com.linkgem.domain.gembox.GemBoxStore;
-import com.linkgem.domain.link.LinkStore;
+import com.linkgem.domain.gembox.GemBoxPersistence;
+import com.linkgem.domain.link.LinkPersistence;
 import com.linkgem.domain.user.provider.OauthProvider;
 import com.linkgem.domain.user.provider.OauthProvider.Provider;
 import com.linkgem.presentation.common.exception.BusinessException;
@@ -27,10 +27,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequiredArgsConstructor
 public class UserLeaveServiceGoogleImpl implements UserLeaveService{
 
-    private final UserReader userReader;
+    private final UserPersistence userPersistence;
     private final OauthProvider oauthProvider;
-    private final GemBoxStore gemBoxStore;
-    private final LinkStore linkStore;
+    private final GemBoxPersistence gemBoxStore;
+    private final LinkPersistence linkPersistence;
 
     @Override
     @Transactional
@@ -38,10 +38,10 @@ public class UserLeaveServiceGoogleImpl implements UserLeaveService{
         String code = userLeaveRequest.getCode();
         String providerName = userLeaveRequest.getProviderName();
         Long userId = userLeaveRequest.getUserId();
-        User user = userReader.find(userId).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+        User user = userPersistence.find(userId).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
         user.leave();
         gemBoxStore.deleteAllByUserId(userId);
-        linkStore.deleteAllByUserId(userId);
+        linkPersistence.deleteAllByUserId(userId);
         OauthProvider.Provider provider = oauthProvider.getProvider(providerName);
         UserResponse.OauthTokenResponse oauthTokenResponse = getToken(code, provider);
         String accessToken = oauthTokenResponse.getAccessToken();

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 public class NotificationCommand {
 
     private NotificationCommand() {
@@ -62,4 +64,46 @@ public class NotificationCommand {
         }
     }
 
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class FindOne {
+        private long notificationId;
+        private long receiverId;
+
+        public static NotificationCommand.FindOne of(long notificationId, Long receiverId) {
+            return new NotificationCommand.FindOne(notificationId, receiverId);
+        }
+    }
+
+    @Getter
+    public static class FindAll {
+        private Long userId;
+
+        private LocalDateTime searchStartDateTime;
+
+        private Boolean isRead;
+
+        private NotificationType type;
+
+        @Builder
+        public FindAll(Long userId, LocalDateTime searchStartDateTime, Boolean isRead, NotificationType type) {
+            this.userId = userId;
+            this.searchStartDateTime = searchStartDateTime;
+            this.isRead = isRead;
+            this.type = type;
+        }
+    }
+
+    @Getter
+    public static class FindAllLatest {
+        private Long userId;
+
+        private LocalDateTime searchStartDateTime;
+
+        @Builder
+        public FindAllLatest(Long userId, LocalDateTime searchStartDateTime) {
+            this.userId = userId;
+            this.searchStartDateTime = searchStartDateTime;
+        }
+    }
 }

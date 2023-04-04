@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.linkgem.domain.commonlink.CommonLinkCommand;
+import com.linkgem.domain.commonlink.CommonLinkService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linkgem.application.CommonLinkFacade;
 import com.linkgem.domain.common.Pages;
 import com.linkgem.domain.commonlink.CommonLinkInfo;
-import com.linkgem.domain.commonlink.CommonLinkQuery;
 import com.linkgem.presentation.common.CommonResponse;
 import com.linkgem.presentation.commonlink.dto.CommonLinkRequest;
 import com.linkgem.presentation.commonlink.dto.CommonLinkResponse;
@@ -34,7 +34,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class CommonLinkApiController {
 
-    private final CommonLinkFacade commonLinkFacade;
+    private final CommonLinkService commonLinkService;
 
     @ApiOperation(value = "잼크루 픽 생성", notes = "잼크루 픽을 생성한다")
     @PostMapping
@@ -42,7 +42,7 @@ public class CommonLinkApiController {
         HttpServletRequest httpServletRequest,
         @RequestBody @Valid CommonLinkRequest.Create request
     ) {
-        CommonLinkInfo.Main main = commonLinkFacade.create(request.to());
+        CommonLinkInfo.Main main = commonLinkService.create(request.to());
 
         return CommonResponse.of(CommonLinkResponse.Main.of(main));
     }
@@ -53,7 +53,7 @@ public class CommonLinkApiController {
         HttpServletRequest httpServletRequest,
         @RequestBody @Valid CommonLinkRequest.DeleteOne request
     ) {
-        commonLinkFacade.delete(request.to());
+        commonLinkService.delete(request.to());
         return ResponseEntity.noContent().build();
     }
 
@@ -64,9 +64,9 @@ public class CommonLinkApiController {
         @PageableDefault(page = 0, size = 10) Pageable pageable,
         @Valid CommonLinkRequest.FindAll request
     ) {
-        CommonLinkQuery.FindAll findAllQuery = request.to();
+        CommonLinkCommand.FindAll findAllQuery = request.to();
 
-        Page<CommonLinkInfo.Main> commonLinkInfos = commonLinkFacade.findAll(findAllQuery, pageable);
+        Page<CommonLinkInfo.Main> commonLinkInfos = commonLinkService.findAll(findAllQuery, pageable);
         List<CommonLinkResponse.Main> responses = CommonLinkResponse.Main.ofs(commonLinkInfos.getContent());
 
         return CommonResponse.of(

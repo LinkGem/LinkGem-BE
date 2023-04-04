@@ -3,6 +3,9 @@ package com.linkgem.domain.user;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
+import com.linkgem.domain.gembox.GemBoxPersistence;
+import com.linkgem.domain.link.LinkPersistence;
+import com.linkgem.domain.notification.NotificationService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,11 +13,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.linkgem.domain.gembox.GemBoxStore;
-import com.linkgem.domain.link.LinkStore;
 import com.linkgem.domain.notification.NotificationCommand;
-import com.linkgem.domain.notification.NotificationStore;
-import com.linkgem.domain.notification.service.delete.NotificationDelete;
 import com.linkgem.domain.user.provider.OauthProvider;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
@@ -26,11 +25,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UserLeaveServiceNaverImpl implements UserLeaveService {
-	private final UserReader userReader;
+	private final UserPersistence userPersistence;
 	private final OauthProvider oauthProvider;
-	private final GemBoxStore gemBoxStore;
-	private final LinkStore linkStore;
-	private final NotificationDelete notificationDelete;
+	private final GemBoxPersistence gemBoxPersistence;
+	private final LinkPersistence linkPersistence;
+	private final NotificationService notificationService;
 
 	@Override
 	@Transactional
@@ -38,11 +37,11 @@ public class UserLeaveServiceNaverImpl implements UserLeaveService {
 		String code = userLeaveRequest.getCode();
 		String providerName = userLeaveRequest.getProviderName();
 		Long userId = userLeaveRequest.getUserId();
-		User user = userReader.find(userId).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+		User user = userPersistence.find(userId).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 		user.leave();
-		gemBoxStore.deleteAllByUserId(userId);
-		linkStore.deleteAllByUserId(userId);
-		notificationDelete.deleteAll(NotificationCommand.DeleteAll.of(userId));
+		gemBoxPersistence.deleteAllByUserId(userId);
+		linkPersistence.deleteAllByUserId(userId);
+		notificationService.deleteAll(NotificationCommand.DeleteAll.of(userId));
 		OauthProvider.Provider provider = oauthProvider.getProvider(providerName);
 		UserResponse.OauthTokenResponse oauthTokenResponse = getToken(code, provider);
 		String accessToken = oauthTokenResponse.getAccessToken();

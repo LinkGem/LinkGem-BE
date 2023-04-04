@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.linkgem.domain.link.LinkService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,11 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linkgem.application.LinkFacade;
 import com.linkgem.domain.common.Pages;
 import com.linkgem.domain.link.LinkCommand;
 import com.linkgem.domain.link.LinkInfo;
-import com.linkgem.domain.link.LinkQuery;
 import com.linkgem.presentation.common.CommonResponse;
 import com.linkgem.presentation.common.UserAuthenticationProvider;
 import com.linkgem.presentation.link.dto.LinkRequest;
@@ -37,7 +36,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class LinkApiController {
 
-    private final LinkFacade linkFacade;
+    private final LinkService linkService;
 
     @ApiOperation(value = "링크 생성", notes = "링크를 생성한다")
     @PostMapping
@@ -48,7 +47,7 @@ public class LinkApiController {
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
         LinkCommand.Create createCommand = request.to(userId);
 
-        LinkInfo.Create create = linkFacade.create(createCommand);
+        LinkInfo.Create create = linkService.create(createCommand);
 
         return CommonResponse.of(LinkResponse.CreateLinkResponse.of(create));
     }
@@ -60,7 +59,7 @@ public class LinkApiController {
         @PathVariable(value = "id") Long id
     ) {
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-        LinkInfo.Detail detailLink = linkFacade.findById(id, userId);
+        LinkInfo.Detail detailLink = linkService.findById(id, userId);
         LinkResponse.SearchDetailLinkResponse linkResponse = LinkResponse.SearchDetailLinkResponse.of(detailLink);
         return CommonResponse.of(linkResponse);
     }
@@ -73,9 +72,9 @@ public class LinkApiController {
         @Valid LinkRequest.SearchLinksRequest request
     ) {
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-        LinkQuery.SearchLinks searchLinks = request.to(userId);
+        LinkCommand.SearchLinks searchLinks = request.to(userId);
 
-        Page<LinkInfo.Search> infos = linkFacade.findAll(searchLinks, pageable);
+        Page<LinkInfo.Search> infos = linkService.findAll(searchLinks, pageable);
         Page<LinkResponse.SearchLinkResponse> responses = infos.map(LinkResponse.SearchLinkResponse::of);
 
         return CommonResponse.of(
@@ -96,7 +95,7 @@ public class LinkApiController {
     ) {
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
         LinkCommand.Delete deleteCommand = request.to(userId);
-        List<Long> deleteIds = linkFacade.deletes(deleteCommand);
+        List<Long> deleteIds = linkService.deletes(deleteCommand);
 
         return CommonResponse.of(new LinkResponse.DeleteLinkResponse(deleteIds));
 
@@ -112,7 +111,7 @@ public class LinkApiController {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
         LinkCommand.Update updateCommand = request.to(id, userId);
-        LinkInfo.Main updateInfo = linkFacade.update(updateCommand);
+        LinkInfo.Main updateInfo = linkService.update(updateCommand);
 
         return CommonResponse.of(LinkResponse.Main.of(updateInfo));
     }

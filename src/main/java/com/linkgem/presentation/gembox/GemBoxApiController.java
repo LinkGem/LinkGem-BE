@@ -3,6 +3,7 @@ package com.linkgem.presentation.gembox;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.linkgem.domain.gembox.GemBoxService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linkgem.application.GemBoxFacade;
 import com.linkgem.domain.common.Pages;
 import com.linkgem.domain.gembox.GemBoxCommand;
 import com.linkgem.domain.gembox.GemBoxInfo;
-import com.linkgem.domain.gembox.GemBoxQuery;
 import com.linkgem.presentation.common.CommonResponse;
 import com.linkgem.presentation.common.UserAuthenticationProvider;
 import com.linkgem.presentation.gembox.dto.GemBoxRequest;
@@ -36,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class GemBoxApiController {
 
-    private final GemBoxFacade gemBoxFacade;
+    private final GemBoxService gemBoxService;
 
     @ApiOperation(value = "잼박스 조회", notes = "잼박스를 조회한다")
     @GetMapping(value = "/{id}")
@@ -46,7 +45,7 @@ public class GemBoxApiController {
     ) {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-        GemBoxInfo.Main gemboxInfo = gemBoxFacade.find(GemBoxQuery.SearchDetail.of(id, userId));
+        GemBoxInfo.Main gemboxInfo = gemBoxService.find(GemBoxCommand.SearchDetail.of(id, userId));
 
         return CommonResponse.of(GemBoxResponse.Main.of(gemboxInfo));
     }
@@ -59,7 +58,7 @@ public class GemBoxApiController {
     ) {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-        Page<GemBoxResponse.Search> responses = gemBoxFacade.search(userId, pageable)
+        Page<GemBoxResponse.Search> responses = gemBoxService.search(userId, pageable)
             .map(GemBoxResponse.Search::of);
 
         return CommonResponse.of(
@@ -81,7 +80,7 @@ public class GemBoxApiController {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
         GemBoxCommand.Create command = request.to(userId);
-        GemBoxInfo.Create createInfo = gemBoxFacade.create(command);
+        GemBoxInfo.Create createInfo = gemBoxService.create(command);
 
         return CommonResponse.of(GemBoxResponse.CreateGemboxResponse.of(createInfo));
     }
@@ -96,7 +95,7 @@ public class GemBoxApiController {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
         GemBoxCommand.Update command = request.to(userId, id);
-        gemBoxFacade.update(command);
+        gemBoxService.update(command);
 
         return ResponseEntity.noContent().build();
     }
@@ -109,7 +108,7 @@ public class GemBoxApiController {
     ) {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-        gemBoxFacade.delete(GemBoxCommand.Delete.of(id, userId));
+        gemBoxService.delete(GemBoxCommand.Delete.of(id, userId));
 
         return ResponseEntity.noContent().build();
     }
@@ -129,7 +128,7 @@ public class GemBoxApiController {
             .linkIds(request.getLinks())
             .build();
 
-        gemBoxFacade.putLinksToGembox(command);
+        gemBoxService.putLinksToGembox(command);
         return ResponseEntity.noContent().build();
     }
 }

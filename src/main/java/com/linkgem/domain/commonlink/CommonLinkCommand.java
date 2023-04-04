@@ -35,4 +35,15 @@ public class CommonLinkCommand {
     public static class DeleteOne {
         private Long id;
     }
+
+    @AllArgsConstructor
+    @Getter
+    public static class FindAll {
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class FindOne {
+        private Long id;
+    }
 }

@@ -69,4 +69,33 @@ public class GemBoxCommand {
         private Long gemBoxId;
         private List<Long> linkIds;
     }
+
+    @AllArgsConstructor
+    @Getter
+    public static class SearchDuplication {
+        private Long id;
+        private String name;
+        private Long userId;
+
+        public static GemBoxCommand.SearchDuplication of(Long id, String name, Long userId) {
+            return new GemBoxCommand.SearchDuplication(id, name, userId);
+        }
+
+        public static GemBoxCommand.SearchDuplication of(String name, Long userId) {
+            return of(null, name, userId);
+        }
+
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class SearchDetail {
+        private Long id;
+        private Long userId;
+
+        public static GemBoxCommand.SearchDetail of(Long id, Long userId) {
+            return new GemBoxCommand.SearchDetail(id, userId);
+        }
+    }
+
 }

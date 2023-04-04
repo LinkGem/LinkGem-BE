@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.linkgem.domain.notification.NotificationInfo;
-import com.linkgem.domain.notification.NotificationQuery;
+import com.linkgem.domain.notification.NotificationCommand;
 import com.linkgem.infrastructure.config.TestQueryDslConfig;
 
 @Sql(value = {"classpath:sql/user.sql", "classpath:sql/notification.sql"})
@@ -27,7 +27,7 @@ class NotificationRepositoryTest {
     @DisplayName("알림 목록을 조회한다")
     @Test
     void 알림_목록_조회() {
-        NotificationQuery.FindAll findAll = NotificationQuery.FindAll.builder()
+        NotificationCommand.FindAll findAll = NotificationCommand.FindAll.builder()
             .userId(1L)
             .searchStartDateTime(LocalDateTime.now().minusDays(1))
             .build();

@@ -40,4 +40,14 @@ public class LinkCommand {
         private String memo;
         private Long gemBoxId;
     }
+
+    @AllArgsConstructor
+    @Getter
+    public static class SearchLinks {
+        private Long userId;
+        private Long gemBoxId;
+        private Boolean isFavorites;
+        private Boolean hasMemo;
+        private Boolean isDefault;
+    }
 }

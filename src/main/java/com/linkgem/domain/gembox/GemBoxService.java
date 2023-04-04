@@ -15,11 +15,15 @@ public interface GemBoxService {
 
     Page<GemBoxInfo.Search> search(Long userId, Pageable pageable);
 
-    GemBoxInfo.Main find(GemBoxQuery.SearchDetail searchDetail);
+    GemBoxInfo.Main find(GemBoxCommand.SearchDetail searchDetail);
 
     void delete(GemBoxCommand.Delete command);
 
     void deleteAllByUserId(Long userId);
 
     void putLinksToGembox(GemBoxCommand.PutLinksToGembox command);
+
+    boolean isExisted(GemBoxCommand.SearchDuplication searchDuplication);
+
+    boolean isFull(Long userId);
 }

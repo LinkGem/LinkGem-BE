@@ -1,7 +1,7 @@
 package com.linkgem.domain.auth;
 
 import com.linkgem.domain.user.User;
-import com.linkgem.domain.user.UserReader;
+import com.linkgem.domain.user.UserPersistence;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
 import java.net.URI;
@@ -25,17 +25,15 @@ import org.thymeleaf.context.Context;
 public class MailAuthServiceImpl implements MailAuthService {
 
     private final JavaMailSender javaMailSender;
-    private final UserReader userReader;
+    private final UserPersistence userPersistence;
     private final TemplateEngine templateEngine;
-    private final AuthReader authReader;
-    private final AuthStore authStore;
-
+    private final AuthPersistence authPersistence;
 
     @Override
     @Async
     @Transactional
     public void mailSend(String emailAddress, Long userId) {
-        User user = userReader.find(userId).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+        User user = userPersistence.find(userId).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
         String nickname = user.getNickname();
         String certificationCode = UUID.randomUUID().toString();
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -58,7 +56,7 @@ public class MailAuthServiceImpl implements MailAuthService {
             throw new BusinessException(ErrorCode.MAIL_SEND_ERROR);
         }
         LocalDateTime expiredDate = LocalDateTime.now().plusSeconds(180);
-        Optional<Auth> foundAuth = authReader.findByUserIdAndAuthType(userId, AuthType.MAIL);
+        Optional<Auth> foundAuth = authPersistence.findByUserIdAndAuthType(userId, AuthType.MAIL);
         if (foundAuth.isEmpty()) {
             Auth auth = Auth.builder()
                     .certificationCode(certificationCode)
@@ -66,7 +64,7 @@ public class MailAuthServiceImpl implements MailAuthService {
                     .authType(AuthType.MAIL)
                     .user(user)
                     .build();
-            authStore.create(auth);
+            authPersistence.create(auth);
         } else {
             Auth auth = foundAuth.get();
             auth.changeMailAuth(expiredDate, certificationCode);
@@ -76,7 +74,7 @@ public class MailAuthServiceImpl implements MailAuthService {
     @Override
     @Transactional
     public URI mailCheck(Long userId, String randomId) {
-        Optional<Auth> auth = authReader.findByUserIdAndAuthType(userId, AuthType.MAIL);
+        Optional<Auth> auth = authPersistence.findByUserIdAndAuthType(userId, AuthType.MAIL);
         if (auth.isEmpty() || !auth.get().getCertificationCode().equals(randomId) || auth.get().getExpiredDate().isBefore(LocalDateTime.now())) {
             return URI.create("https://dev-front.linkgem.co.kr/email/fail");
         } else {
@@ -88,8 +86,8 @@ public class MailAuthServiceImpl implements MailAuthService {
     @Override
     @Transactional
     public boolean mailConfirm(String emailAddress, Long userId) {
-        User user = userReader.find(userId).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-        Optional<Auth> auth = authReader.findByUserIdAndAuthType(userId, AuthType.MAIL);
+        User user = userPersistence.find(userId).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+        Optional<Auth> auth = authPersistence.findByUserIdAndAuthType(userId, AuthType.MAIL);
         if (auth.isEmpty()) {
             return false;
         } else if (auth.get().isAuth()) {

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.linkgem.domain.notification.NotificationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -19,11 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linkgem.application.NotificationFacade;
 import com.linkgem.domain.common.Pages;
 import com.linkgem.domain.notification.NotificationCommand;
 import com.linkgem.domain.notification.NotificationInfo;
-import com.linkgem.domain.notification.NotificationQuery;
 import com.linkgem.domain.notification.NotificationType;
 import com.linkgem.presentation.common.CommonResponse;
 import com.linkgem.presentation.common.UserAuthenticationProvider;
@@ -40,7 +39,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class NotificationApiController {
 
-    private final NotificationFacade notificationFacade;
+    private final NotificationService notificationService;
 
     private static final LocalDateTime SEARCH_START_DATE_TIME = LocalDateTime.now().minusMonths(3);
 
@@ -54,14 +53,14 @@ public class NotificationApiController {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
-        NotificationQuery.FindAll findAllQuery = NotificationQuery.FindAll.builder()
+        NotificationCommand.FindAll findAllQuery = NotificationCommand.FindAll.builder()
             .userId(userId)
             .isRead(findAllRequestDto.getIsRead())
             .type(findAllRequestDto.getType())
             .searchStartDateTime(SEARCH_START_DATE_TIME)
             .build();
 
-        Page<NotificationInfo.Main> notifications = notificationFacade.findAll(findAllQuery, pageable);
+        Page<NotificationInfo.Main> notifications = notificationService.findAll(findAllQuery, pageable);
 
         List<NotificationResponse.Main> responses =
             NotificationResponse.Main.ofs(notifications.getContent());
@@ -83,13 +82,13 @@ public class NotificationApiController {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
-        NotificationQuery.FindAllLatest findAllLatestQuery = NotificationQuery.FindAllLatest.builder()
+        NotificationCommand.FindAllLatest findAllLatestQuery = NotificationCommand.FindAllLatest.builder()
             .userId(userId)
             .searchStartDateTime(SEARCH_START_DATE_TIME)
             .build();
 
         List<NotificationResponse.LatestNotification> responses =
-            NotificationResponse.LatestNotification.ofs(notificationFacade.findAllLatest(findAllLatestQuery));
+            NotificationResponse.LatestNotification.ofs(notificationService.findAllLatest(findAllLatestQuery));
 
         return CommonResponse.of(responses);
     }
@@ -111,7 +110,7 @@ public class NotificationApiController {
     ) {
         NotificationCommand.Create createCommand = createRequest.toCommand(receiverId);
 
-        return CommonResponse.of(NotificationResponse.Main.of(notificationFacade.create(createCommand)));
+        return CommonResponse.of(NotificationResponse.Main.of(notificationService.create(createCommand)));
     }
 
     @ApiOperation(value = "알림 읽기 요청", notes = "알림 읽기를 요청한다")
@@ -124,7 +123,7 @@ public class NotificationApiController {
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
         NotificationCommand.Read command = NotificationCommand.Read.of(notificationId, userId);
-        notificationFacade.readNotification(command);
+        notificationService.readNotification(command);
 
         return ResponseEntity.noContent().build();
     }
@@ -139,7 +138,7 @@ public class NotificationApiController {
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
 
         NotificationCommand.Delete command = NotificationCommand.Delete.of(notificationId, userId);
-        notificationFacade.deleteNotification(command);
+        notificationService.delete(command);
 
         return ResponseEntity.noContent().build();
     }

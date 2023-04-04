@@ -2,6 +2,11 @@ package com.linkgem.presentation.user;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.linkgem.domain.user.UserLeaveService;
+import com.linkgem.domain.user.UserLoginService;
+import com.linkgem.domain.user.UserService;
+import com.linkgem.presentation.common.exception.BusinessException;
+import com.linkgem.presentation.common.exception.ErrorCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -14,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.linkgem.application.UserFacade;
 import com.linkgem.presentation.common.CommonResponse;
 import com.linkgem.presentation.common.UserAuthenticationProvider;
 import com.linkgem.presentation.user.dto.UserRequest;
@@ -26,12 +30,18 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @Api(tags = "유저")
 @RequestMapping("/api/v1/user")
 public class UserApiController {
-	private final UserFacade userFacade;
+	private final UserService userService;
+
+	private final List<UserLoginService> userLoginServices;
+
+	private final List<UserLeaveService> userLeaveServices;
 
 	@ApiOperation(value = "추가정보 추가", notes = "유저의 직업,경력,닉네임을 추가한다.")
 	@PatchMapping("/addDetailInfo")
@@ -39,7 +49,7 @@ public class UserApiController {
 		HttpServletRequest httpServletRequest,
 		@RequestBody AddDetailInfoRequest addDetailInfoRequest) {
 		Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-		userFacade.addDetailInfo(userId, addDetailInfoRequest);
+		userService.addDetailInfo(userId, addDetailInfoRequest);
 		return ResponseEntity.ok(CommonResponse.of(null));
 	}
 
@@ -50,7 +60,7 @@ public class UserApiController {
 		@RequestParam String jobName,
 		@RequestParam Integer careerYear) {
 		Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-		UserResponse.SettingResponse settingResponse = userFacade.settingUserInfo(userId, profileImage, nickName,
+		UserResponse.SettingResponse settingResponse = userService.settingUserInfo(userId, profileImage, nickName,
 			jobName, careerYear);
 		return ResponseEntity.ok(CommonResponse.of(settingResponse));
 	}
@@ -60,7 +70,12 @@ public class UserApiController {
 	public ResponseEntity<CommonResponse<UserResponse.LoginResponse>> login(
 		@ApiParam(value = "provider", example = "naver") @PathVariable String provider,
 		@ApiParam(value = "인증코드") @RequestParam String code) {
-		UserResponse.LoginResponse loginResponse = userFacade.login(provider, code);
+		UserLoginService userLoginService = userLoginServices.stream()
+				.filter(p -> p.getLoginService(provider))
+				.findFirst()
+				.orElseThrow(() -> new BusinessException(ErrorCode.PROVIDER_NOT_VALID));
+		UserResponse.LoginResponse loginResponse = userLoginService.login(provider, code);
+
 		return ResponseEntity.ok(CommonResponse.of(loginResponse));
 	}
 
@@ -69,7 +84,7 @@ public class UserApiController {
 	public ResponseEntity<CommonResponse<UserResponse.TokenReissueResponse>> reissue(
 		@RequestHeader(value = "ACCESS-TOKEN") String accessToken,
 		@RequestHeader(value = "REFRESH-TOKEN") String refreshToken) {
-		UserResponse.TokenReissueResponse tokenReissueResponse = userFacade.reissue(accessToken, refreshToken);
+		UserResponse.TokenReissueResponse tokenReissueResponse = userService.reissue(accessToken, refreshToken);
 		return ResponseEntity.ok(CommonResponse.of(tokenReissueResponse));
 	}
 
@@ -77,7 +92,11 @@ public class UserApiController {
 	@PostMapping("oauth/leave")
 	public ResponseEntity<CommonResponse<UserResponse.UserLeaveResponse>> leave(
 		@RequestBody UserRequest.UserLeaveRequest userLeaveRequest) {
-		UserResponse.UserLeaveResponse userLeaveResponse = userFacade.leave(userLeaveRequest);
+		UserLeaveService userLeaveService = userLeaveServices.stream()
+				.filter(p -> p.getLeaveService(userLeaveRequest.getProviderName()))
+				.findFirst()
+				.orElseThrow(() -> new BusinessException(ErrorCode.PROVIDER_NOT_VALID));
+		UserResponse.UserLeaveResponse userLeaveResponse = userLeaveService.leave(userLeaveRequest);
 		return ResponseEntity.ok(CommonResponse.of(userLeaveResponse));
 	}
 
@@ -85,6 +104,6 @@ public class UserApiController {
 	@GetMapping("/info")
 	public ResponseEntity<CommonResponse<UserResponse.UserInfoResponse>> info(HttpServletRequest httpServletRequest){
 		Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-		return ResponseEntity.ok(CommonResponse.of(userFacade.info(userId)));
+		return ResponseEntity.ok(CommonResponse.of(userService.info(userId)));
 	}
 }

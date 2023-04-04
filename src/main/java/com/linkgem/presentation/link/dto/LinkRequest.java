@@ -6,7 +6,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 import com.linkgem.domain.link.LinkCommand;
-import com.linkgem.domain.link.LinkQuery;
 import com.linkgem.domain.link.opengraph.OpenGraph;
 
 import io.swagger.annotations.ApiModel;
@@ -38,8 +37,8 @@ public class LinkRequest {
         @ApiModelProperty(value = "메모 저장 여부", allowableValues = "true, false")
         private Boolean hasMemo;
 
-        public LinkQuery.SearchLinks to(Long userId) {
-            return new LinkQuery.SearchLinks(userId, this.gemBoxId, this.isFavorites, this.hasMemo, this.isDefault);
+        public LinkCommand.SearchLinks to(Long userId) {
+            return new LinkCommand.SearchLinks(userId, this.gemBoxId, this.isFavorites, this.hasMemo, this.isDefault);
         }
     }
 

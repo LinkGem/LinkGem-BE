@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.linkgem.domain.link.LinkCommand;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
 import com.linkgem.domain.link.Link;
 import com.linkgem.domain.link.LinkInfo;
-import com.linkgem.domain.link.LinkQuery;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -26,7 +26,7 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<LinkInfo.Search> findAll(LinkQuery.SearchLinks searchLinks, Pageable pageable) {
+    public Page<LinkInfo.Search> findAll(LinkCommand.SearchLinks searchLinks, Pageable pageable) {
 
         BooleanBuilder whereBuilder = this.createWhereBuilder(searchLinks);
 
@@ -59,7 +59,7 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
         );
     }
 
-    private BooleanBuilder createWhereBuilder(LinkQuery.SearchLinks searchLinks) {
+    private BooleanBuilder createWhereBuilder(LinkCommand.SearchLinks searchLinks) {
         BooleanBuilder whereBuilder = new BooleanBuilder();
         whereBuilder.and(link.user.id.eq(searchLinks.getUserId()));
 
