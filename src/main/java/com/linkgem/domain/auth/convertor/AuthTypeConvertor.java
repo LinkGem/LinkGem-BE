@@ -1,6 +1,6 @@
 package com.linkgem.domain.auth.convertor;
 
-import com.linkgem.domain.auth.AuthType;
+import com.linkgem.domain.auth.domain.AuthType;
 import java.util.Objects;
 import java.util.stream.Stream;
 import javax.persistence.AttributeConverter;

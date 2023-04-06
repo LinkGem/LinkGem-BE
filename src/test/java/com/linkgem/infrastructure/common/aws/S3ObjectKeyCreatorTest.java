@@ -1,5 +1,6 @@
 package com.linkgem.infrastructure.common.aws;
 
+import com.linkgem.domain.common.file.aws.S3ObjectKeyCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

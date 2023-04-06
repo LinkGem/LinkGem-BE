@@ -10,7 +10,7 @@ public class FileCommand {
     private FileCommand() {
     }
 
-    @AllArgsConstructor(access = AccessLevel.PACKAGE)
+    @AllArgsConstructor(access = AccessLevel.PUBLIC)
     @Getter
     public static class UploadFile {
         private MultipartFile file;
@@ -21,7 +21,7 @@ public class FileCommand {
         }
     }
 
-    @AllArgsConstructor(access = AccessLevel.PACKAGE)
+    @AllArgsConstructor(access = AccessLevel.PUBLIC)
     @Getter
     public static class UploadUrlFile {
         private String url;

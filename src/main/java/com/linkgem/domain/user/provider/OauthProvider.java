@@ -7,8 +7,8 @@ import java.util.Objects;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
-import com.linkgem.presentation.common.exception.BusinessException;
-import com.linkgem.presentation.common.exception.ErrorCode;
+import com.linkgem.domain.common.exception.BusinessException;
+import com.linkgem.domain.common.exception.ErrorCode;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

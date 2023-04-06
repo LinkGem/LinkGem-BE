@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import com.linkgem.domain.user.UserPhase;
+import com.linkgem.domain.user.domain.UserPhase;
 
 @Converter(autoApply = true)
 public class UserPhaseConvertor implements AttributeConverter<UserPhase, String> {

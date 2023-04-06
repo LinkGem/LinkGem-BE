@@ -5,8 +5,17 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import com.linkgem.domain.gembox.domain.GemBox;
+import com.linkgem.domain.gembox.dto.GemBoxCommand;
+import com.linkgem.domain.gembox.dto.GemBoxInfo;
+import com.linkgem.domain.gembox.persistence.GemBoxPersistence;
+import com.linkgem.domain.gembox.service.GemBoxServiceImpl;
+import com.linkgem.domain.link.service.LinkService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,15 +23,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.linkgem.domain.link.LinkPersistence;
-import com.linkgem.presentation.common.exception.BusinessException;
-import com.linkgem.presentation.common.exception.ErrorCode;
+import com.linkgem.domain.link.persistence.LinkPersistence;
+import com.linkgem.domain.common.exception.BusinessException;
+import com.linkgem.domain.common.exception.ErrorCode;
 
 @ExtendWith(MockitoExtension.class)
 class GemBoxServiceImplTest {
 
     @InjectMocks
     private GemBoxServiceImpl gemBoxService;
+
+    @Mock
+    private LinkService linkService;
 
     @Mock
     private GemBoxPersistence gemBoxPersistence;
@@ -42,8 +54,6 @@ class GemBoxServiceImplTest {
             .userId(userId)
             .build();
 
-        when(gemBoxService.isFull(any())).thenReturn(false);
-        when(gemBoxService.isExisted(any())).thenReturn(false);
         when(linkPersistence.find(any(), any())).thenReturn(Optional.empty());
         when(gemBoxPersistence.create(any())).thenReturn(gemBox);
 
@@ -66,7 +76,9 @@ class GemBoxServiceImplTest {
         final String name = "테스트";
         final Long userId = 1L;
 
-        when(gemBoxService.isFull(any())).thenReturn(true);
+
+        List<GemBox> gemBoxes = Stream.generate(GemBox::new).limit(GemBox.MAX_GEMBOX + 1).collect(Collectors.toList());
+        when(gemBoxPersistence.findAll(any())).thenReturn(gemBoxes);
 
         GemBoxCommand.Create command = GemBoxCommand.Create.builder()
             .name(name)
@@ -86,7 +98,12 @@ class GemBoxServiceImplTest {
         final String name = "테스트";
         final Long userId = 1L;
 
-        when(gemBoxService.isExisted(any())).thenReturn(true);
+        GemBox gemBox = GemBox.builder().
+                userId(userId).
+                name(name).
+                build();
+
+        when(gemBoxPersistence.find(name, userId)).thenReturn(Optional.of(gemBox));
 
         GemBoxCommand.Create command = GemBoxCommand.Create.builder()
             .name(name)
@@ -111,9 +128,11 @@ class GemBoxServiceImplTest {
             .name(name)
             .userId(userId)
             .build();
+        gemBox.setId(id);
 
+        when(gemBoxPersistence.find(anyString(), anyLong())).thenReturn(Optional.empty());
         when(gemBoxPersistence.find(anyLong(), anyLong())).thenReturn(Optional.of(gemBox));
-        when(gemBoxService.isExisted(any())).thenReturn(false);
+
 
         GemBoxCommand.Update command = GemBoxCommand.Update.builder()
             .id(id)
@@ -136,8 +155,9 @@ class GemBoxServiceImplTest {
             .name(name)
             .userId(userId)
             .build();
+        gemBox.setId(2L);
 
-        when(gemBoxService.isExisted(any())).thenReturn(true);
+        when(gemBoxPersistence.find(anyString(), anyLong())).thenReturn(Optional.of(gemBox));
 
         GemBoxCommand.Update command = GemBoxCommand.Update.builder()
             .id(id)
@@ -158,6 +178,7 @@ class GemBoxServiceImplTest {
         final Long userId = 1L;
         final Long id = 1L;
 
+        when(gemBoxPersistence.find(anyString(), anyLong())).thenReturn(Optional.empty());
         doThrow(new BusinessException(ErrorCode.GEMBOX_ALREADY_EXISTED)).when(gemBoxPersistence)
             .find(anyLong(), anyLong());
 
