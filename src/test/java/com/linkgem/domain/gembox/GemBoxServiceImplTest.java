@@ -10,12 +10,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.linkgem.domain.gembox.domain.GemBox;
-import com.linkgem.domain.gembox.dto.GemBoxCommand;
-import com.linkgem.domain.gembox.dto.GemBoxInfo;
-import com.linkgem.domain.gembox.persistence.GemBoxPersistence;
-import com.linkgem.domain.gembox.service.GemBoxServiceImpl;
-import com.linkgem.domain.link.service.LinkService;
+import com.linkgem.domain.gem.domain.GemBox;
+import com.linkgem.domain.gem.dto.GemBoxCommand;
+import com.linkgem.domain.gem.dto.GemBoxInfo;
+import com.linkgem.domain.gem.persistence.GemBoxPersistence;
+import com.linkgem.domain.gem.service.GemBoxServiceImpl;
+import com.linkgem.domain.gem.service.LinkService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.linkgem.domain.link.persistence.LinkPersistence;
+import com.linkgem.domain.gem.persistence.LinkPersistence;
 import com.linkgem.domain.common.exception.BusinessException;
 import com.linkgem.domain.common.exception.ErrorCode;
 

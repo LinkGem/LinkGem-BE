@@ -2,7 +2,7 @@ package com.linkgem.domain.common.exception;
 
 import org.springframework.http.HttpStatus;
 
-import com.linkgem.domain.gembox.domain.GemBox;
+import com.linkgem.domain.gem.domain.GemBox;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

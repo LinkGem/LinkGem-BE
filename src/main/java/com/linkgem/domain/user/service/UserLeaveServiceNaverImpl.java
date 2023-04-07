@@ -3,8 +3,8 @@ package com.linkgem.domain.user.service;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
-import com.linkgem.domain.gembox.persistence.GemBoxPersistence;
-import com.linkgem.domain.link.persistence.LinkPersistence;
+import com.linkgem.domain.gem.persistence.GemBoxPersistence;
+import com.linkgem.domain.gem.persistence.LinkPersistence;
 import com.linkgem.domain.notification.service.NotificationService;
 import com.linkgem.domain.user.persistence.UserPersistence;
 import com.linkgem.domain.user.domain.User;

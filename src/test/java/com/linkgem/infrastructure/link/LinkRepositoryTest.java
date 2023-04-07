@@ -2,7 +2,7 @@ package com.linkgem.infrastructure.link;
 
 import java.util.Optional;
 
-import com.linkgem.domain.link.persistence.LinkRepository;
+import com.linkgem.domain.gem.persistence.LinkRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.linkgem.domain.link.domain.Link;
-import com.linkgem.domain.link.opengraph.OpenGraph;
+import com.linkgem.domain.gem.domain.Link;
+import com.linkgem.domain.gem.opengraph.OpenGraph;
 import com.linkgem.domain.user.domain.User;
 import com.linkgem.config.TestQueryDslConfig;
 import com.linkgem.domain.user.persistence.UserRepository;
