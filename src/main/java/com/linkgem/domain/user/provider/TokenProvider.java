@@ -1,22 +1,20 @@
 package com.linkgem.domain.user.provider;
 
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 @Service
 public class TokenProvider {
@@ -59,12 +57,12 @@ public class TokenProvider {
   }
 
   private Date createAccessExpireDate() {
-    return Date.from(Instant.now().plus(1, ChronoUnit.MINUTES));
+    return Date.from(Instant.now().plus(7, ChronoUnit.DAYS));
 
   }
 
   private Date createRefreshExpireDate() {
-    return Date.from(Instant.now().plus(2, ChronoUnit.MINUTES));
+    return Date.from(Instant.now().plus(14, ChronoUnit.DAYS));
 
   }
 

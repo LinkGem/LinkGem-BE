@@ -4,11 +4,6 @@ import com.linkgem.domain.user.User;
 import com.linkgem.domain.user.UserReader;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
-import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.UUID;
-import javax.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,6 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import javax.mail.internet.MimeMessage;
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +49,7 @@ public class MailAuthServiceImpl implements MailAuthService {
             Context context = new Context();
             context.setVariable("name", nickname);
             context.setVariable("redirectUrl",
-                    "https://dev.linkgem.co.kr/api/v1/auth/mail/check?randomId=" + certificationCode + "&userId="
+                    "https://prod.linkgem.co.kr/api/v1/auth/mail/check?randomId=" + certificationCode + "&userId="
                             + userId.toString());
             String html = templateEngine.process("mailFormat", context);
             messageHelper.setText(html, true);
@@ -78,10 +79,10 @@ public class MailAuthServiceImpl implements MailAuthService {
     public URI mailCheck(Long userId, String randomId) {
         Optional<Auth> auth = authReader.findByUserIdAndAuthType(userId, AuthType.MAIL);
         if (auth.isEmpty() || !auth.get().getCertificationCode().equals(randomId) || auth.get().getExpiredDate().isBefore(LocalDateTime.now())) {
-            return URI.create("https://dev-front.linkgem.co.kr/email/fail");
+            return URI.create("https://linkgem.co.kr/email/fail");
         } else {
             auth.get().authenticate();
-            return URI.create("https://dev-front.linkgem.co.kr/email/success");
+            return URI.create("https://linkgem.co.kr/email/success");
         }
     }
 
