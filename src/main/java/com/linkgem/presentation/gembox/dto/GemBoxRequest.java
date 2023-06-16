@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.linkgem.domain.gembox.GemBox;
-import com.linkgem.domain.gembox.GemBoxCommand;
+import com.linkgem.presentation.gembox.cmd.GemBoxCommand;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

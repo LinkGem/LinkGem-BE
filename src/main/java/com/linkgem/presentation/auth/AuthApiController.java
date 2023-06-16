@@ -1,7 +1,7 @@
 package com.linkgem.presentation.auth;
 
 import com.linkgem.domain.auth.AuthInfo;
-import com.linkgem.domain.auth.MailAuthService;
+import com.linkgem.application.auth.service.MailAuthService;
 import com.linkgem.presentation.auth.dto.AuthResponse;
 import com.linkgem.presentation.common.CommonResponse;
 import com.linkgem.presentation.common.UserAuthenticationProvider;

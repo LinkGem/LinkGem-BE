@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.linkgem.domain.notification.Notification;
 import com.linkgem.domain.notification.NotificationInfo;
 import com.linkgem.domain.notification.NotificationQuery;
-import com.linkgem.domain.notification.NotificationReader;
 
 import lombok.RequiredArgsConstructor;
 

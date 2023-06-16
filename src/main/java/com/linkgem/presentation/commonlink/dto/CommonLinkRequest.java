@@ -2,7 +2,7 @@ package com.linkgem.presentation.commonlink.dto;
 
 import javax.validation.constraints.Pattern;
 
-import com.linkgem.domain.commonlink.CommonLinkCommand;
+import com.linkgem.presentation.commonlink.cmd.CommonLinkCommand;
 import com.linkgem.domain.commonlink.CommonLinkQuery;
 import com.linkgem.domain.link.opengraph.OpenGraph;
 

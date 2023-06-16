@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.linkgem.domain.link.Link;
 import com.linkgem.domain.link.LinkInfo;
 import com.linkgem.domain.link.LinkQuery;
-import com.linkgem.domain.link.LinkReader;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
 

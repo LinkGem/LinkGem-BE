@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.linkgem.domain.gembox.GemBox;
 import com.linkgem.domain.gembox.GemBoxInfo;
-import com.linkgem.domain.gembox.GemBoxReader;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
 

@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
 import com.linkgem.domain.notification.Notification;
-import com.linkgem.domain.notification.NotificationCommand;
+import com.linkgem.presentation.notification.cmd.NotificationCommand;
 import com.linkgem.domain.notification.NotificationInfo;
 import com.linkgem.domain.notification.NotificationQuery;
 import com.querydsl.core.BooleanBuilder;

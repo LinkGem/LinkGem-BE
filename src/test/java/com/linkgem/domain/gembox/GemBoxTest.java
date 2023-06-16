@@ -2,6 +2,7 @@ package com.linkgem.domain.gembox;
 
 import java.util.Optional;
 
+import com.linkgem.presentation.gembox.cmd.GemBoxCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

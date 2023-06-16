@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.linkgem.domain.notification.NotificationButtonAction;
-import com.linkgem.domain.notification.NotificationCommand;
+import com.linkgem.presentation.notification.cmd.NotificationCommand;
 import com.linkgem.domain.notification.NotificationType;
 
 import lombok.AllArgsConstructor;

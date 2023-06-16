@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linkgem.application.NotificationFacade;
+import com.linkgem.application.notification.facade.NotificationFacade;
 import com.linkgem.domain.common.Pages;
-import com.linkgem.domain.notification.NotificationCommand;
+import com.linkgem.presentation.notification.cmd.NotificationCommand;
 import com.linkgem.domain.notification.NotificationInfo;
 import com.linkgem.domain.notification.NotificationQuery;
 import com.linkgem.domain.notification.NotificationType;

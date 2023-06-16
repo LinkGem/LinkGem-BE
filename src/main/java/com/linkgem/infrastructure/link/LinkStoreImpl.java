@@ -3,7 +3,6 @@ package com.linkgem.infrastructure.link;
 import org.springframework.stereotype.Repository;
 
 import com.linkgem.domain.link.Link;
-import com.linkgem.domain.link.LinkStore;
 
 import lombok.RequiredArgsConstructor;
 

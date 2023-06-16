@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linkgem.application.LinkFacade;
+import com.linkgem.application.link.facade.LinkFacade;
 import com.linkgem.domain.common.Pages;
-import com.linkgem.domain.link.LinkCommand;
+import com.linkgem.presentation.link.cmd.LinkCommand;
 import com.linkgem.domain.link.LinkInfo;
 import com.linkgem.domain.link.LinkQuery;
 import com.linkgem.presentation.common.CommonResponse;

@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linkgem.application.GemBoxFacade;
+import com.linkgem.application.gembox.facade.GemBoxFacade;
 import com.linkgem.domain.common.Pages;
-import com.linkgem.domain.gembox.GemBoxCommand;
+import com.linkgem.presentation.gembox.cmd.GemBoxCommand;
 import com.linkgem.domain.gembox.GemBoxInfo;
 import com.linkgem.domain.gembox.GemBoxQuery;
 import com.linkgem.presentation.common.CommonResponse;

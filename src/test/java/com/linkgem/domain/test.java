@@ -1,12 +1,12 @@
 package com.linkgem.domain;
 
 import com.linkgem.domain.auth.Auth;
-import com.linkgem.domain.auth.AuthReader;
-import com.linkgem.domain.auth.AuthStore;
+import com.linkgem.infrastructure.auth.AuthReader;
+import com.linkgem.infrastructure.auth.AuthStore;
 import com.linkgem.domain.auth.AuthType;
-import com.linkgem.domain.auth.MailAuthService;
+import com.linkgem.application.auth.service.MailAuthService;
 import com.linkgem.domain.user.User;
-import com.linkgem.domain.user.UserReader;
+import com.linkgem.infrastructure.user.UserReader;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;

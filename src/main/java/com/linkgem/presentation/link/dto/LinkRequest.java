@@ -5,7 +5,7 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import com.linkgem.domain.link.LinkCommand;
+import com.linkgem.presentation.link.cmd.LinkCommand;
 import com.linkgem.domain.link.LinkQuery;
 import com.linkgem.domain.link.opengraph.OpenGraph;
 

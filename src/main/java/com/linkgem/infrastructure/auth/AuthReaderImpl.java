@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.linkgem.domain.auth.Auth;
-import com.linkgem.domain.auth.AuthReader;
 
 import lombok.RequiredArgsConstructor;
 

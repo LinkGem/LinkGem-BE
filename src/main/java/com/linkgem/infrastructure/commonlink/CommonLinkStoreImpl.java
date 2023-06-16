@@ -3,7 +3,6 @@ package com.linkgem.infrastructure.commonlink;
 import org.springframework.stereotype.Repository;
 
 import com.linkgem.domain.commonlink.CommonLink;
-import com.linkgem.domain.commonlink.CommonLinkStore;
 
 import lombok.RequiredArgsConstructor;
 

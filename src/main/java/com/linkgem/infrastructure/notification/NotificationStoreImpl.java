@@ -3,8 +3,7 @@ package com.linkgem.infrastructure.notification;
 import org.springframework.stereotype.Repository;
 
 import com.linkgem.domain.notification.Notification;
-import com.linkgem.domain.notification.NotificationCommand;
-import com.linkgem.domain.notification.NotificationStore;
+import com.linkgem.presentation.notification.cmd.NotificationCommand;
 
 import lombok.RequiredArgsConstructor;
 
