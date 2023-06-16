@@ -7,11 +7,11 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.Optional;
 
-import com.linkgem.application.gembox.service.GemBoxService;
-import com.linkgem.application.gembox.service.search.GemBoxDomainService;
-import com.linkgem.infrastructure.gembox.GemBoxReader;
-import com.linkgem.infrastructure.gembox.GemBoxStore;
-import com.linkgem.presentation.gembox.cmd.GemBoxCommand;
+import com.linkgem.gembox.application.service.GemBoxService;
+import com.linkgem.gembox.application.service.search.GemBoxDomainService;
+import com.linkgem.gembox.infrastructure.GemBoxReader;
+import com.linkgem.gembox.infrastructure.GemBoxStore;
+import com.linkgem.gembox.presentation.cmd.GemBoxCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

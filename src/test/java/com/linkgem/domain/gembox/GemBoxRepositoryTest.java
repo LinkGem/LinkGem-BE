@@ -1,7 +1,5 @@
 package com.linkgem.domain.gembox;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.linkgem.infrastructure.config.TestQueryDslConfig;
-import com.linkgem.infrastructure.gembox.GemBoxRepository;
+import com.linkgem.gembox.infrastructure.GemBoxRepository;
 
 @Import(TestQueryDslConfig.class)
 @DataJpaTest
