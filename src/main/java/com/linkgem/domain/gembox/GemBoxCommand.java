@@ -1,11 +1,11 @@
 package com.linkgem.domain.gembox;
 
-import java.util.List;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.List;
 
 public class GemBoxCommand {
 
@@ -68,5 +68,18 @@ public class GemBoxCommand {
         private Long userId;
         private Long gemBoxId;
         private List<Long> linkIds;
+    }
+
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class Merge {
+        private Long userId;
+        private Long targetId;
+        private Long sourceId;
+
+        public static Merge of(Long userId, Long targetId, Long sourceId) {
+            return new Merge(userId, targetId, sourceId);
+        }
     }
 }
