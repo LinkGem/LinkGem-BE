@@ -1,19 +1,17 @@
 package com.linkgem.domain.gembox;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.linkgem.domain.link.LinkDeleteService;
+import com.linkgem.domain.link.LinkReader;
+import com.linkgem.presentation.common.exception.BusinessException;
+import com.linkgem.presentation.common.exception.ErrorCode;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linkgem.domain.link.LinkDeleteService;
-import com.linkgem.domain.link.LinkReader;
-import com.linkgem.presentation.common.exception.BusinessException;
-import com.linkgem.presentation.common.exception.ErrorCode;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -130,6 +128,23 @@ public class GemBoxServiceImpl implements GemBoxService {
             .stream()
             .map(linkId -> linkReader.get(linkId, userId))
             .forEach(link -> link.updateGemBox(gemBox));
+    }
+
+    @Transactional
+    @Override
+    public void merge(GemBoxCommand.Merge command) {
+
+        GemBox targetGemBox = gemBoxReader.find(command.getTargetId(), command.getUserId())
+            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
+
+        GemBox sourceGemBox = gemBoxReader.find(command.getSourceId(), command.getUserId())
+            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
+
+        linkReader.findAllByGemBoxId(command.getTargetId())
+            .stream()
+            .forEach(link -> link.updateGemBox(sourceGemBox));
+
+        gemBoxStore.delete(targetGemBox);
     }
 
 }
