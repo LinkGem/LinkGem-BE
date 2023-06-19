@@ -22,9 +22,6 @@ public class UserInitializeServiceImpl implements UserInitializeService {
 
         final Long userId = user.getId();
 
-        //기본 잼박스 생성
-        gemBoxService.create(GemBoxCommand.Create.createDefault(userId));
-
         //회원가입 환영 알림
         NotificationCommand.Create joinNotification = notificationCreateFactory.createJoinNotification(user);
         notificationCreate.create(joinNotification);

@@ -54,9 +54,6 @@ public class LinkCreateServiceImpl implements LinkCreateService {
             .openGraph(openGraph)
             .build();
 
-        gemBoxReader.findDefault(user.getId())
-            .ifPresent(link::updateGemBox);
-
         Link createdLink = linkStore.create(link);
 
         if (link.hasImageUrl()) {
