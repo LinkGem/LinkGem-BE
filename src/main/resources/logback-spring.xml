@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="APPLICATION" value="linkgem-server"/>
+
+    <springProfile name="local">
+        <property name="LOG_FILE_PATH" value="logs"/>
+        <property name="LOG_ARCHIVE_PATH" value="logs"/>
+    </springProfile>
+
+    <springProfile name="dev, prod">
+        <property name="LOG_FILE_PATH" value="/home/ec2-user/logs/${APPLICATION}"/>
+        <property name="LOG_ARCHIVE_PATH" value="/home/ec2-user/logs/Archive/${APPLICATION}"/>
+    </springProfile>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- file appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_PATH}/${APPLICATION}.stdout.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${LOG_ARCHIVE_PATH}/%d{yyyy,aux}/%d{MM,aux}/%d{dd,aux}/${APPLICATION}.stdout.log.%d{yyyyMMdd}.%i.gz
+            </fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- file appender -->
+    <appender name="STDERR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_PATH}/${APPLICATION}.stderr.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${LOG_ARCHIVE_PATH}/%d{yyyy,aux}/%d{MM,aux}/%d{dd,aux}/${APPLICATION}.stderr.log.%d{yyyyMMdd}.%i.gz
+            </fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- file appender -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_PATH}/${APPLICATION}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${LOG_ARCHIVE_PATH}/%d{yyyy,aux}/%d{MM,aux}/%d{dd,aux}/${APPLICATION}.log.%d{yyyyMMdd}.%i.gz
+            </fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- file async appender -->
+    <appender name="FILE-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <param name="queueSize" value="2048"/>
+        <appender-ref ref="FILE"/>
+    </appender>
+
+    <springProfile name="local">
+        <logger name="com.linkgem" level="DEBUG" additivity="false">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+
+        <logger name="stdout" level="INFO" additivity="false">
+            <appender-ref ref="STDOUT"/>
+        </logger>
+
+        <logger name="stderr" level="ERROR" additivity="false">
+            <appender-ref ref="STDERR"/>
+        </logger>
+
+        <root level="WARN">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="dev, production">
+        <logger name="com.linkgem" level="DEBUG" additivity="false">
+            <appender-ref ref="FILE-ASYNC"/>
+        </logger>
+
+        <logger name="stdout" level="INFO" additivity="false">
+            <appender-ref ref="STDOUT"/>
+        </logger>
+
+        <logger name="stderr" level="ERROR" additivity="false">
+            <appender-ref ref="STDERR"/>
+        </logger>
+
+        <root level="WARN">
+            <appender-ref ref="ASYNC_SLACK"/>
+            <appender-ref ref="FILE-ASYNC"/>
+        </root>
+    </springProfile>
+</configuration>
