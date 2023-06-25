@@ -100,6 +100,13 @@ public class GemBoxServiceImpl implements GemBoxService {
             .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
     }
 
+    @Override
+    public GemBoxInfo.Main findById(GemBoxQuery.SearchDetail searchDetail){
+        return gemBoxReader.find(searchDetail.getId())
+                .map(GemBoxInfo.Main::of)
+                .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
+    }
+
     @Transactional
     @Override
     public void delete(GemBoxCommand.Delete command) {

@@ -17,6 +17,8 @@ public interface GemBoxService {
 
     GemBoxInfo.Main find(GemBoxQuery.SearchDetail searchDetail);
 
+    GemBoxInfo.Main findById(GemBoxQuery.SearchDetail searchDetail);
+
     void delete(GemBoxCommand.Delete command);
 
     void deleteAllByUserId(Long userId);
