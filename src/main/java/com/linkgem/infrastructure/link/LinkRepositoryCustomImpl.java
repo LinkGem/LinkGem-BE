@@ -61,7 +61,11 @@ public class LinkRepositoryCustomImpl implements LinkRepositoryCustom {
 
     private BooleanBuilder createWhereBuilder(LinkQuery.SearchLinks searchLinks) {
         BooleanBuilder whereBuilder = new BooleanBuilder();
-        whereBuilder.and(link.user.id.eq(searchLinks.getUserId()));
+
+        // open api 경우 서비스 사용자가 아닌 경우가 있을 수 있음.
+        if (searchLinks.getUserId() != null) {
+            whereBuilder.and(link.user.id.eq(searchLinks.getUserId()));
+        }
 
         if (searchLinks.getGemBoxId() != null) {
             whereBuilder.and(link.gemBox.id.eq(searchLinks.getGemBoxId()));
