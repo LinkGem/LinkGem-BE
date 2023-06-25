@@ -36,24 +36,25 @@ public class LinkResponse {
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
 
-        public Main(LinkInfo.Main linkInfo) {
+        // isOpen(공유 api 응답) 인경우 에는 모든 정보를 보여주지 않도록한다.
+        public Main(LinkInfo.Main linkInfo, boolean isOpen) {
             this.id = linkInfo.getId();
-            this.memo = linkInfo.getMemo();
             this.url = linkInfo.getUrl();
             this.title = linkInfo.getTitle();
             this.description = linkInfo.getDescription();
             this.imageUrl = linkInfo.getImageUrl();
             this.siteName = linkInfo.getSiteName();
-            this.isFavorites = linkInfo.isFavorites();
             this.gemBoxId = linkInfo.getGemBoxId();
-            this.userId = linkInfo.getUserId();
-            this.userNickname = linkInfo.getUserNickname();
+            this.isFavorites = linkInfo.isFavorites();
+            this.userId = isOpen ? null: linkInfo.getUserId();
+            this.memo = isOpen ? null : linkInfo.getMemo();
+            this.userNickname = isOpen ? null: linkInfo.getUserNickname();
             this.createDate = linkInfo.getCreateDate();
             this.updateDate = linkInfo.getUpdateDate();
         }
 
         public static Main of(LinkInfo.Main linkInfo) {
-            return new Main(linkInfo);
+            return new Main(linkInfo, false);
         }
     }
 
@@ -62,7 +63,7 @@ public class LinkResponse {
     public static class SearchDetailLinkResponse extends Main {
 
         public SearchDetailLinkResponse(LinkInfo.Main linkInfo) {
-            super(linkInfo);
+            super(linkInfo, false);
         }
 
         public static SearchDetailLinkResponse of(LinkInfo.Main linkInfo) {
@@ -74,13 +75,18 @@ public class LinkResponse {
     @Getter
     public static class SearchLinkResponse extends Main {
 
-        public SearchLinkResponse(LinkInfo.Main linkInfo) {
-            super(linkInfo);
+        public SearchLinkResponse(LinkInfo.Main linkInfo, boolean isOpen) {
+            super(linkInfo, isOpen);
         }
 
         public static SearchLinkResponse of(LinkInfo.Main linkInfo) {
-            return new SearchLinkResponse(linkInfo);
+            return new SearchLinkResponse(linkInfo, false);
         }
+
+        public static SearchLinkResponse of(LinkInfo.Main linkInfo, boolean isOpen) {
+            return new SearchLinkResponse(linkInfo, isOpen);
+        }
+
     }
 
     @ApiModel(description = "링크 생성 응답")
@@ -88,7 +94,7 @@ public class LinkResponse {
     public static class CreateLinkResponse extends Main {
 
         public CreateLinkResponse(LinkInfo.Main linkInfo) {
-            super(linkInfo);
+            super(linkInfo, false);
         }
 
         public static CreateLinkResponse of(LinkInfo.Create create) {
