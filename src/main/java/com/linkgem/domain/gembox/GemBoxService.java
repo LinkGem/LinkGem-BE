@@ -24,4 +24,6 @@ public interface GemBoxService {
     void putLinksToGembox(GemBoxCommand.PutLinksToGembox command);
 
     void merge(GemBoxCommand.Merge command);
+
+    GemBoxInfo.MergeMulti mergeMulti(GemBoxCommand.MergeMulti command);
 }

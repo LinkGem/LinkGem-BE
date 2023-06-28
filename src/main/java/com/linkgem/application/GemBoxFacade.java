@@ -42,4 +42,8 @@ public class GemBoxFacade {
     public void merge(GemBoxCommand.Merge command) {
         gemBoxService.merge(command);
     }
+
+    public GemBoxInfo.MergeMulti mergeMulti(GemBoxCommand.MergeMulti command) {
+        return gemBoxService.mergeMulti(command);
+    }
 }

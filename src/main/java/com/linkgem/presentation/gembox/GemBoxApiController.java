@@ -138,4 +138,18 @@ public class GemBoxApiController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "선택 된 잼박스들을 새로운 잼박스로 합친다.", notes = "다중 잼 박스를 합친다.")
+    @PostMapping(value = "/merge")
+    public CommonResponse<GemBoxResponse.MergeMultiGemboxResponse> mergeMultiGembox(
+        HttpServletRequest httpServletRequest,
+        @RequestBody @Valid GemBoxRequest.MergeMultiGemBoxRequest request
+    ) {
+
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        GemBoxCommand.MergeMulti command = request.to(userId);
+        GemBoxInfo.MergeMulti mergeMultiInfo = gemBoxFacade.mergeMulti(command);
+
+        return CommonResponse.of(GemBoxResponse.MergeMultiGemboxResponse.of(mergeMultiInfo));
+    }
+
 }

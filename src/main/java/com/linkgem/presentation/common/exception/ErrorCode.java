@@ -1,11 +1,9 @@
 package com.linkgem.presentation.common.exception;
 
-import org.springframework.http.HttpStatus;
-
 import com.linkgem.domain.gembox.GemBox;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
@@ -13,6 +11,7 @@ public enum ErrorCode {
     GEMBOX_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 잼박스 입니다"),
     GEMBOX_ALREADY_EXISTED(HttpStatus.CONFLICT, "이미 존재하는 잼박스 입니다."),
     GEMBOX_IS_FULL(HttpStatus.BAD_REQUEST, String.format("%s%d%s", "잼박스는 최대", GemBox.MAX_GEMBOX, "개 까지 저장이 가능합니다.")),
+    GEMBOX_NOT_CHOOSE(HttpStatus.BAD_REQUEST, String.format("머지 할 잼박스를 하나 이상 선택하세요.")),
 
     ACCESS_TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "엑세스 토큰이 만료되었습니다."),
     ACCESS_TOKEN_NOT_EXPIRED(HttpStatus.BAD_REQUEST, "엑세스 토큰이 만료되지않았습니다."),
