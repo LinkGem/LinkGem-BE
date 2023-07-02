@@ -157,7 +157,7 @@ public class GemBoxServiceImpl implements GemBoxService {
         GemBox gemBox = gemBoxReader.get(newGembox.getId(), command.getUserId());
 
         // 선택된 잼박스의 링크 이동
-        if(command.getGemboxIds().isEmpty()) {
+        if(command.getGemboxIds().isEmpty() || command.getGemboxIds().size() < 2) {
             throw new BusinessException(ErrorCode.GEMBOX_NOT_CHOOSE);
         }
 
