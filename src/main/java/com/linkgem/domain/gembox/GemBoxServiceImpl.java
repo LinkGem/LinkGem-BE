@@ -1,15 +1,16 @@
 package com.linkgem.domain.gembox;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.linkgem.domain.link.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linkgem.domain.link.LinkDeleteService;
-import com.linkgem.domain.link.LinkReader;
 import com.linkgem.presentation.common.exception.BusinessException;
 import com.linkgem.presentation.common.exception.ErrorCode;
 
@@ -23,9 +24,13 @@ public class GemBoxServiceImpl implements GemBoxService {
     private final GemBoxReader gemBoxReader;
 
     private final LinkReader linkReader;
-    private final LinkDeleteService linkDeleteService;
 
     private final GemBoxDomainService gemBoxDomainService;
+
+    private final LinkCreateService linkCreateService;
+    private final LinkDeleteService linkDeleteService;
+
+
 
     @Transactional
     @Override
@@ -130,6 +135,62 @@ public class GemBoxServiceImpl implements GemBoxService {
             .stream()
             .map(linkId -> linkReader.get(linkId, userId))
             .forEach(link -> link.updateGemBox(gemBox));
+    }
+
+    @Transactional
+    @Override
+    public GemBoxInfo.Create copyGembox(GemBoxQuery.SearchDetail searchDetail){
+        GemBox originGembox = gemBoxReader.find(searchDetail.getId(), searchDetail.getUserId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
+
+        GemBoxCommand.Create command = GemBoxCommand
+                .Create.builder()
+                .name(generateCopiedGemBoxName(originGembox.getName()))
+                .userId(originGembox.getUserId()).build();
+
+        GemBoxInfo.Create copiedGemboxInfo = this.create(command);
+        GemBox copiedGembox = gemBoxReader.find(copiedGemboxInfo.getId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
+
+        List<Link> copiedLinks = linkCreateService.copyLinks(originGembox.getLinks(), copiedGembox);
+
+        return new GemBoxInfo.Create(
+                copiedGembox.getId(),
+                copiedGembox.getName(),
+                copiedGembox.getUserId(),
+                copiedLinks.stream().map(Link::getId)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    private String generateCopiedGemBoxName(String name) {
+        String initSuffix = "(1)";
+        int length = name.length();
+
+        if (length <= 3) {
+            return name + initSuffix;
+        }
+
+        // (n) 패턴 값 추출 한 후 (n+1) 변경하여 반환
+        String pattern = "\\((\\d+)\\)$";
+        Pattern regex = Pattern.compile(pattern);
+        Matcher matcher = regex.matcher(name);
+
+        StringBuffer sb = new StringBuffer();
+        boolean isMatched = false;
+        while (matcher.find()) {
+            int lastSuffixNumber = Integer.parseInt(matcher.group(1));
+            int nextSuffixNumber = lastSuffixNumber + 1;
+            matcher.appendReplacement(sb, "(" + nextSuffixNumber + ")");
+            isMatched = true;
+        }
+        matcher.appendTail(sb);
+
+        if (!isMatched) {
+            sb.append(initSuffix);
+        }
+
+        return sb.toString();
     }
 
 }

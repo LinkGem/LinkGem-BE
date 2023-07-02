@@ -55,14 +55,14 @@ public class Link extends BaseEntity {
     private boolean isFavorites;
 
     @Builder
-    private Link(String url, String memo, OpenGraph openGraph, User user) {
+    private Link(String url, String memo, OpenGraph openGraph, User user, Boolean isFavorites, GemBox gemBox) {
         validateString(url, "url");
         validateObject(user, "user");
         updateMemo(memo);
         this.url = url;
         this.user = user;
-        this.isFavorites = false;
-
+        this.gemBox = gemBox;
+        this.isFavorites = isFavorites != null && isFavorites;
         this.openGraph = openGraph == null ? OpenGraph.createEmpty() : openGraph;
     }
 

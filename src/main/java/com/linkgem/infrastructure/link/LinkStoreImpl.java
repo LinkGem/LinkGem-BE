@@ -7,6 +7,8 @@ import com.linkgem.domain.link.LinkStore;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Repository
 public class LinkStoreImpl implements LinkStore {
@@ -16,6 +18,10 @@ public class LinkStoreImpl implements LinkStore {
     @Override
     public Link create(Link link) {
         return repository.save(link);
+    }
+
+    public List<Link> createAll(List<Link> links) {
+        return repository.saveAll(links);
     }
 
     @Override
