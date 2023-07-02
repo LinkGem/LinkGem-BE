@@ -1,20 +1,5 @@
 package com.linkgem.presentation.gembox;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.linkgem.application.GemBoxFacade;
 import com.linkgem.domain.common.Pages;
 import com.linkgem.domain.gembox.GemBoxCommand;
@@ -24,11 +9,17 @@ import com.linkgem.presentation.common.CommonResponse;
 import com.linkgem.presentation.common.UserAuthenticationProvider;
 import com.linkgem.presentation.gembox.dto.GemBoxRequest;
 import com.linkgem.presentation.gembox.dto.GemBoxResponse;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Api(tags = "잼박스")
 @RequiredArgsConstructor
@@ -102,14 +93,15 @@ public class GemBoxApiController {
     }
 
     @ApiOperation(value = "잼박스 삭제", notes = "잼박스를 삭제한다")
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(
+    @DeleteMapping
+    public ResponseEntity<Void> deleteGemboxes(
         HttpServletRequest httpServletRequest,
-        @ApiParam(value = "잼박스 고유 아이디", example = "1") @PathVariable Long id
+        @RequestBody @Valid GemBoxRequest.DeleteGemboxRequest request
     ) {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-        gemBoxFacade.delete(GemBoxCommand.Delete.of(id, userId));
+        GemBoxCommand.Delete deleteCommand = request.to(userId);
+        gemBoxFacade.deleteGemboxes(deleteCommand);
 
         return ResponseEntity.noContent().build();
     }
@@ -132,4 +124,33 @@ public class GemBoxApiController {
         gemBoxFacade.putLinksToGembox(command);
         return ResponseEntity.noContent().build();
     }
+
+    @ApiOperation(value = "선택 된 잼박스를 합칠 잼 박스에 넣는다.", notes = "개별 잼 박스를 합친다.")
+    @PatchMapping(value = "/{targetId}/merge")
+    public ResponseEntity<Void> mergeGemBox(
+        HttpServletRequest httpServletRequest,
+        @ApiParam(value = "선택 된 잼박스 고유 아이디", example = "1")  @PathVariable Long targetId,
+        @ApiParam(value = "합칠 잼박스 고유 아이디", example = "1") @RequestParam Long sourceId
+    ) {
+
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        gemBoxFacade.merge(GemBoxCommand.Merge.of(userId, targetId, sourceId));
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "선택 된 잼박스들을 새로운 잼박스로 합친다.", notes = "다중 잼 박스를 합친다.")
+    @PostMapping(value = "/merge")
+    public CommonResponse<GemBoxResponse.MergeMultiGemboxResponse> mergeMultiGembox(
+        HttpServletRequest httpServletRequest,
+        @RequestBody @Valid GemBoxRequest.MergeMultiGemBoxRequest request
+    ) {
+
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        GemBoxCommand.MergeMulti command = request.to(userId);
+        GemBoxInfo.MergeMulti mergeMultiInfo = gemBoxFacade.mergeMulti(command);
+
+        return CommonResponse.of(GemBoxResponse.MergeMultiGemboxResponse.of(mergeMultiInfo));
+    }
+
 }

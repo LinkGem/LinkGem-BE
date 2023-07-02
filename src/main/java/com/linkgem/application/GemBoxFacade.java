@@ -1,15 +1,13 @@
 package com.linkgem.application;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
-
 import com.linkgem.domain.gembox.GemBoxCommand;
 import com.linkgem.domain.gembox.GemBoxInfo;
 import com.linkgem.domain.gembox.GemBoxQuery;
 import com.linkgem.domain.gembox.GemBoxService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
@@ -25,8 +23,8 @@ public class GemBoxFacade {
         gemBoxService.update(command);
     }
 
-    public void delete(GemBoxCommand.Delete command) {
-        gemBoxService.delete(command);
+    public void deleteGemboxes(GemBoxCommand.Delete command) {
+        gemBoxService.deleteGemboxes(command);
     }
 
     public Page<GemBoxInfo.Search> search(Long userId, Pageable pageable) {
@@ -39,5 +37,13 @@ public class GemBoxFacade {
 
     public void putLinksToGembox(GemBoxCommand.PutLinksToGembox command) {
         gemBoxService.putLinksToGembox(command);
+    }
+
+    public void merge(GemBoxCommand.Merge command) {
+        gemBoxService.merge(command);
+    }
+
+    public GemBoxInfo.MergeMulti mergeMulti(GemBoxCommand.MergeMulti command) {
+        return gemBoxService.mergeMulti(command);
     }
 }

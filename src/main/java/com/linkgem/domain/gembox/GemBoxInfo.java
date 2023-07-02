@@ -1,13 +1,12 @@
 package com.linkgem.domain.gembox;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.linkgem.domain.link.Link;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GemBoxInfo {
 
@@ -60,6 +59,30 @@ public class GemBoxInfo {
                 .name(gemBox.getName())
                 .userId(gemBox.getUserId())
                 .linkIds(gemBox.getLinks().stream().map(Link::getId).collect(Collectors.toList()))
+                .build();
+        }
+
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class MergeMulti {
+        private Long id;
+
+        private String name;
+
+        private Long userId;
+
+        private List<Long> gemboxIds;
+
+        public static MergeMulti of(GemBox gemBox) {
+
+            return MergeMulti.builder()
+                .id(gemBox.getId())
+                .name(gemBox.getName())
+                .userId(gemBox.getUserId())
+//                .gemboxIds(gemBox.getLinks().stream().map(Link::getId).collect(Collectors.toList()))
                 .build();
         }
 
