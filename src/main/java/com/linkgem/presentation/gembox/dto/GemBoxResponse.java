@@ -1,12 +1,11 @@
 package com.linkgem.presentation.gembox.dto;
 
-import java.util.List;
-
 import com.linkgem.domain.gembox.GemBoxInfo;
-
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.List;
 
 public class GemBoxResponse {
 
@@ -57,6 +56,18 @@ public class GemBoxResponse {
 
         public static CreateGemboxResponse of(GemBoxInfo.Create create) {
             return new CreateGemboxResponse(create.getId(), create.getName(), create.getLinkIds());
+        }
+    }
+
+    @ApiModel(description = "잼박스 다중 합치기 응답")
+    @AllArgsConstructor
+    @Getter
+    public static class MergeMultiGemboxResponse {
+        private Long id;
+        private String name;
+
+        public static MergeMultiGemboxResponse of(GemBoxInfo.MergeMulti mergeMulti) {
+            return new MergeMultiGemboxResponse(mergeMulti.getId(), mergeMulti.getName());
         }
     }
 
