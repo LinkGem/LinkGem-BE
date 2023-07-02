@@ -37,6 +37,10 @@ public class GemBoxFacade {
         return gemBoxService.find(searchDetail);
     }
 
+    public GemBoxInfo.Create copyGembox(GemBoxQuery.SearchDetail searchDetail) {
+        return gemBoxService.copyGembox(searchDetail);
+    }
+
     public void putLinksToGembox(GemBoxCommand.PutLinksToGembox command) {
         gemBoxService.putLinksToGembox(command);
     }

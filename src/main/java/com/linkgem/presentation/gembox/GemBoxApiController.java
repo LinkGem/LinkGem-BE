@@ -114,6 +114,19 @@ public class GemBoxApiController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "잼박스 복제", notes = "잼박스를 복제한다")
+    @PostMapping(value = "{id}/copy")
+    public CommonResponse<GemBoxResponse.CreateGemboxResponse> copy(
+            HttpServletRequest httpServletRequest,
+            @ApiParam(value = "잼박스 고유 아이디", example = "1") @PathVariable Long id
+    ) {
+        Long userId = UserAuthenticationProvider.provider(httpServletRequest);
+        GemBoxInfo.Create createInfo = gemBoxFacade.copyGembox(GemBoxQuery.SearchDetail.of(id, userId));
+
+        return CommonResponse.of(GemBoxResponse.CreateGemboxResponse.of(createInfo));
+
+    }
+
     @ApiOperation(value = "링크들을 잼박스에 넣는다.", notes = "링크들을 잼박스에 넣는다.")
     @PatchMapping(value = "/{id}/links")
     public ResponseEntity<Void> pushLinksToGembox(
