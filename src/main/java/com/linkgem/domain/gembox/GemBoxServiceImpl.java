@@ -101,13 +101,19 @@ public class GemBoxServiceImpl implements GemBoxService {
 
     @Transactional
     @Override
-    public void delete(GemBoxCommand.Delete command) {
+    public void deleteGemboxes(GemBoxCommand.Delete command) {
 
-        GemBox gemBox = gemBoxReader.find(command.getId(), command.getUserId())
-            .orElseThrow(() -> new BusinessException(ErrorCode.GEMBOX_NOT_FOUND));
+        List<GemBox> gemBoxList = command.getIds()
+            .stream()
+            .map(gemBoxId -> gemBoxReader.get(gemBoxId, command.getUserId()))
+            .collect(Collectors.toList());
 
-        linkDeleteService.deleteAllByGemBoxId(gemBox.getId());
-        gemBoxStore.delete(gemBox);
+        if(gemBoxList != null && !gemBoxList.isEmpty()) {
+            for(GemBox gemBox : gemBoxList) {
+                linkDeleteService.deleteAllByGemBoxId(gemBox.getId());
+                gemBoxStore.delete(gemBox);
+            }
+        }
     }
 
     @Override

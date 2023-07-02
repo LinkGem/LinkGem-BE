@@ -57,11 +57,11 @@ public class GemBoxCommand {
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
     public static class Delete {
-        private Long id;
+        private List<Long> ids;
         private Long userId;
 
-        public static Delete of(Long id, Long userId) {
-            return new Delete(id, userId);
+        public static Delete of(List<Long> ids, Long userId) {
+            return new Delete(ids, userId);
         }
     }
 

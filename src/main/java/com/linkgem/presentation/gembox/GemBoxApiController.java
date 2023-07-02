@@ -93,14 +93,15 @@ public class GemBoxApiController {
     }
 
     @ApiOperation(value = "잼박스 삭제", notes = "잼박스를 삭제한다")
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(
+    @DeleteMapping
+    public ResponseEntity<Void> deleteGemboxes(
         HttpServletRequest httpServletRequest,
-        @ApiParam(value = "잼박스 고유 아이디", example = "1") @PathVariable Long id
+        @RequestBody @Valid GemBoxRequest.DeleteGemboxRequest request
     ) {
 
         Long userId = UserAuthenticationProvider.provider(httpServletRequest);
-        gemBoxFacade.delete(GemBoxCommand.Delete.of(id, userId));
+        GemBoxCommand.Delete deleteCommand = request.to(userId);
+        gemBoxFacade.deleteGemboxes(deleteCommand);
 
         return ResponseEntity.noContent().build();
     }

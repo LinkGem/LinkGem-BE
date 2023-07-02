@@ -23,8 +23,8 @@ public class GemBoxFacade {
         gemBoxService.update(command);
     }
 
-    public void delete(GemBoxCommand.Delete command) {
-        gemBoxService.delete(command);
+    public void deleteGemboxes(GemBoxCommand.Delete command) {
+        gemBoxService.deleteGemboxes(command);
     }
 
     public Page<GemBoxInfo.Search> search(Long userId, Pageable pageable) {

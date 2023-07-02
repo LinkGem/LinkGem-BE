@@ -6,10 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -53,6 +50,23 @@ public class GemBoxRequest {
                 .id(id)
                 .name(this.name)
                 .userId(userId)
+                .build();
+        }
+    }
+
+    @ApiModel(description = "잼박스 삭제 요청")
+    @NoArgsConstructor
+    @Getter
+    public static class DeleteGemboxRequest {
+
+        @ApiModelProperty(value = "잼박스 id 리스트", required = true)
+        @NotEmpty(message = "잼박스 id는 필수 값입니다.")
+        private List<Long> ids;
+
+        public GemBoxCommand.Delete to(Long userId) {
+            return GemBoxCommand.Delete.builder()
+                .userId(userId)
+                .ids(this.ids)
                 .build();
         }
     }
